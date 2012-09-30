@@ -75,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
 
         double totalAmount = 0d;
         for (Transaction transaction : transactions) {
-            int multiplier = type == TransactionType.EXPENSE ? -1 : 1;
+            int multiplier = (transaction.getType() == TransactionType.EXPENSE) ? -1 : 1;
             totalAmount += transaction.getAmount() * multiplier;
         }
 

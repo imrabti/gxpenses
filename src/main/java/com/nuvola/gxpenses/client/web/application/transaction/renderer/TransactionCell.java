@@ -84,46 +84,48 @@ public class TransactionCell extends AbstractCell<Transaction> {
 	public void render(Context context, Transaction value, SafeHtmlBuilder sb) {
 		NumberFormat numberFormat = NumberFormat.getCurrencyFormat(currency);
 		DateTimeFormat dateFormat = DateTimeFormat.getFormat("LLL d yyyy");
-		
-		String balance = (value.getType() == TransactionType.INCOME) ? numberFormat.format(value.getAmount()) :
-			numberFormat.format(-value.getAmount());
-		SafeHtml safeDate = SafeHtmlUtils.fromString(dateFormat.format(value.getDate()));
-		SafeHtml safePayee = SafeHtmlUtils.fromString(value.getPayee());
-		SafeHtml safeAmount = SafeHtmlUtils.fromString(balance);
-		
-		String dateStyle = resources.generalStyleCss().date();
-		String payeeStyle = resources.generalStyleCss().payee();
-		String amountStyle = (value.getType() == TransactionType.INCOME) ?
-                resources.generalStyleCss().amountIncomeTrans() : resources.generalStyleCss().amountExpenseTrans();
-		
-		if(value == selectedTransaction) {
-			dateStyle = resources.generalStyleCss().dateWhite();
-			payeeStyle = resources.generalStyleCss().payeeWhite();
-			amountStyle = resources.generalStyleCss().amountWhite();
-		}
-		
-		SafeHtmlBuilder tagsBuilder = new SafeHtmlBuilder();
-		if(value.getTags() != null) {
-			SafeHtml safeTag;
-			List<String> tags = Arrays.asList(value.getTags().split(","));
-			String tagCss = resources.generalStyleCss().tag();
-			
-			if(value == selectedTransaction) {
-				tagCss = resources.generalStyleCss().tagWhite();
-			}
-			
-			for(String tag : tags) {
-				safeTag = SafeHtmlUtils.fromString(tag);
-				tagsBuilder.append(template.tagTemplate(safeTag, tagCss));
-			}
-		}
-		
-		if(value.getTags() != null) {
-			sb.append(template.transactionTemplate(safeDate, safePayee, tagsBuilder.toSafeHtml(), safeAmount, 
-					dateStyle, payeeStyle, amountStyle));
-		} else {
-			sb.append(template.transactionTemplateWithoutTags(safeDate, safePayee, safeAmount, dateStyle, 
-					payeeStyle, amountStyle));
-		}
+
+        if (value != null) {
+            String balance = (value.getType() == TransactionType.INCOME) ? numberFormat.format(value.getAmount()) :
+                numberFormat.format(-value.getAmount());
+            SafeHtml safeDate = SafeHtmlUtils.fromString(dateFormat.format(value.getDate()));
+            SafeHtml safePayee = SafeHtmlUtils.fromString(value.getPayee());
+            SafeHtml safeAmount = SafeHtmlUtils.fromString(balance);
+
+            String dateStyle = resources.generalStyleCss().date();
+            String payeeStyle = resources.generalStyleCss().payee();
+            String amountStyle = (value.getType() == TransactionType.INCOME) ?
+                    resources.generalStyleCss().amountIncomeTrans() : resources.generalStyleCss().amountExpenseTrans();
+
+            if(value == selectedTransaction) {
+                dateStyle = resources.generalStyleCss().dateWhite();
+                payeeStyle = resources.generalStyleCss().payeeWhite();
+                amountStyle = resources.generalStyleCss().amountWhite();
+            }
+
+            SafeHtmlBuilder tagsBuilder = new SafeHtmlBuilder();
+            if(value.getTags() != null) {
+                SafeHtml safeTag;
+                List<String> tags = Arrays.asList(value.getTags().split(","));
+                String tagCss = resources.generalStyleCss().tag();
+
+                if(value == selectedTransaction) {
+                    tagCss = resources.generalStyleCss().tagWhite();
+                }
+
+                for(String tag : tags) {
+                    safeTag = SafeHtmlUtils.fromString(tag);
+                    tagsBuilder.append(template.tagTemplate(safeTag, tagCss));
+                }
+            }
+
+            if(value.getTags() != null) {
+                sb.append(template.transactionTemplate(safeDate, safePayee, tagsBuilder.toSafeHtml(), safeAmount,
+                        dateStyle, payeeStyle, amountStyle));
+            } else {
+                sb.append(template.transactionTemplateWithoutTags(safeDate, safePayee, safeAmount, dateStyle,
+                        payeeStyle, amountStyle));
+            }
+        }
 	}
 }

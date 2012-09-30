@@ -32,6 +32,7 @@ public class BootStrapperImpl implements BootStrapper {
             @Override
             public void onSuccess(Method method, User user) {
                 currentUser = user;
+                onGetCurrentUser();
             }
         };
     }
@@ -51,7 +52,7 @@ public class BootStrapperImpl implements BootStrapper {
         return currentUser;
     }
 
-    private void onGetCurrentUser(User currentUser) {
+    private void onGetCurrentUser() {
         if (currentUser == null) {
             logger.info("User is not authentified -- access denied...");
             PlaceRequest place = new PlaceRequest(NameTokens.getLogin());

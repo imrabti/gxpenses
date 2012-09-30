@@ -17,9 +17,9 @@ public interface TransactionService extends RestService {
 
     @POST
     @Path("/transaction/transfer")
-    void createTransfer(TransferTransaction transfer, MethodCallback callback);
+    void createTransfer(TransferTransaction transfer, MethodCallback<Void> callback);
 
     @POST
     @Path("/transaction/filter")
-    void getTransactions(TransactionFilter filer, MethodCallback<PagedData<Transaction>> callback);
+    void getTransactions(TransactionFilter filter, MethodCallback<PagedData<Transaction>> callback);
 }

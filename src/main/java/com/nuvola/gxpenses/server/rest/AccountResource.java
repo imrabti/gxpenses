@@ -4,6 +4,7 @@ import com.nuvola.gxpenses.server.service.AccountService;
 import com.nuvola.gxpenses.server.util.SecurityContext;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.shared.dto.TransactionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +47,13 @@ public class AccountResource {
     public Response removeAccount(@PathParam("id") Long id) {
         accountService.removeAccount(id);
         return Response.ok().build();
+    }
+
+    @POST
+    @Path("/total")
+    public Double totalAmount(TransactionFilter filter) {
+        return accountService.totalAmountByAccountAndPeriodAndType(filter.getAccountId(),
+                filter.getPeriodFilter(), filter.getTypeFilter());
     }
 
 }

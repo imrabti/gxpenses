@@ -39,7 +39,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     private String currency;
 
-    CellList<Transaction> transactionTable;
+    CellList<Transaction> transactionList;
 
     @UiField
     Label message;
@@ -86,12 +86,12 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         dataProvider = setupDataProvider();
 
         pagerPanel = new ShowMorePagerPanel(pageSize);
-        transactionTable = new CellList<Transaction>(transactionCellFactory.create(setupRemoveAction()), listResources);
-        transactionTable.setPageSize(pageSize);
-        transactionTable.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
-        transactionTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
-        pagerPanel.setDisplay(transactionTable);
-        dataProvider.addDataDisplay(transactionTable);
+        transactionList = new CellList<Transaction>(transactionCellFactory.create(setupRemoveAction()), listResources);
+        transactionList.setPageSize(pageSize);
+        transactionList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
+        transactionList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+        pagerPanel.setDisplay(transactionList);
+        dataProvider.addDataDisplay(transactionList);
 
         initWidget(uiBinder.createAndBindUi(this));
 
@@ -105,8 +105,8 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     @Override
     public void setData(List<Transaction> data, Integer start, Integer totalCount) {
-        dataProvider.updateRowCount(totalCount, true);
         dataProvider.updateRowData(start, data);
+        dataProvider.updateRowCount(totalCount, true);
     }
 
     @Override
