@@ -5,10 +5,12 @@ import com.nuvola.gxpenses.server.repos.TransactionRepos;
 import com.nuvola.gxpenses.server.util.DateUtils;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.shared.dto.PagedData;
 import com.nuvola.gxpenses.shared.dto.TransferTransaction;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -104,38 +106,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Transaction> findByAccountAndDateAndType(Long accountId, PeriodType periodFilter,
+    public PagedData<Transaction> findByAccountAndDateAndType(Long accountId, PeriodType periodFilter,
                                                          TransactionType type, Integer pageNumber, Integer length) {
         Date startDate = DateUtils.getStartDate(periodFilter, new Date());
         Date endDate = DateUtils.getEndDate(periodFilter, new Date());
         PageRequest page = new PageRequest(pageNumber, length, new Sort(Sort.Direction.DESC, "date"));
 
-        List<Transaction> transactions;
+        Page<Transaction> transactions;
         if (type == TransactionType.ALL) {
-            transactions = transactionRepos.findByAccountIdAndDateBetween(accountId, startDate,
-                    endDate, page).getContent();
+            transactions = transactionRepos.findByAccountIdAndDateBetween(accountId, startDate, endDate, page);
         } else {
-            transactions = transactionRepos.findByAccountIdAndDateBetweenAndType(accountId, startDate,
-                    endDate, type, page).getContent();
+            transactions = transactionRepos.findByAccountIdAndDateBetweenAndType(accountId, startDate, endDate,
+                    type, page);
         }
 
-        return transactions;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Long countByAccountAndDateAndType(Long accountId, PeriodType periodFilter, TransactionType type) {
-        Date startDate = DateUtils.getStartDate(periodFilter, new Date());
-        Date endDate = DateUtils.getEndDate(periodFilter, new Date());
-        PageRequest page = new PageRequest(0, 10);
-
-        if (type == TransactionType.ALL) {
-            return transactionRepos.findByAccountIdAndDateBetween(accountId, startDate,
-                    endDate, page).getTotalElements();
-        } else {
-            return transactionRepos.findByAccountIdAndDateBetweenAndType(accountId, startDate,
-                    endDate, type, page).getTotalElements();
-        }
+        return new PagedData<Transaction>(transactions.getContent(), (int)transactions.getTotalElements());
     }
 
     private void updateAccountBalanceInvert(Transaction transaction) {

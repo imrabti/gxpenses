@@ -1,22 +1,30 @@
 package com.nuvola.gxpenses.client.gin;
 
-import com.nuvola.gxpenses.client.application.ApplicationPresenter;
-import com.nuvola.gxpenses.client.application.home.HomePagePresenter;
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.nuvola.gxpenses.client.BootStrapper;
+import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.web.GxpensesPresenter;
+import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
+import com.nuvola.gxpenses.client.web.application.transaction.TransactionPresenter;
 
-@GinModules({DispatchAsyncModule.class, ClientModule.class})
+import com.google.gwt.inject.client.GinModules;
+import com.google.gwt.inject.client.Ginjector;
+
+@GinModules(value = {ClientModule.class})
 public interface ClientGinjector extends Ginjector {
-
     EventBus getEventBus();
 
     PlaceManager getPlaceManager();
 
-    Provider<HomePagePresenter> getMainPagePresenter();
+    GxpensesRes getResources();
+
+    BootStrapper getBootStrapper();
+
+    Provider<GxpensesPresenter> getGxpensesPresenter();
 
     Provider<ApplicationPresenter> getAppPresenter();
+
+    Provider<TransactionPresenter> getTransactionPresenter();
 }

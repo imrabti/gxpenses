@@ -22,4 +22,6 @@ public class ClientPlaceManager extends PlaceManagerImpl {
     public void revealDefaultPlace() {
         revealPlace(defaultPlaceRequest, false);
     }
+
 }
+

@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:d="urn:import:com.nuvola.gxpenses.client.web.application.transaction.popup.ui">
+
+    <ui:with field="resource" type="com.nuvola.gxpenses.client.resource.GxpensesRes"/>
+
+    <g:PopupPanel ui:field="popup" autoHideEnabled="true" stylePrimaryName="{resource.popupStyleCss.gwtPopupPanel}">
+        <g:VerticalPanel width="275px" height="200px">
+            <d:TransactionEditor ui:field="transactionEditor"/>
+            
+            <g:HTMLPanel height="29px" styleName="{resource.popupStyleCss.buttonContainer}">
+				<g:Button ui:field="cancel" text="Cancel"
+                          addStyleNames="{resource.buttonStyleCss.button} {resource.buttonStyleCss.medium} {resource.buttonStyleCss.gray}"/>
+				<g:Button ui:field="save" text="Save"
+                          addStyleNames="{resource.buttonStyleCss.button} {resource.buttonStyleCss.medium} {resource.buttonStyleCss.green}"/>
+			</g:HTMLPanel>
+        </g:VerticalPanel>
+    </g:PopupPanel>
+</ui:UiBinder>

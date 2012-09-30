@@ -1,0 +1,33 @@
+.cellListWidget { }
+
+.cellListEvenItem {
+	cursor: pointer;
+	zoom: 1;
+	padding: 6px;
+	color: #454545;
+	font-size: 14px;
+	margin-bottom: 8px;
+}
+
+.cellListOddItem {
+	cursor: pointer;
+	zoom: 1;
+	padding: 6px;
+	color: #454545;
+	font-size: 14px;
+	margin-bottom: 8px;
+}
+
+.cellListSelectedItem {
+	background-color: #555;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	background-image: none;
+	border-radius: 6px;
+	padding: 6px;
+	color: white;
+	height: auto;
+	font-weight: bold;
+	overflow: visible;
+	font-size: 14px;
+}

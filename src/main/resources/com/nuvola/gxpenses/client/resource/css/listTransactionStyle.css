@@ -1,0 +1,38 @@
+@external removeButton;
+
+.cellListWidget { }
+
+.cellListEvenItem {
+	padding: 8px;
+	background-color: #fff;
+	height: 45px;
+}
+
+.cellListOddItem {
+	padding: 8px;
+	background-color: #eee;
+	height: 45px;
+}
+
+.cellListOddItem .removeButton {
+	display: none;
+}
+
+.cellListEvenItem .removeButton {
+	display: none;
+}
+
+.cellListSelectedItem {
+	background: none;
+	background-color: #555;
+	height: 45px;
+}
+
+@sprite .cellListSelectedItem .removeButton {
+	gwt-image: "removeList";
+	display: block;
+	float: left;
+	width: 27px;
+	height: 27px;
+	margin-top: 8px;
+}

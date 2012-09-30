@@ -1,0 +1,239 @@
+package com.nuvola.gxpenses.client.web.application.transaction;
+
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.HasUiHandlers;
+import com.gwtplatform.mvp.client.Presenter;
+import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyStandard;
+import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
+import com.nuvola.gxpenses.client.event.PopupClosedEvent;
+import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
+import com.nuvola.gxpenses.client.gin.PageSize;
+import com.nuvola.gxpenses.client.place.NameTokens;
+import com.nuvola.gxpenses.client.resource.message.MessageBundle;
+import com.nuvola.gxpenses.client.rest.AccountService;
+import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.TransactionService;
+import com.nuvola.gxpenses.client.util.DateUtils;
+import com.nuvola.gxpenses.client.util.EmptyDisplay;
+import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
+import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
+import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
+import com.nuvola.gxpenses.client.web.application.transaction.popup.AddTransactionPresenter;
+import com.nuvola.gxpenses.client.web.application.transaction.widget.AccountSiderPresenter;
+import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.shared.dto.PagedData;
+import com.nuvola.gxpenses.shared.dto.TransactionFilter;
+import com.nuvola.gxpenses.shared.type.PeriodType;
+import com.nuvola.gxpenses.shared.type.TransactionType;
+import org.fusesource.restygwt.client.Method;
+
+import java.util.List;
+
+public class TransactionPresenter extends Presenter<TransactionPresenter.MyView, TransactionPresenter.MyProxy>
+        implements TransactionUiHandlers, AccountChangedEvent.AccountChangedHandler,
+                   TransactionFiltreChangedEvent.TransactionFilterChangedHandler,
+                   NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
+
+    public interface MyView extends View, EmptyDisplay, HasUiHandlers<TransactionUiHandlers> {
+        void setData(List<Transaction> data, Integer start, Integer totalCount);
+
+        void setAccountName(String accountName);
+
+        void setPeriod(String period);
+
+        void setTransactionTotal(Double total);
+
+        void showTransactionsPanel();
+
+        void hideTransactionsPanel();
+
+        void showNoTransactionsPanel();
+
+        void hideNoTransactionsPanel();
+
+        void switchAddTransactionStyle();
+
+        Boolean isEmptyVisible();
+    }
+
+    @ProxyStandard
+    @NameToken(NameTokens.transaction)
+    public interface MyProxy extends ProxyPlace<TransactionPresenter> {
+    }
+
+    private final TransactionService transactionService;
+    private final AccountService accountService;
+    private final MessageBundle messageBundle;
+    private final Integer defaultPageSize;
+
+    private final AccountSiderPresenter accountSiderPresenter;
+    private final AddTransactionPresenter addTransactionPresenter;
+
+    private Account selectedAccount;
+    private PeriodType selectedPeriodeFilter;
+    private TransactionType selectedTypeFilter;
+    private Integer paginationStart;
+
+    @Inject
+    public TransactionPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
+                                final TransactionService transactionService,
+                                final AccountService accountService,
+                                final MessageBundle messageBundle,
+                                final AccountSiderPresenter accountSiderPresenter,
+                                final AddTransactionPresenter addTransactionPresenter,
+                                @PageSize Integer defaultPageSize) {
+        super(eventBus, view, proxy);
+
+        this.transactionService = transactionService;
+        this.accountService = accountService;
+        this.messageBundle = messageBundle;
+        this.defaultPageSize = defaultPageSize;
+        this.accountSiderPresenter  = accountSiderPresenter;
+        this.addTransactionPresenter = addTransactionPresenter;
+
+        getView().setUiHandlers(this);
+    }
+
+    @Override
+    public void onPopupClosed(PopupClosedEvent event) {
+        getView().switchAddTransactionStyle();
+    }
+
+    @Override
+    public void onNoElementFound(NoElementFoundEvent event) {
+        if (event.getSize() == 0) {
+            if (!getView().isEmptyVisible()) {
+                getView().hideTransactionsPanel();
+            }
+            getView().setEmptyMessage(messageBundle.noAccounts());
+        } else {
+            getView().setEmptyMessage(messageBundle.noSelectedAccount());
+        }
+    }
+
+    @Override
+    public void onAccountChanged(AccountChangedEvent event) {
+        if(event.getAccount() == null) {
+            selectedAccount = null;
+            selectedPeriodeFilter = event.getPeriodeFilter();
+            selectedTypeFilter = event.getTypeFilter();
+
+            if(!getView().isEmptyVisible()) {
+                getView().hideTransactionsPanel();
+            }
+        } else {
+            selectedAccount = event.getAccount();
+            selectedPeriodeFilter = event.getPeriodeFilter();
+            selectedTypeFilter = event.getTypeFilter();
+            paginationStart = 0;
+
+            //Set the current Date
+            getView().setPeriod(DateUtils.getDateToDisplay(selectedPeriodeFilter));
+
+            //Reload transactions total amount and data
+            fireLoadTotalAmountTransactionRequest();
+            fireLoadTransactionDataRequest(0, defaultPageSize);
+
+            //Show the transaction Panel
+            if(getView().isEmptyVisible()) {
+                getView().showTransactionsPanel();
+            }
+
+            //Set up account name
+            getView().setAccountName(selectedAccount.getName());
+        }
+    }
+
+    @Override
+    public void onFilterChanged(TransactionFiltreChangedEvent event) {
+        selectedPeriodeFilter = event.getPeriodeFilter();
+        selectedTypeFilter = event.getTypeFilter();
+        paginationStart = 0;
+
+        //Set the current Date
+        getView().setPeriod(DateUtils.getDateToDisplay(selectedPeriodeFilter));
+
+        //Reload transactions total amount and data
+        fireLoadTotalAmountTransactionRequest();
+        fireLoadTransactionDataRequest(0, defaultPageSize);
+    }
+
+    @Override
+    public void loadTransactions(Integer start, Integer length) {
+        paginationStart = start;
+        Integer pageNumber = (start / length) + (start % length);
+        fireLoadTransactionDataRequest(pageNumber, length);
+    }
+
+    @Override
+    public void addNewTransaction(Widget relativeTo) {
+        addTransactionPresenter.setRelativeTo(relativeTo);
+        addTransactionPresenter.setSelectedAccount(selectedAccount);
+        addToPopupSlot(addTransactionPresenter, false);
+    }
+
+    @Override
+    public void removeTransaction(Transaction transaction) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    protected void revealInParent() {
+        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
+    }
+
+    @Override
+    protected void onBind() {
+        super.onBind();
+        SetVisibleSiderEvent.fire(this, accountSiderPresenter);
+
+        addRegisteredHandler(PopupClosedEvent.getType(), this);
+        addRegisteredHandler(NoElementFoundEvent.getType(), this);
+        addRegisteredHandler(AccountChangedEvent.getType(), this);
+        addRegisteredHandler(TransactionFiltreChangedEvent.getType(), this);
+    }
+
+    private void fireLoadTransactionDataRequest(Integer pageNumber, Integer length) {
+        TransactionFilter filter = new TransactionFilter();
+        filter.setAccountId(selectedAccount.getId());
+        filter.setTypeFilter(selectedTypeFilter);
+        filter.setPeriodFilter(selectedPeriodeFilter);
+        filter.setPageNumber(pageNumber);
+        filter.setLength(length);
+
+        transactionService.getTransactions(filter, new MethodCallBackImpl<PagedData<Transaction>>() {
+            @Override
+            public void onSuccess(Method method, PagedData<Transaction> result) {
+                getView().setData(result.getData(), result.getTotalElements(), paginationStart);
+
+                if(result.getData().size() > 0) {
+                    getView().hideNoTransactionsPanel();
+                } else {
+                    getView().showNoTransactionsPanel();
+                }
+            }
+        });
+    }
+
+    private void fireLoadTotalAmountTransactionRequest() {
+        TransactionFilter filter = new TransactionFilter();
+        filter.setAccountId(selectedAccount.getId());
+        filter.setTypeFilter(selectedTypeFilter);
+        filter.setPeriodFilter(selectedPeriodeFilter);
+
+        accountService.totalAmount(filter, new MethodCallBackImpl<Double>() {
+            @Override
+            public void onSuccess(Method method, Double totalAmount) {
+                getView().setTransactionTotal(totalAmount);
+            }
+        });
+    }
+
+}

@@ -3,7 +3,7 @@ package com.nuvola.gxpenses.shared.dto;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
-public class TransactionFilter {
+public class TransactionFilter extends PageRequest {
 
     private Long accountId;
     private TransactionType typeFilter;

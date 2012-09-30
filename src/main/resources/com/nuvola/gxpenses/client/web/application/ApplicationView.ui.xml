@@ -1,0 +1,62 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:f='urn:import:com.nuvola.gxpenses.client.web.application.ui'
+             xmlns:s='urn:import:com.nuvola.gxpenses.client.web.application.widget'>
+
+    <ui:image field='rootBack' src="../../resource/images/back.png"/>
+
+    <ui:style>
+        @sprite .root {
+            gwt-image: "rootBack";
+            background-repeat: repeat-x;
+            width: 100%;
+            height: 100%;
+            font-family: arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .mainContainer {
+            border-right: 1px dashed #bebebe;
+            min-width: 800px;
+        }
+
+        .siderContainer {
+            float: right;
+            width: 260px;
+            padding-left: 20px;
+        }
+    </ui:style>
+
+    <g:SimpleLayoutPanel>
+        <g:DockLayoutPanel unit='PX' styleName="{style.root}">
+            <!-- Main header of the application -->
+            <g:north size="64">
+                <g:HTMLPanel>
+                    <!-- Ajax Loader displayer -->
+                    <f:AjaxLoader ui:field="ajaxLoader"/>
+
+                    <!-- Global Message displayer -->
+                    <f:GlobalMessage ui:field="globalMessage"/>
+
+                    <g:SimplePanel ui:field="headerDisplay"/>
+                </g:HTMLPanel>
+            </g:north>
+
+            <!-- FooterView Mainly copyright -->
+            <g:south size="50">
+                <s:FooterView ui:field="footer"/>
+            </g:south>
+
+            <!-- Main content of the application -->
+            <g:center>
+                <!-- The Application content dislay -->
+                <g:SimpleLayoutPanel styleName='{style.mainContainer}' ui:field="mainDisplay"/>
+            </g:center>
+
+            <g:east size="300">
+                <!-- The Application sider display -->
+                <g:SimplePanel styleName='{style.siderContainer}' ui:field="siderDisplay"/>
+            </g:east>
+        </g:DockLayoutPanel>
+    </g:SimpleLayoutPanel>
+</ui:UiBinder>

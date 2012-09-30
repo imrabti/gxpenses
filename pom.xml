@@ -16,7 +16,6 @@
 
         <gwt.version>2.4.0</gwt.version>
         <gwt-maven-plugin.version>2.4.0</gwt-maven-plugin.version>
-        <arcbees-core.version>1.0-SNAPSHOT</arcbees-core.version>
         <gwtp.version>0.8-SNAPSHOT</gwtp.version>
         <guice.version>3.0</guice.version>
         <gin.version>1.5.0</gin.version>
@@ -27,6 +26,7 @@
         <spring.version>3.1.2.RELEASE</spring.version>
         <log4j.version>1.2.14</log4j.version>
         <jersey.version>1.13</jersey.version>
+        <restygwt.version>1.3</restygwt.version>
         <maven-surefire-plugin.version>2.6</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
         <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
@@ -169,12 +169,6 @@
 
         <!-- GWT-Platform dependencies -->
         <dependency>
-            <groupId>com.arcbees.core</groupId>
-            <artifactId>arcbees-core</artifactId>
-            <version>${arcbees-core.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.gwtplatform</groupId>
             <artifactId>gwtp-mvp-client</artifactId>
             <version>${gwtp.version}</version>
@@ -300,6 +294,13 @@
                     <artifactId>spring-context</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- RestGwt dependencies -->
+        <dependency>
+            <groupId>org.fusesource.restygwt</groupId>
+            <artifactId>restygwt</artifactId>
+            <version>${restygwt.version}</version>
         </dependency>
 
         <!-- Other dependencies -->
