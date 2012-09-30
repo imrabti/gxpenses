@@ -1,15 +1,24 @@
 package com.nuvola.gxpenses.shared.domaine;
 
+import com.nuvola.gxpenses.shared.dto.Dto;
 import com.nuvola.gxpenses.shared.type.CurrencyType;
 import com.nuvola.gxpenses.shared.type.PaginationType;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 @Entity
-public class User extends BaseEntity {
+@XmlRootElement
+public class User implements Dto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
     private String userName;
     private String email;
     private String password;
@@ -20,6 +29,14 @@ public class User extends BaseEntity {
     private Date dateCreation;
     @Enumerated
     private PaginationType pageSize;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;

@@ -3,6 +3,9 @@ package com.nuvola.gxpenses.shared.dto;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class TransactionFilter extends PageRequest {
 
     private Long accountId;

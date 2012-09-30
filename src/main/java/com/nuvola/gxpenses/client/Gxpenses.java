@@ -4,6 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 import com.nuvola.gxpenses.client.gin.ClientGinjector;
+import org.fusesource.restygwt.client.Defaults;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ public class Gxpenses implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
+        Defaults.setDateFormat(null);
         DelayedBindRegistry.bind(ginjector);
 
         ginjector.getResources().generalStyleCss().ensureInjected();

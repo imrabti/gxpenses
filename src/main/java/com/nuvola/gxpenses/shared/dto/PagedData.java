@@ -1,7 +1,9 @@
 package com.nuvola.gxpenses.shared.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
+@XmlRootElement
 public class PagedData<T> implements Dto {
 
     private List<T> data;

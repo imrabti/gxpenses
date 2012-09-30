@@ -1,15 +1,24 @@
 package com.nuvola.gxpenses.shared.domaine;
 
+import com.nuvola.gxpenses.shared.dto.Dto;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 @Entity
-public class Transaction extends BaseEntity {
+@XmlRootElement
+public class Transaction implements Dto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
     private String payee;
     @Enumerated
     private TransactionType type;
@@ -20,6 +29,14 @@ public class Transaction extends BaseEntity {
     private Account account;
     @ManyToOne
     private Transaction destTransaction;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getPayee() {
         return payee;

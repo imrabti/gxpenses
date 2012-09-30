@@ -1,20 +1,37 @@
 package com.nuvola.gxpenses.shared.domaine;
 
+import com.nuvola.gxpenses.shared.dto.Dto;
 import com.nuvola.gxpenses.shared.type.AccountType;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-public class Account extends BaseEntity {
+@XmlRootElement
+public class Account implements Dto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
     private String name;
     @Enumerated
     private AccountType type;
     private Double balance;
     @ManyToOne
     private User user;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

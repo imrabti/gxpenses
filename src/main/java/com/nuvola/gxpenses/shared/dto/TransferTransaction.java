@@ -1,5 +1,8 @@
 package com.nuvola.gxpenses.shared.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class TransferTransaction implements Dto  {
 
 	private Long sourceAccount;
