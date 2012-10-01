@@ -87,9 +87,9 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
         pagerPanel = new ShowMorePagerPanel(pageSize);
         transactionList = new CellList<Transaction>(transactionCellFactory.create(setupRemoveAction()), listResources);
-        transactionList.setPageSize(pageSize);
         transactionList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
         transactionList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+        transactionList.setPageSize(pageSize);
         pagerPanel.setDisplay(transactionList);
         dataProvider.addDataDisplay(transactionList);
 
@@ -219,7 +219,6 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     private void fetchData(HasData<Transaction> display) {
         Range range = display.getVisibleRange();
-        Integer pageNumber = (range.getStart() / range.getLength()) + (range.getStart() % range.getLength());
 
         if (getUiHandlers() != null) {
             getUiHandlers().loadTransactions(range.getStart(), range.getLength());

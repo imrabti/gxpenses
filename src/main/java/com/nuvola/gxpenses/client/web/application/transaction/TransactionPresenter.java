@@ -211,7 +211,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         transactionService.getTransactions(filter, new MethodCallBackImpl<PagedData<Transaction>>() {
             @Override
             public void onSuccess(Method method, PagedData<Transaction> result) {
-                getView().setData(result.getData(), result.getTotalElements(), paginationStart);
+                getView().setData(result.getData(), paginationStart, result.getTotalElements());
 
                 if(result.getData().size() > 0) {
                     getView().hideNoTransactionsPanel();

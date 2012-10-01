@@ -47,7 +47,8 @@ public class TransactionCell extends AbstractCell<Transaction> {
 	private final Template template;
     private final GxpensesRes resources;
 	private final Delegate<Transaction> delegate;
-    private final String currency;
+    private final NumberFormat numberFormat;
+    private final DateTimeFormat dateFormat;
 
 	private Transaction selectedTransaction;
 
@@ -59,8 +60,10 @@ public class TransactionCell extends AbstractCell<Transaction> {
 
         this.template = template;
         this.resources = resources;
-        this.currency = currency;
         this.delegate = delegate;
+
+        numberFormat = NumberFormat.getCurrencyFormat(currency);
+        dateFormat = DateTimeFormat.getFormat("LLL d yyyy");
 	}
 
 	@Override
@@ -82,41 +85,26 @@ public class TransactionCell extends AbstractCell<Transaction> {
 
 	@Override
 	public void render(Context context, Transaction value, SafeHtmlBuilder sb) {
-		NumberFormat numberFormat = NumberFormat.getCurrencyFormat(currency);
-		DateTimeFormat dateFormat = DateTimeFormat.getFormat("LLL d yyyy");
-
         if (value != null) {
-            String balance = (value.getType() == TransactionType.INCOME) ? numberFormat.format(value.getAmount()) :
-                numberFormat.format(-value.getAmount());
             SafeHtml safeDate = SafeHtmlUtils.fromString(dateFormat.format(value.getDate()));
             SafeHtml safePayee = SafeHtmlUtils.fromString(value.getPayee());
-            SafeHtml safeAmount = SafeHtmlUtils.fromString(balance);
+            SafeHtml safeAmount = getSafeAmount(value.getAmount(), value.getType());
 
             String dateStyle = resources.generalStyleCss().date();
             String payeeStyle = resources.generalStyleCss().payee();
-            String amountStyle = (value.getType() == TransactionType.INCOME) ?
-                    resources.generalStyleCss().amountIncomeTrans() : resources.generalStyleCss().amountExpenseTrans();
+            String tagStyle = resources.generalStyleCss().tag();
+            String amountStyle = getAmountStyle(value.getType());
 
             if(value == selectedTransaction) {
                 dateStyle = resources.generalStyleCss().dateWhite();
                 payeeStyle = resources.generalStyleCss().payeeWhite();
                 amountStyle = resources.generalStyleCss().amountWhite();
+                tagStyle = resources.generalStyleCss().tagWhite();
             }
 
             SafeHtmlBuilder tagsBuilder = new SafeHtmlBuilder();
             if(value.getTags() != null) {
-                SafeHtml safeTag;
-                List<String> tags = Arrays.asList(value.getTags().split(","));
-                String tagCss = resources.generalStyleCss().tag();
-
-                if(value == selectedTransaction) {
-                    tagCss = resources.generalStyleCss().tagWhite();
-                }
-
-                for(String tag : tags) {
-                    safeTag = SafeHtmlUtils.fromString(tag);
-                    tagsBuilder.append(template.tagTemplate(safeTag, tagCss));
-                }
+                renderTags(value.getTags(), tagStyle, tagsBuilder);
             }
 
             if(value.getTags() != null) {
@@ -128,4 +116,34 @@ public class TransactionCell extends AbstractCell<Transaction> {
             }
         }
 	}
+
+    private SafeHtml getSafeAmount(Double amount, TransactionType type) {
+        String balance;
+        if (type == TransactionType.EXPENSE) {
+            balance = numberFormat.format(amount);
+        } else {
+            balance = numberFormat.format(-amount);
+        }
+
+        return SafeHtmlUtils.fromString(balance);
+    }
+
+    private String getAmountStyle(TransactionType type) {
+        if (type == TransactionType.INCOME) {
+            return resources.generalStyleCss().amountIncomeTrans();
+        } else {
+            return resources.generalStyleCss().amountExpenseTrans();
+        }
+    }
+
+    private void renderTags(String value, String tagCss, SafeHtmlBuilder sb) {
+        SafeHtml safeTag;
+        List<String> tags = Arrays.asList(value.split(","));
+
+        for(String tag : tags) {
+            safeTag = SafeHtmlUtils.fromString(tag);
+            sb.append(template.tagTemplate(safeTag, tagCss));
+        }
+    }
+
 }
