@@ -32,6 +32,13 @@ public class TransactionResource {
         return Response.ok().build();
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response removeTransaction(@PathParam("id") Long id) {
+        transactionService.removeTransaction(id);
+        return Response.ok().build();
+    }
+
     @POST
     @Path("/transfer")
     public Response createTransfer(TransferTransaction transfer) {
@@ -44,13 +51,6 @@ public class TransactionResource {
     public PagedData<Transaction> getTransactions(TransactionFilter filter) {
         return transactionService.findByAccountAndDateAndType(filter.getAccountId(), filter.getPeriodFilter(),
                 filter.getTypeFilter(), filter.getPageNumber(), filter.getLength());
-    }
-
-    @DELETE
-    @Path("/{id}")
-    public Response removeTransaction(@PathParam("id") Long id) {
-        transactionService.removeTransaction(id);
-        return Response.ok().build();
     }
 
 }
