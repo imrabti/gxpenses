@@ -7,8 +7,10 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
+import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
 import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
@@ -38,17 +40,20 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     private final AccountService accountService;
     private final AddAccountPresenter addAccountPresenter;
     private final TransferTransactionPresenter transferTransactionPresenter;
+    private final MessageBundle messageBundle;
 
     private PeriodType currentPeriodType;
     private TransactionType currentTransactionType;
 
     @Inject
     public AccountSiderPresenter(EventBus eventBus, MyView view,
+                                 final MessageBundle messageBundle,
                                  final AccountService accountService,
                                  final AddAccountPresenter addAccountPresenter,
                                  final TransferTransactionPresenter transferTransactionPresenter) {
         super(eventBus, view);
 
+        this.messageBundle = messageBundle;
         this.accountService = accountService;
         this.addAccountPresenter = addAccountPresenter;
         this.transferTransactionPresenter = transferTransactionPresenter;
@@ -89,6 +94,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
                 @Override
                 public void onSuccess(Method method, Void aVoid) {
                     AccountChangedEvent.fire(this);
+                    GlobalMessageEvent.fire(this, messageBundle.accountRemoved());
                     fireLoadListAccounts();
                 }
             });

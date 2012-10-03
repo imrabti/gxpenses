@@ -19,7 +19,7 @@ import com.nuvola.gxpenses.client.rest.AccountService;
 import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.rest.UserService;
-import com.nuvola.gxpenses.client.util.GxpensesSuggestionListFactory;
+import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.web.GxpensesModule;
 import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestServiceProxy;
@@ -36,7 +36,7 @@ public class ClientModule extends AbstractPresenterModule {
         requestStaticInjection(MethodCallBackImpl.class);
 
         bind(BootStrapper.class).to(BootStrapperImpl.class).in(Singleton.class);
-		bind(GxpensesSuggestionListFactory.class).in(Singleton.class);
+		bind(SuggestionListFactory.class).in(Singleton.class);
 
 		bind(String.class).annotatedWith(Currency.class).toProvider(CurrencyProvider.class);
 		bind(Integer.class).annotatedWith(PageSize.class).toProvider(PageSizeProvider.class);

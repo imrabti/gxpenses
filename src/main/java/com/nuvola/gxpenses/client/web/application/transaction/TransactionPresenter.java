@@ -1,5 +1,6 @@
 package com.nuvola.gxpenses.client.web.application.transaction;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -10,6 +11,7 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
@@ -22,6 +24,7 @@ import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.util.DateUtils;
 import com.nuvola.gxpenses.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
+import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddTransactionPresenter;
@@ -39,6 +42,7 @@ import java.util.List;
 public class TransactionPresenter extends Presenter<TransactionPresenter.MyView, TransactionPresenter.MyProxy>
         implements TransactionUiHandlers, AccountChangedEvent.AccountChangedHandler,
                    TransactionFiltreChangedEvent.TransactionFilterChangedHandler,
+                   AccountBalanceChangedEvent.AccountBalanceChangedHandler,
                    NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
 
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<TransactionUiHandlers> {
@@ -166,6 +170,13 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     @Override
+    public void onAccountBalanceChanged(AccountBalanceChangedEvent event) {
+        Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
+        fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
+        fireLoadTotalAmountTransactionRequest();
+    }
+
+    @Override
     public void loadTransactions(Integer start, Integer length) {
         paginationStart = start;
         Integer pageNumber = (start / length) + (start % length);
@@ -181,7 +192,20 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     public void removeTransaction(Transaction transaction) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        Boolean decision = Window.confirm("Are you sure about removing this transaction ?");
+        if (decision) {
+            transactionService.removeTransaction(transaction.getId(), new MethodCallBackImpl<Void>() {
+                @Override
+                public void onSuccess(Method method, Void aVoid) {
+                    Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
+                    fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
+                    fireLoadTotalAmountTransactionRequest();
+
+                    AccountBalanceChangedEvent.fire(this);
+                    GlobalMessageEvent.fire(this, messageBundle.transactionRemoved());
+                }
+            });
+        }
     }
 
     @Override
@@ -198,6 +222,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         addRegisteredHandler(NoElementFoundEvent.getType(), this);
         addRegisteredHandler(AccountChangedEvent.getType(), this);
         addRegisteredHandler(TransactionFiltreChangedEvent.getType(), this);
+        addRegisteredHandler(AccountBalanceChangedEvent.getType(), this);
     }
 
     private void fireLoadTransactionDataRequest(Integer pageNumber, Integer length) {

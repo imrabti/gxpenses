@@ -1,6 +1,7 @@
 @external item, item-selected;
 
-.gwt-SuggestBox { }
+.gwt-SuggestBox {
+}
 
 .gwt-SuggestBoxPopup {
 	min-width: 200px;
@@ -12,6 +13,7 @@
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
 	border-radius: 8px;
+    z-index: 100;
 }
 
 .gwt-SuggestBoxPopup .item {

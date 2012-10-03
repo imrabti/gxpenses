@@ -1,6 +1,11 @@
-@external datePickerMonthSelector, datePickerMonth, datePickerPreviousButton, datePickerNextButton, datePickerDays,
- datePickerWeekdayLabel, datePickerWeekendLabel, datePickerDay, datePickerDayIsToday, datePickerDayIsWeekend, 
- datePickerDayIsFiller, datePickerDayIsValue, datePickerDayIsDisabled, datePickerDayIsHighlighted, datePickerDayIsValueAndHighlighted;
+@external dateBoxPopup, datePickerMonthSelector, datePickerMonth, datePickerPreviousButton, datePickerNextButton,
+ datePickerDays,datePickerWeekdayLabel, datePickerWeekendLabel, datePickerDay, datePickerDayIsToday,
+ datePickerDayIsWeekend, datePickerDayIsFiller, datePickerDayIsValue, datePickerDayIsDisabled,
+ datePickerDayIsHighlighted, datePickerDayIsValueAndHighlighted;
+
+.dateBoxPopup {
+    z-index: 100;
+}
 
 .gwt-DatePicker {
 	border: 1px solid #a1a1a1;
@@ -73,6 +78,8 @@
 	background-color: #e5fdd0;
 }
 
-.gwt-DatePicker .datePickerDayIsValueAndHighlighted {}
+.gwt-DatePicker .datePickerDayIsValueAndHighlighted {
+}
 
-.gwt-DatePicker .datePickerDayIsDisabled {}
+.gwt-DatePicker .datePickerDayIsDisabled {
+}
