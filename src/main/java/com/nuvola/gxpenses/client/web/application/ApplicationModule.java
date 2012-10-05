@@ -16,7 +16,7 @@ public class ApplicationModule extends AbstractPresenterModule {
         install(new TransactionModule());
 
         bind(new TypeLiteral<UiHandlersStrategy<HeaderUiHandlers>>() {})
-                .to(new TypeLiteral<SetterUiHandlersStrategy<HeaderUiHandlers>>() {});
+            .to(new TypeLiteral<SetterUiHandlersStrategy<HeaderUiHandlers>>() {});
 
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
                 ApplicationPresenter.MyProxy.class);

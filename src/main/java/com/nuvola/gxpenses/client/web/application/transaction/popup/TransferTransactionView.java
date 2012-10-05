@@ -16,13 +16,12 @@ import com.nuvola.gxpenses.shared.dto.TransferTransaction;
 
 public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTransactionUiHandlers>
         implements TransferTransactionPresenter.MyView {
-	
-	public interface Binder extends UiBinder<Widget, TransferTransactionView> {
+
+    public interface Binder extends UiBinder<Widget, TransferTransactionView> {
     }
 
     @UiField
     PopupPanel popup;
-
     @UiField(provided = true)
     TransferTransactionEditor transferTransactionEditor;
 
@@ -34,7 +33,7 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
         this.transferTransactionEditor = transferTransactionEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
-	}
+    }
 
     @UiHandler("popup")
     void onClose(CloseEvent<PopupPanel> closeEvent) {
@@ -44,7 +43,7 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
     @UiHandler("save")
     void onSave(ClickEvent event) {
         TransferTransaction transfer = transferTransactionEditor.get();
-        if(transfer != null) {
+        if (transfer != null) {
             getUiHandlers().saveTransfer(transfer);
             getUiHandlers().close();
             hide();
@@ -52,10 +51,10 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
     }
 
     @UiHandler("cancel")
-	void onCancel(ClickEvent event) {
+    void onCancel(ClickEvent event) {
         getUiHandlers().close();
-		hide();
-	}
+        hide();
+    }
 
     @Override
     public void showRelativeTo(Widget widget) {

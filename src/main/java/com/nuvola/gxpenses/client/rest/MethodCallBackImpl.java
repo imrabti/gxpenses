@@ -10,9 +10,9 @@ import org.fusesource.restygwt.client.MethodCallback;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class MethodCallBackImpl<T> implements MethodCallback<T>, HasHandlers {
+public abstract class MethodCallbackImpl<T> implements MethodCallback<T>, HasHandlers {
 
-    private static final Logger logger = Logger.getLogger(MethodCallBackImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(MethodCallbackImpl.class.getName());
 
     @Inject
     protected static EventBus eventBus;

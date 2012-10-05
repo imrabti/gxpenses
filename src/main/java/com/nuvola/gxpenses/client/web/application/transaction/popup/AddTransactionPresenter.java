@@ -9,7 +9,8 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Account;
@@ -27,6 +28,7 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
     }
 
     private final TransactionService transactionService;
+    private final SuggestionListFactory suggestionListFactory;
     private final MessageBundle messageBundle;
 
     private Widget relativeTo;
@@ -35,19 +37,24 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
     @Inject
     public AddTransactionPresenter(final EventBus eventBus, final MyView view,
                                    final TransactionService transactionService,
+                                   final SuggestionListFactory suggestionListFactory,
                                    final MessageBundle messageBundle) {
         super(eventBus, view);
         this.transactionService = transactionService;
+        this.suggestionListFactory = suggestionListFactory;
         this.messageBundle = messageBundle;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    public void saveTransaction(Transaction transaction) {
-        transactionService.createTransaction(transaction, new MethodCallBackImpl<Void>() {
+    public void saveTransaction(final Transaction transaction) {
+        transactionService.createTransaction(transaction, new MethodCallbackImpl<Void>() {
             @Override
             public void onSuccess(Method method, Void aVoid) {
+                suggestionListFactory.updatePayeeList(transaction.getPayee());
+                suggestionListFactory.updateTagsList(transaction.getTags());
+
                 GlobalMessageEvent.fire(this, messageBundle.transactionAdded());
                 AccountBalanceChangedEvent.fire(this);
             }

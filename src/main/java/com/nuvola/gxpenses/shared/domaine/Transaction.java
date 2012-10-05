@@ -2,6 +2,7 @@ package com.nuvola.gxpenses.shared.domaine;
 
 import com.nuvola.gxpenses.shared.dto.Dto;
 import com.nuvola.gxpenses.shared.type.TransactionType;
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -27,6 +28,7 @@ public class Transaction implements Dto {
     private String tags;
     @ManyToOne
     private Account account;
+    @JsonBackReference
     @ManyToOne
     private Transaction destTransaction;
 

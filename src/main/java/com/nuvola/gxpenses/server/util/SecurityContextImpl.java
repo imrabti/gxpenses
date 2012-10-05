@@ -21,7 +21,7 @@ public class SecurityContextImpl implements SecurityContext {
     @Override
     @Transactional
     public User getCurrentUser() {
-        User currentUser  = userRepos.findByUserName(USERNAME);
+        User currentUser = userRepos.findByUserName(USERNAME);
 
         if (currentUser == null) {
             currentUser = setupTestUser();

@@ -3,28 +3,29 @@ package com.nuvola.gxpenses.shared.type;
 
 public enum TransactionType {
 
-	ALL("All", "ALL"),
-	INCOME("Income", "IN"),
-	EXPENSE("Expense", "OUT");
-	
-	private final String label;
-	private final String value;
+    ALL("All", "ALL"),
+    INCOME("Income", "IN"),
+    EXPENSE("Expense", "OUT");
 
-	private TransactionType(String label, String value) {
-		this.label = label;
-		this.value = value;
-	}
+    private final String label;
+    private final String value;
 
-	public String getLabel() {
-		return label;
-	}
+    private TransactionType(String label, String value) {
+        this.label = label;
+        this.value = value;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public String getLabel() {
+        return label;
+    }
+
+    public String getValue() {
+        return value;
+    }
 
     @Override
     public String toString() {
         return label;
     }
+
 }

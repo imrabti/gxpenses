@@ -8,13 +8,13 @@
     <g:PopupPanel ui:field="popup" autoHideEnabled="true" stylePrimaryName="{resource.popupStyleCss.gwtPopupPanel}">
         <g:VerticalPanel width="275px" height="200px">
             <d:TransactionEditor ui:field="transactionEditor"/>
-            
+
             <g:HTMLPanel height="29px" styleName="{resource.popupStyleCss.buttonContainer}">
-				<g:Button ui:field="cancel" text="Cancel"
+                <g:Button ui:field="cancel" text="Cancel"
                           addStyleNames="{resource.buttonStyleCss.button} {resource.buttonStyleCss.medium} {resource.buttonStyleCss.gray}"/>
-				<g:Button ui:field="save" text="Save"
+                <g:Button ui:field="save" text="Save"
                           addStyleNames="{resource.buttonStyleCss.button} {resource.buttonStyleCss.medium} {resource.buttonStyleCss.green}"/>
-			</g:HTMLPanel>
+            </g:HTMLPanel>
         </g:VerticalPanel>
     </g:PopupPanel>
 </ui:UiBinder>

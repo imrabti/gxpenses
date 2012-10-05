@@ -1,38 +1,39 @@
 @external removeButton;
 
-.cellListWidget { }
+.cellListWidget {
+}
 
 .cellListEvenItem {
-	padding: 8px;
-	background-color: #fff;
-	height: 45px;
+    padding: 8px;
+    background-color: #fff;
+    height: 45px;
 }
 
 .cellListOddItem {
-	padding: 8px;
-	background-color: #eee;
-	height: 45px;
+    padding: 8px;
+    background-color: #eee;
+    height: 45px;
 }
 
 .cellListOddItem .removeButton {
-	display: none;
+    display: none;
 }
 
 .cellListEvenItem .removeButton {
-	display: none;
+    display: none;
 }
 
 .cellListSelectedItem {
-	background: none;
-	background-color: #555;
-	height: 45px;
+    background: none;
+    background-color: #555;
+    height: 45px;
 }
 
 @sprite .cellListSelectedItem .removeButton {
-	gwt-image: "removeList";
-	display: block;
-	float: left;
-	width: 27px;
-	height: 27px;
-	margin-top: 8px;
+    gwt-image: "removeList";
+    display: block;
+    float: left;
+    width: 27px;
+    height: 27px;
+    margin-top: 8px;
 }

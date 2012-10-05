@@ -17,6 +17,8 @@ import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.SelectionModel;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.gin.PageSize;
@@ -66,6 +68,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     private final ProvidesKey<Transaction> keyProvider;
     private final AsyncDataProvider<Transaction> dataProvider;
+    private final SelectionModel<Transaction> selectionModel;
     private final MessageBundle messageBundle;
     private final GxpensesRes resources;
 
@@ -84,12 +87,14 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
         keyProvider = setupKeyProvider();
         dataProvider = setupDataProvider();
+        selectionModel = new SingleSelectionModel<Transaction>(keyProvider);
 
         pagerPanel = new ShowMorePagerPanel(pageSize);
         transactionList = new CellList<Transaction>(transactionCellFactory.create(setupRemoveAction()), listResources);
         transactionList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
         transactionList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
         transactionList.setPageSize(pageSize);
+        transactionList.setSelectionModel(selectionModel);
         pagerPanel.setDisplay(transactionList);
         dataProvider.addDataDisplay(transactionList);
 
@@ -174,7 +179,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     @Override
     public void switchAddTransactionStyle() {
-        if(!addTransactionButton.getText().equals("")) {
+        if (!addTransactionButton.getText().equals("")) {
             addTransactionButton.setText("");
             addTransactionButton.removeStyleName(resources.buttonStyleCss().addButtonAltText());
             addTransactionButton.addStyleName(resources.buttonStyleCss().addButtonAlt());
@@ -183,7 +188,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     @UiHandler("addTransactionButton")
     void onAddTransaction(ClickEvent event) {
-        getUiHandlers().addNewTransaction((Widget)event.getSource());
+        getUiHandlers().addNewTransaction((Widget) event.getSource());
 
         addTransactionButton.setText(messageBundle.transactionNew());
         addTransactionButton.removeStyleName(resources.buttonStyleCss().settingButton());

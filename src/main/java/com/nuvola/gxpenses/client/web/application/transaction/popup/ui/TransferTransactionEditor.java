@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.rest.ValueListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountRenderer;
 import com.nuvola.gxpenses.shared.domaine.Account;
@@ -22,22 +23,22 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
             SimpleBeanEditorDriver<TransferTransaction, TransferTransactionEditor> {
     }
 
-    @UiField(provided=true)
-    @Ignore
+    @UiField(provided = true)
     ValueListBox<Account> sourceAccount;
-
-    @UiField(provided=true)
-    @Ignore
+    @UiField(provided = true)
     ValueListBox<Account> targetAccount;
-
     @UiField
     DoubleBox amount;
 
-    private TransferTransactionDriver driver;
+    private final ValueListFactory valueListFactory;
+    private final TransferTransactionDriver driver;
 
     @Inject
-    public TransferTransactionEditor(final Binder uiBinder, final TransferTransactionDriver driver) {
+    public TransferTransactionEditor(final Binder uiBinder, final TransferTransactionDriver driver,
+                                     final ValueListFactory valueListFactory) {
         this.driver = driver;
+        this.valueListFactory = valueListFactory;
+
         sourceAccount = new ValueListBox<Account>(new AccountRenderer());
         targetAccount = new ValueListBox<Account>(new AccountRenderer());
 
@@ -46,13 +47,16 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
     }
 
     public void edit(TransferTransaction transfertTransaction) {
+        sourceAccount.setAcceptableValues(valueListFactory.getListAccounts());
+        targetAccount.setAcceptableValues(valueListFactory.getListAccounts());
+
         amount.setFocus(true);
         driver.edit(transfertTransaction);
     }
 
     public TransferTransaction get() {
         TransferTransaction transfertTransaction = driver.flush();
-        if(driver.hasErrors()) {
+        if (driver.hasErrors()) {
             return null;
         } else {
             return transfertTransaction;

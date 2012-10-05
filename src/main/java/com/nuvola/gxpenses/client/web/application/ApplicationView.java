@@ -20,19 +20,14 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 
     @UiField
     SimplePanel headerDisplay;
-
     @UiField
     SimpleLayoutPanel mainDisplay;
-
     @UiField
     SimplePanel siderDisplay;
-
     @UiField(provided = true)
     FooterView footer;
-
     @UiField(provided = true)
     GlobalMessage globalMessage;
-
     @UiField(provided = true)
     AjaxLoader ajaxLoader;
 
@@ -51,9 +46,9 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
         if (content != null) {
             if (slot == ApplicationPresenter.TYPE_SetMainContent) {
                 mainDisplay.setWidget(content);
-            } else if(slot == ApplicationPresenter.TYPE_SetHeaderContent) {
+            } else if (slot == ApplicationPresenter.TYPE_SetHeaderContent) {
                 headerDisplay.setWidget(content);
-            } else if(slot == ApplicationPresenter.TYPE_SetSiderContent) {
+            } else if (slot == ApplicationPresenter.TYPE_SetSiderContent) {
                 siderDisplay.setWidget(content);
             }
         }
