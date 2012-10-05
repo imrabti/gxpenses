@@ -24,5 +24,5 @@ public interface UserService extends RestService {
 
     @PUT
     @Path("/user/tags")
-    void updateTags(List<String> tags, MethodCallBackImpl<Void> callBack);
+    void updateTags(List<String> tags, MethodCallbackImpl<Void> callBack);
 }

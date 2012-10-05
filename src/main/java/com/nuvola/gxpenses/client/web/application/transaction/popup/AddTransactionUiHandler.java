@@ -4,7 +4,7 @@ import com.gwtplatform.mvp.client.UiHandlers;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
 
 public interface AddTransactionUiHandler extends UiHandlers {
-    void saveTransaction(Transaction transaction);
+    void saveTransaction(final Transaction transaction);
 
     void close();
 }

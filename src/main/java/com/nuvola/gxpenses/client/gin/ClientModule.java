@@ -16,33 +16,35 @@ import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.GxpensesRes;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.rest.UserService;
-import com.nuvola.gxpenses.client.util.GxpensesSuggestionListFactory;
+import com.nuvola.gxpenses.client.rest.ValueListFactory;
 import com.nuvola.gxpenses.client.web.GxpensesModule;
 import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestServiceProxy;
 
 public class ClientModule extends AbstractPresenterModule {
 
-	@Override
-	protected void configure() {
+    @Override
+    protected void configure() {
         install(new DefaultModule(ClientPlaceManager.class));
         install(new GxpensesModule());
 
         bind(GxpensesRes.class).in(Singleton.class);
         bind(MessageBundle.class).in(Singleton.class);
-        requestStaticInjection(MethodCallBackImpl.class);
+        requestStaticInjection(MethodCallbackImpl.class);
 
         bind(BootStrapper.class).to(BootStrapperImpl.class).in(Singleton.class);
-		bind(GxpensesSuggestionListFactory.class).in(Singleton.class);
+        bind(SuggestionListFactory.class).in(Singleton.class);
+        bind(ValueListFactory.class).in(Singleton.class);
 
-		bind(String.class).annotatedWith(Currency.class).toProvider(CurrencyProvider.class);
-		bind(Integer.class).annotatedWith(PageSize.class).toProvider(PageSizeProvider.class);
+        bind(String.class).annotatedWith(Currency.class).toProvider(CurrencyProvider.class);
+        bind(Integer.class).annotatedWith(PageSize.class).toProvider(PageSizeProvider.class);
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.transaction);
         bindConstant().annotatedWith(Names.named("rest")).to("http://127.0.0.1:8888/rest");
-	}
+    }
 
     @Provides
     @Singleton

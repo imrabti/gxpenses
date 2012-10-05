@@ -7,33 +7,33 @@ import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 public class TransactionFiltreChangedEvent extends GwtEvent<TransactionFiltreChangedEvent.TransactionFilterChangedHandler> {
-	
-	public static Type<TransactionFilterChangedHandler> TYPE = new Type<TransactionFilterChangedHandler>();
-	
-	public interface TransactionFilterChangedHandler extends EventHandler {	
-		void onFilterChanged(TransactionFiltreChangedEvent event);
-	}	
-	
-	private PeriodType periodeFilter;
-	private TransactionType typeFilter;
 
-	public TransactionFiltreChangedEvent(PeriodType periodeFilter, TransactionType typeFilter) {
-		this.periodeFilter = periodeFilter;
-		this.typeFilter = typeFilter;
-	}	
+    public static Type<TransactionFilterChangedHandler> TYPE = new Type<TransactionFilterChangedHandler>();
 
-	public PeriodType getPeriodeFilter() {
-		return periodeFilter;
-	}
+    public interface TransactionFilterChangedHandler extends EventHandler {
+        void onFilterChanged(TransactionFiltreChangedEvent event);
+    }
 
-	public TransactionType getTypeFilter() {
-		return typeFilter;
-	}
+    private PeriodType periodeFilter;
+    private TransactionType typeFilter;
 
-	@Override
-	public Type<TransactionFilterChangedHandler> getAssociatedType() {
-		return TYPE;
-	}
+    public TransactionFiltreChangedEvent(PeriodType periodeFilter, TransactionType typeFilter) {
+        this.periodeFilter = periodeFilter;
+        this.typeFilter = typeFilter;
+    }
+
+    public PeriodType getPeriodeFilter() {
+        return periodeFilter;
+    }
+
+    public TransactionType getTypeFilter() {
+        return typeFilter;
+    }
+
+    @Override
+    public Type<TransactionFilterChangedHandler> getAssociatedType() {
+        return TYPE;
+    }
 
     public static Type<TransactionFilterChangedHandler> getType() {
         return TYPE;
@@ -43,9 +43,9 @@ public class TransactionFiltreChangedEvent extends GwtEvent<TransactionFiltreCha
         source.fireEvent(new TransactionFiltreChangedEvent(periodeFilter, typeFilter));
     }
 
-	@Override
-	protected void dispatch(TransactionFilterChangedHandler handler) {
-		handler.onFilterChanged(this);
-	}
+    @Override
+    protected void dispatch(TransactionFilterChangedHandler handler) {
+        handler.onFilterChanged(this);
+    }
 
 }

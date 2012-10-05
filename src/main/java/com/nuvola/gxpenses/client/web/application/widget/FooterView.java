@@ -7,12 +7,12 @@ import com.google.inject.Inject;
 
 public class FooterView extends Composite {
 
-	public interface Binder extends UiBinder<Widget, FooterView> {
-	}
+    public interface Binder extends UiBinder<Widget, FooterView> {
+    }
 
     @Inject
-	public FooterView(final Binder uiBinder) {
-		initWidget(uiBinder.createAndBindUi(this));
-	}
+    public FooterView(final Binder uiBinder) {
+        initWidget(uiBinder.createAndBindUi(this));
+    }
 
 }

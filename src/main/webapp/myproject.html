@@ -11,36 +11,37 @@
         @import url(http://fonts.googleapis.com/css?family=Architects+Daughter&v2);
 
         .ball {
-            background-color: rgba(0,0,0,0);
-            border:5px solid rgba(124,183,47,0.9);
-            opacity:.9;
-            border-top:5px solid rgba(0,0,0,0);
-            border-left:5px solid rgba(0,0,0,0);
-            border-radius:50px;
+            background-color: rgba(0, 0, 0, 0);
+            border: 5px solid rgba(124, 183, 47, 0.9);
+            opacity: .9;
+            border-top: 5px solid rgba(0, 0, 0, 0);
+            border-left: 5px solid rgba(0, 0, 0, 0);
+            border-radius: 50px;
             box-shadow: 0 0 35px #b6e970;
-            width:50px;
-            height:50px;
-            margin:0 auto;
-            -moz-animation:spin .8s infinite linear;
-            -webkit-animation:spin .8s infinite linear;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+            -moz-animation: spin .8s infinite linear;
+            -webkit-animation: spin .8s infinite linear;
         }
 
         .ball1 {
-            background-color: rgba(0,0,0,0);
-            border:5px solid rgba(78,125,14,0.9);
-            opacity:.9;
-            border-top:5px solid rgba(0,0,0,0);
-            border-left:5px solid rgba(0,0,0,0);
-            border-radius:50px;
+            background-color: rgba(0, 0, 0, 0);
+            border: 5px solid rgba(78, 125, 14, 0.9);
+            opacity: .9;
+            border-top: 5px solid rgba(0, 0, 0, 0);
+            border-left: 5px solid rgba(0, 0, 0, 0);
+            border-radius: 50px;
             box-shadow: 0 0 15px #b6e970;
-            width:30px;
-            height:30px;
-            margin:0 auto;
-            position:relative;
-            top:-50px;
-            -moz-animation:spinoff .8s infinite linear;
-            -webkit-animation:spinoff .8s infinite linear;
+            width: 30px;
+            height: 30px;
+            margin: 0 auto;
+            position: relative;
+            top: -50px;
+            -moz-animation: spinoff .8s infinite linear;
+            -webkit-animation: spinoff .8s infinite linear;
         }
+
         @-moz-keyframes spin {
 			0% { -moz-transform:rotate(0deg); }
 			100% { -moz-transform:rotate(360deg); }
@@ -61,7 +62,8 @@
 </head>
 
 <body style="-webkit-text-size-adjust: none; background: url(static/images/back.png) repeat-x;">
-<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+        style="position: absolute; width: 0; height: 0; border: 0"></iframe>
 
 <div id="loading" style="margin-top: 20px;">
     <div class="ball"></div>

@@ -10,7 +10,7 @@ import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.type.AccountType;
@@ -45,7 +45,7 @@ public class AddAccountPresenter extends PresenterWidget<AddAccountPresenter.MyV
 
     @Override
     public void saveAccount(Account account) {
-        accountService.createAccount(account, new MethodCallBackImpl<Void>() {
+        accountService.createAccount(account, new MethodCallbackImpl<Void>() {
             @Override
             public void onSuccess(Method method, Void aVoid) {
                 GlobalMessageEvent.fire(this, messageBundle.accountAdded());

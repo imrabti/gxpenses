@@ -9,7 +9,7 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.shared.dto.TransferTransaction;
@@ -42,7 +42,7 @@ public class TransferTransactionPresenter extends PresenterWidget<TransferTransa
 
     @Override
     public void saveTransfer(TransferTransaction transferTransaction) {
-        transactionService.createTransfer(transferTransaction, new MethodCallBackImpl() {
+        transactionService.createTransfer(transferTransaction, new MethodCallbackImpl() {
             @Override
             public void onSuccess(Method method, Object o) {
                 GlobalMessageEvent.fire(this, messageBundle.transfertAdded());

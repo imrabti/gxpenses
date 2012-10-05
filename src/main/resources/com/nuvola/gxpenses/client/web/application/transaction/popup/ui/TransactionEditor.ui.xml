@@ -28,7 +28,8 @@
                     <g:Label text="Tags" styleName="{resource.generalStyleCss.label}"/>
                 </g:customCell>
                 <g:customCell>
-                    <f:MultipleSuggestBox ui:field="tags" width="200px" styleName="{resource.generalStyleCss.textInput}"/>
+                    <f:MultipleSuggestBox ui:field="tags" width="200px"
+                                          styleName="{resource.generalStyleCss.textInput}"/>
                 </g:customCell>
             </g:row>
             <g:row>
@@ -44,7 +45,7 @@
                     <g:Label text="Amount" styleName="{resource.generalStyleCss.label}"/>
                 </g:customCell>
                 <g:customCell>
-                    <g:DoubleBox ui:field="amount" width="150px"  styleName="{resource.generalStyleCss.textInput}"/>
+                    <g:DoubleBox ui:field="amount" width="150px" styleName="{resource.generalStyleCss.textInput}"/>
                 </g:customCell>
             </g:row>
         </g:Grid>

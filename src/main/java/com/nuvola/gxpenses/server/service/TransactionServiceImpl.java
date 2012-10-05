@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Service
 @Transactional
@@ -74,9 +73,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void createNewTransferTransaction(TransferTransaction transfer) {
         if ((transfer.getSourceAccount() != null) && (transfer.getTargetAccount() != null)) {
-            if(!(transfer.getSourceAccount().equals(transfer.getTargetAccount()) && (transfer.getAmount() > 0d))) {
-                Account sourceAccount = accountRepos.findOne(transfer.getSourceAccount());
-                Account destinationAccount = accountRepos.findOne(transfer.getTargetAccount());
+            if (!(transfer.getSourceAccount().equals(transfer.getTargetAccount()) && (transfer.getAmount() > 0d))) {
+                Account sourceAccount = accountRepos.findOne(transfer.getSourceAccount().getId());
+                Account destinationAccount = accountRepos.findOne(transfer.getTargetAccount().getId());
                 String payeeStr = "Transfert from " + sourceAccount.getName() + " to " + destinationAccount.getName();
 
                 Transaction sourceTrans = new Transaction();
@@ -98,8 +97,8 @@ public class TransactionServiceImpl implements TransactionService {
                 sourceTrans.setDestTransaction(destTrans);
                 destTrans.setDestTransaction(sourceTrans);
 
-                accountRepos.updateAccountBalance(transfer.getSourceAccount(), -1, transfer.getAmount());
-                accountRepos.updateAccountBalance(transfer.getTargetAccount(), 1, transfer.getAmount());
+                accountRepos.updateAccountBalance(transfer.getSourceAccount().getId(), -1, transfer.getAmount());
+                accountRepos.updateAccountBalance(transfer.getTargetAccount().getId(), 1, transfer.getAmount());
             }
         }
     }
@@ -107,7 +106,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional(readOnly = true)
     public PagedData<Transaction> findByAccountAndDateAndType(Long accountId, PeriodType periodFilter,
-                                                         TransactionType type, Integer pageNumber, Integer length) {
+                                                              TransactionType type, Integer pageNumber, Integer length) {
         Date startDate = DateUtils.getStartDate(periodFilter, new Date());
         Date endDate = DateUtils.getEndDate(periodFilter, new Date());
         PageRequest page = new PageRequest(pageNumber, length, new Sort(Sort.Direction.DESC, "date"));
@@ -120,7 +119,7 @@ public class TransactionServiceImpl implements TransactionService {
                     type, page);
         }
 
-        return new PagedData<Transaction>(transactions.getContent(), (int)transactions.getTotalElements());
+        return new PagedData<Transaction>(transactions.getContent(), (int) transactions.getTotalElements());
     }
 
     private void updateAccountBalanceInvert(Transaction transaction) {

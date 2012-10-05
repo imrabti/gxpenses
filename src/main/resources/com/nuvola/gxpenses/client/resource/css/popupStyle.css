@@ -1,18 +1,18 @@
 @sprite .gwt-PopupPanel {
-	gwt-image: "popupBack";
-	background-color: #fff;
-	padding: 10px;
-	border: 1px solid #a0a0a0;
-	height: auto;
-	z-index: 100;
+    gwt-image: "popupBack";
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #a0a0a0;
+    height: auto;
+    z-index: 100;
 }
 
 .buttonContainer {
-	text-align: right;
+    text-align: right;
 }
 
 .buttonContainer button {
-	display: inline-block;
-	margin-right: 5px;
-	min-width: 60px;
+    display: inline-block;
+    margin-right: 5px;
+    min-width: 60px;
 }

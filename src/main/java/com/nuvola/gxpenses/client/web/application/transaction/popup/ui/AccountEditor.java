@@ -27,7 +27,7 @@ public class AccountEditor extends Composite implements EditorView<Account> {
     @UiField
     TextBox name;
 
-    @UiField(provided=true)
+    @UiField(provided = true)
     ValueListBox<AccountType> type;
 
     @UiField
@@ -55,7 +55,7 @@ public class AccountEditor extends Composite implements EditorView<Account> {
 
     public Account get() {
         Account account = driver.flush();
-        if(driver.hasErrors()) {
+        if (driver.hasErrors()) {
             return null;
         } else {
             return account;

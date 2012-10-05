@@ -25,7 +25,7 @@ public class GxpensesPresenter extends Presenter<GxpensesPresenter.MyView, Gxpen
 
     @Inject
     public GxpensesPresenter(final EventBus eventBus, final MyView view,
-                                final MyProxy proxy) {
+                             final MyProxy proxy) {
         super(eventBus, view, proxy);
     }
 

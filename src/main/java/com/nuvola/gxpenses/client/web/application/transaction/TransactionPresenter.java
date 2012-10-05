@@ -1,5 +1,6 @@
 package com.nuvola.gxpenses.client.web.application.transaction;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -10,6 +11,7 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
@@ -17,11 +19,12 @@ import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.util.DateUtils;
 import com.nuvola.gxpenses.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
+import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddTransactionPresenter;
@@ -38,8 +41,9 @@ import java.util.List;
 
 public class TransactionPresenter extends Presenter<TransactionPresenter.MyView, TransactionPresenter.MyProxy>
         implements TransactionUiHandlers, AccountChangedEvent.AccountChangedHandler,
-                   TransactionFiltreChangedEvent.TransactionFilterChangedHandler,
-                   NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
+        TransactionFiltreChangedEvent.TransactionFilterChangedHandler,
+        AccountBalanceChangedEvent.AccountBalanceChangedHandler,
+        NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
 
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<TransactionUiHandlers> {
         void setData(List<Transaction> data, Integer start, Integer totalCount);
@@ -95,7 +99,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         this.accountService = accountService;
         this.messageBundle = messageBundle;
         this.defaultPageSize = defaultPageSize;
-        this.accountSiderPresenter  = accountSiderPresenter;
+        this.accountSiderPresenter = accountSiderPresenter;
         this.addTransactionPresenter = addTransactionPresenter;
 
         getView().setUiHandlers(this);
@@ -120,12 +124,12 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     public void onAccountChanged(AccountChangedEvent event) {
-        if(event.getAccount() == null) {
+        if (event.getAccount() == null) {
             selectedAccount = null;
             selectedPeriodeFilter = event.getPeriodeFilter();
             selectedTypeFilter = event.getTypeFilter();
 
-            if(!getView().isEmptyVisible()) {
+            if (!getView().isEmptyVisible()) {
                 getView().hideTransactionsPanel();
             }
         } else {
@@ -142,7 +146,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
             fireLoadTransactionDataRequest(0, defaultPageSize);
 
             //Show the transaction Panel
-            if(getView().isEmptyVisible()) {
+            if (getView().isEmptyVisible()) {
                 getView().showTransactionsPanel();
             }
 
@@ -166,6 +170,13 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     @Override
+    public void onAccountBalanceChanged(AccountBalanceChangedEvent event) {
+        Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
+        fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
+        fireLoadTotalAmountTransactionRequest();
+    }
+
+    @Override
     public void loadTransactions(Integer start, Integer length) {
         paginationStart = start;
         Integer pageNumber = (start / length) + (start % length);
@@ -181,7 +192,20 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     public void removeTransaction(Transaction transaction) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        Boolean decision = Window.confirm("Are you sure about removing this transaction ?");
+        if (decision) {
+            transactionService.removeTransaction(transaction.getId(), new MethodCallbackImpl<Void>() {
+                @Override
+                public void onSuccess(Method method, Void aVoid) {
+                    Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
+                    fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
+                    fireLoadTotalAmountTransactionRequest();
+
+                    AccountBalanceChangedEvent.fire(this);
+                    GlobalMessageEvent.fire(this, messageBundle.transactionRemoved());
+                }
+            });
+        }
     }
 
     @Override
@@ -198,6 +222,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         addRegisteredHandler(NoElementFoundEvent.getType(), this);
         addRegisteredHandler(AccountChangedEvent.getType(), this);
         addRegisteredHandler(TransactionFiltreChangedEvent.getType(), this);
+        addRegisteredHandler(AccountBalanceChangedEvent.getType(), this);
     }
 
     private void fireLoadTransactionDataRequest(Integer pageNumber, Integer length) {
@@ -208,12 +233,12 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         filter.setPageNumber(pageNumber);
         filter.setLength(length);
 
-        transactionService.getTransactions(filter, new MethodCallBackImpl<PagedData<Transaction>>() {
+        transactionService.getTransactions(filter, new MethodCallbackImpl<PagedData<Transaction>>() {
             @Override
             public void onSuccess(Method method, PagedData<Transaction> result) {
                 getView().setData(result.getData(), paginationStart, result.getTotalElements());
 
-                if(result.getData().size() > 0) {
+                if (result.getData().size() > 0) {
                     getView().hideNoTransactionsPanel();
                 } else {
                     getView().showNoTransactionsPanel();
@@ -228,7 +253,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         filter.setTypeFilter(selectedTypeFilter);
         filter.setPeriodFilter(selectedPeriodeFilter);
 
-        accountService.totalAmount(filter, new MethodCallBackImpl<Double>() {
+        accountService.totalAmount(filter, new MethodCallbackImpl<Double>() {
             @Override
             public void onSuccess(Method method, Double totalAmount) {
                 getView().setTransactionTotal(totalAmount);

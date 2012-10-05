@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.ui.MultipleSuggestBox;
@@ -32,25 +33,24 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
 
     @UiField(provided = true)
     SuggestBox payee;
-
     @UiField(provided = true)
     ValueListBox<TransactionType> type;
-
     @UiField(provided = true)
     MultipleSuggestBox tags;
-
     @UiField
     DateBox date;
-
     @UiField
     DoubleBox amount;
 
     private final TransactionDriver driver;
+    private final SuggestionListFactory suggestionListFactory;
 
     @Inject
     public TransactionEditor(final Binder uiBinder, final TransactionDriver driver,
+                             final SuggestionListFactory suggestionListFactory,
                              final GxpensesRes resources) {
         this.driver = driver;
+        this.suggestionListFactory = suggestionListFactory;
 
         // Initialize ValusListBox elements
         payee = new SuggestBox(new MultiWordSuggestOracle());
@@ -73,16 +73,29 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
     }
 
     public void edit(Transaction transaction) {
+        initSuggestionList();
         payee.setFocus(true);
         driver.edit(transaction);
     }
 
     public Transaction get() {
         Transaction transaction = driver.flush();
-        if(driver.hasErrors()) {
+        if (driver.hasErrors()) {
             return null;
         } else {
             return transaction;
+        }
+    }
+
+    private void initSuggestionList() {
+        ((MultiWordSuggestOracle) payee.getSuggestOracle()).clear();
+        ((MultiWordSuggestOracle) tags.getSuggestOracle()).clear();
+
+        if (suggestionListFactory.getListPayee() != null && !suggestionListFactory.getListPayee().isEmpty()) {
+            ((MultiWordSuggestOracle) payee.getSuggestOracle()).addAll(suggestionListFactory.getListPayee());
+        }
+        if (suggestionListFactory.getListTags() != null && !suggestionListFactory.getListTags().isEmpty()) {
+            ((MultiWordSuggestOracle) tags.getSuggestOracle()).addAll(suggestionListFactory.getListTags());
         }
     }
 
