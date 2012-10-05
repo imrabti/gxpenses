@@ -25,15 +25,15 @@ public class TransactionModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         bind(new TypeLiteral<UiHandlersStrategy<AccountSiderUiHandlers>>() {})
-                .to(new TypeLiteral<SetterUiHandlersStrategy<AccountSiderUiHandlers>>() {});
+            .to(new TypeLiteral<SetterUiHandlersStrategy<AccountSiderUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<TransactionUiHandlers>>() {})
-                .to(new TypeLiteral<SetterUiHandlersStrategy<TransactionUiHandlers>>() {});
+            .to(new TypeLiteral<SetterUiHandlersStrategy<TransactionUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<AddAccountUiHandlers>>() {})
-                .to(new TypeLiteral<SetterUiHandlersStrategy<AddAccountUiHandlers>>() {});
+            .to(new TypeLiteral<SetterUiHandlersStrategy<AddAccountUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<TransferTransactionUiHandlers>>() {})
-                .to(new TypeLiteral<SetterUiHandlersStrategy<TransferTransactionUiHandlers>>() {});
+            .to(new TypeLiteral<SetterUiHandlersStrategy<TransferTransactionUiHandlers>>() {});
         bind(new TypeLiteral<UiHandlersStrategy<AddTransactionUiHandler>>() {})
-                .to(new TypeLiteral<SetterUiHandlersStrategy<AddTransactionUiHandler>>() {});
+            .to(new TypeLiteral<SetterUiHandlersStrategy<AddTransactionUiHandler>>() {});
 
         bindPresenter(TransactionPresenter.class, TransactionPresenter.MyView.class,
                 TransactionView.class, TransactionPresenter.MyProxy.class);

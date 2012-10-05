@@ -41,9 +41,9 @@ import java.util.List;
 
 public class TransactionPresenter extends Presenter<TransactionPresenter.MyView, TransactionPresenter.MyProxy>
         implements TransactionUiHandlers, AccountChangedEvent.AccountChangedHandler,
-                   TransactionFiltreChangedEvent.TransactionFilterChangedHandler,
-                   AccountBalanceChangedEvent.AccountBalanceChangedHandler,
-                   NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
+        TransactionFiltreChangedEvent.TransactionFilterChangedHandler,
+        AccountBalanceChangedEvent.AccountBalanceChangedHandler,
+        NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
 
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<TransactionUiHandlers> {
         void setData(List<Transaction> data, Integer start, Integer totalCount);
@@ -99,7 +99,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         this.accountService = accountService;
         this.messageBundle = messageBundle;
         this.defaultPageSize = defaultPageSize;
-        this.accountSiderPresenter  = accountSiderPresenter;
+        this.accountSiderPresenter = accountSiderPresenter;
         this.addTransactionPresenter = addTransactionPresenter;
 
         getView().setUiHandlers(this);
@@ -124,12 +124,12 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     public void onAccountChanged(AccountChangedEvent event) {
-        if(event.getAccount() == null) {
+        if (event.getAccount() == null) {
             selectedAccount = null;
             selectedPeriodeFilter = event.getPeriodeFilter();
             selectedTypeFilter = event.getTypeFilter();
 
-            if(!getView().isEmptyVisible()) {
+            if (!getView().isEmptyVisible()) {
                 getView().hideTransactionsPanel();
             }
         } else {
@@ -146,7 +146,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
             fireLoadTransactionDataRequest(0, defaultPageSize);
 
             //Show the transaction Panel
-            if(getView().isEmptyVisible()) {
+            if (getView().isEmptyVisible()) {
                 getView().showTransactionsPanel();
             }
 
@@ -238,7 +238,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
             public void onSuccess(Method method, PagedData<Transaction> result) {
                 getView().setData(result.getData(), paginationStart, result.getTotalElements());
 
-                if(result.getData().size() > 0) {
+                if (result.getData().size() > 0) {
                     getView().hideNoTransactionsPanel();
                 } else {
                     getView().showNoTransactionsPanel();

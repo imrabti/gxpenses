@@ -23,9 +23,9 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
             SimpleBeanEditorDriver<TransferTransaction, TransferTransactionEditor> {
     }
 
-    @UiField(provided=true)
+    @UiField(provided = true)
     ValueListBox<Account> sourceAccount;
-    @UiField(provided=true)
+    @UiField(provided = true)
     ValueListBox<Account> targetAccount;
     @UiField
     DoubleBox amount;
@@ -56,7 +56,7 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
 
     public TransferTransaction get() {
         TransferTransaction transfertTransaction = driver.flush();
-        if(driver.hasErrors()) {
+        if (driver.hasErrors()) {
             return null;
         } else {
             return transfertTransaction;

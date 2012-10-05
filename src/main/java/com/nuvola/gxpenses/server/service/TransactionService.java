@@ -6,8 +6,6 @@ import com.nuvola.gxpenses.shared.dto.TransferTransaction;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
-import java.util.List;
-
 public interface TransactionService {
     public void createNewTransaction(Transaction transaction);
 

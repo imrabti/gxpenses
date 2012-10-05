@@ -33,31 +33,27 @@ import java.util.List;
 public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
         implements AccountSiderPresenter.MyView {
 
-	public interface Binder extends UiBinder<Widget, AccountSiderView> {
+    public interface Binder extends UiBinder<Widget, AccountSiderView> {
     }
 
-	@UiField(provided=true) 
-	ValueListBox<PeriodType> periodType;
-	
-	@UiField(provided=true) 
-	ValueListBox<TransactionType> transactionType;
-	
-	@UiField(provided=true) 
-	CellList<Account> accountList;
-	
-	@UiField
-	Button addNew;
-	
-	@UiField
-	Button transfert;
+    @UiField(provided = true)
+    ValueListBox<PeriodType> periodType;
+    @UiField(provided = true)
+    ValueListBox<TransactionType> transactionType;
+    @UiField(provided = true)
+    CellList<Account> accountList;
+    @UiField
+    Button addNew;
+    @UiField
+    Button transfer;
 
     private final ProvidesKey<Account> keyProvider;
     private final ListDataProvider<Account> dataProvider;
     private final SingleSelectionModel<Account> selectionModel;
     private final GxpensesRes resources;
-	
-	@Inject
-	public AccountSiderView(final Binder uiBinder,
+
+    @Inject
+    public AccountSiderView(final Binder uiBinder,
                             final UiHandlersStrategy<AccountSiderUiHandlers> uiHandlers,
                             final AccountCellFactory accountCellFactory,
                             final GxpensesListStyle listResources,
@@ -71,24 +67,24 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
 
         periodType = new ValueListBox<PeriodType>(new EnumRenderer<PeriodType>());
         transactionType = new ValueListBox<TransactionType>(new EnumRenderer<TransactionType>());
-		accountList = new CellList<Account>(accountCellFactory.create(setupRemoveAction()), listResources);
+        accountList = new CellList<Account>(accountCellFactory.create(setupRemoveAction()), listResources);
         selectionModel = new SingleSelectionModel<Account>(keyProvider);
-		
-		//Initialize ValueListBox elements
-		periodType.setValue(PeriodType.THIS_MONTH);
-		transactionType.setValue(TransactionType.ALL);
-		periodType.setAcceptableValues(Arrays.asList(PeriodType.values()));
-		transactionType.setAcceptableValues(Arrays.asList(TransactionType.values()));
+
+        //Initialize ValueListBox elements
+        periodType.setValue(PeriodType.THIS_MONTH);
+        transactionType.setValue(TransactionType.ALL);
+        periodType.setAcceptableValues(Arrays.asList(PeriodType.values()));
+        transactionType.setAcceptableValues(Arrays.asList(TransactionType.values()));
 
         //Init The UI Binder
         initWidget(uiBinder.createAndBindUi(this));
-		
-		//Set up CSS Style Classes
-		addNew.setStylePrimaryName(resources.buttonStyleCss().button());
-		addNew.setStyleName(resources.buttonStyleCss().medium(), true);
-		addNew.setStyleName(resources.buttonStyleCss().gray(), true);
 
-		accountList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.DISABLED);
+        //Set up CSS Style Classes
+        addNew.setStylePrimaryName(resources.buttonStyleCss().button());
+        addNew.setStyleName(resources.buttonStyleCss().medium(), true);
+        addNew.setStyleName(resources.buttonStyleCss().gray(), true);
+
+        accountList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.DISABLED);
         accountList.setSelectionModel(selectionModel);
         dataProvider.addDataDisplay(accountList);
 
@@ -98,7 +94,7 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
                 getUiHandlers().accountSelected(selectionModel.getSelectedObject());
             }
         });
-	}
+    }
 
     @Override
     public void setData(List<Account> accounts) {
@@ -106,33 +102,33 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
         dataProvider.getList().addAll(accounts);
         dataProvider.refresh();
     }
-	
-	@Override
-	public void showTransferButton(Boolean visible) {
-		transfert.setVisible(visible);
-	}
+
+    @Override
+    public void showTransferButton(Boolean visible) {
+        transfer.setVisible(visible);
+    }
 
     @Override
     public void switchTransferStyle() {
-        if(!transfert.getText().equals("")) {
-            transfert.setText("");
-            transfert.removeStyleName(resources.buttonStyleCss().transfertButtonText());
-            transfert.addStyleName(resources.buttonStyleCss().transfertButton());
+        if (!transfer.getText().equals("")) {
+            transfer.setText("");
+            transfer.removeStyleName(resources.buttonStyleCss().transfertButtonText());
+            transfer.addStyleName(resources.buttonStyleCss().transfertButton());
         }
     }
 
     @UiHandler("addNew")
     void onAddAccount(ClickEvent event) {
-        getUiHandlers().addNewAccount((Widget)event.getSource());
+        getUiHandlers().addNewAccount((Widget) event.getSource());
     }
 
-    @UiHandler("transfert")
-    void onTransfert(ClickEvent event) {
-        getUiHandlers().addNewTransfert((Widget)event.getSource());
+    @UiHandler("transfer")
+    void onTransfer(ClickEvent event) {
+        getUiHandlers().addNewTransfert((Widget) event.getSource());
 
-        transfert.removeStyleName(resources.buttonStyleCss().transfertButton());
-        transfert.addStyleName(resources.buttonStyleCss().transfertButtonText());
-        transfert.setText("Transfert");
+        transfer.removeStyleName(resources.buttonStyleCss().transfertButton());
+        transfer.addStyleName(resources.buttonStyleCss().transfertButtonText());
+        transfer.setText("Transfer");
     }
 
     @UiHandler("periodType")

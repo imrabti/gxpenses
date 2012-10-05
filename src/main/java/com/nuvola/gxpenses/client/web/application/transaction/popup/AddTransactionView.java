@@ -26,14 +26,14 @@ public class AddTransactionView extends PopupViewWithUiHandlers<AddTransactionUi
     TransactionEditor transactionEditor;
 
     @Inject
-	public AddTransactionView(final EventBus eventBus, final Binder uiBinder,
+    public AddTransactionView(final EventBus eventBus, final Binder uiBinder,
                               final UiHandlersStrategy<AddTransactionUiHandler> uiHandlersStrategy,
                               final TransactionEditor transactionEditor) {
         super(eventBus, uiHandlersStrategy);
         this.transactionEditor = transactionEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
-	}
+    }
 
     @UiHandler("popup")
     void onClose(CloseEvent<PopupPanel> closeEvent) {
@@ -43,18 +43,18 @@ public class AddTransactionView extends PopupViewWithUiHandlers<AddTransactionUi
     @UiHandler("save")
     void onSave(ClickEvent event) {
         Transaction transaction = transactionEditor.get();
-        if(transaction != null) {
+        if (transaction != null) {
             getUiHandlers().saveTransaction(transaction);
             getUiHandlers().close();
             hide();
         }
     }
-	
-	@UiHandler("cancel")
-	void onCancel(ClickEvent event) {
+
+    @UiHandler("cancel")
+    void onCancel(ClickEvent event) {
         getUiHandlers().close();
-		hide();
-	}
+        hide();
+    }
 
     @Override
     public void showRelativeTo(Widget widget) {

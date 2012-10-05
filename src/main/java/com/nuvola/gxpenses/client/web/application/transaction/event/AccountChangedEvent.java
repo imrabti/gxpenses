@@ -8,42 +8,42 @@ import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 public class AccountChangedEvent extends GwtEvent<AccountChangedEvent.AccountChangedHandler> {
-	
-	public static Type<AccountChangedHandler> TYPE = new Type<AccountChangedHandler>();
-	
-	public interface AccountChangedHandler extends EventHandler {
-		void onAccountChanged(AccountChangedEvent event);
-	}	
+
+    public static Type<AccountChangedHandler> TYPE = new Type<AccountChangedHandler>();
+
+    public interface AccountChangedHandler extends EventHandler {
+        void onAccountChanged(AccountChangedEvent event);
+    }
 
     private Account account;
-	private PeriodType periodeFilter;
-	private TransactionType typeFilter;
+    private PeriodType periodeFilter;
+    private TransactionType typeFilter;
 
     public AccountChangedEvent() {
     }
 
     public AccountChangedEvent(Account account, PeriodType periodeFilter, TransactionType typeFilter) {
-		this.account = account;
-		this.periodeFilter = periodeFilter;
-		this.typeFilter = typeFilter;
-	}
+        this.account = account;
+        this.periodeFilter = periodeFilter;
+        this.typeFilter = typeFilter;
+    }
 
     public Account getAccount() {
         return account;
     }
 
     public PeriodType getPeriodeFilter() {
-		return periodeFilter;
-	}
+        return periodeFilter;
+    }
 
-	public TransactionType getTypeFilter() {
-		return typeFilter;
-	}
+    public TransactionType getTypeFilter() {
+        return typeFilter;
+    }
 
-	@Override
-	public Type<AccountChangedHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<AccountChangedHandler> getAssociatedType() {
+        return TYPE;
+    }
 
     public static Type<AccountChangedHandler> getType() {
         return TYPE;
@@ -57,9 +57,9 @@ public class AccountChangedEvent extends GwtEvent<AccountChangedEvent.AccountCha
         source.fireEvent(new AccountChangedEvent(account, periodeFilter, typeFilter));
     }
 
-	@Override
-	protected void dispatch(AccountChangedHandler handler) {
-		handler.onAccountChanged(this);
-	}
+    @Override
+    protected void dispatch(AccountChangedHandler handler) {
+        handler.onAccountChanged(this);
+    }
 
 }

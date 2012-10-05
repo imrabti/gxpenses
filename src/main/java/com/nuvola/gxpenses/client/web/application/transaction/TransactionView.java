@@ -179,7 +179,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     @Override
     public void switchAddTransactionStyle() {
-        if(!addTransactionButton.getText().equals("")) {
+        if (!addTransactionButton.getText().equals("")) {
             addTransactionButton.setText("");
             addTransactionButton.removeStyleName(resources.buttonStyleCss().addButtonAltText());
             addTransactionButton.addStyleName(resources.buttonStyleCss().addButtonAlt());
@@ -188,7 +188,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     @UiHandler("addTransactionButton")
     void onAddTransaction(ClickEvent event) {
-        getUiHandlers().addNewTransaction((Widget)event.getSource());
+        getUiHandlers().addNewTransaction((Widget) event.getSource());
 
         addTransactionButton.setText(messageBundle.transactionNew());
         addTransactionButton.removeStyleName(resources.buttonStyleCss().settingButton());

@@ -27,7 +27,7 @@ import java.util.List;
 
 public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter.MyView>
         implements AccountSiderUiHandlers, AccountBalanceChangedEvent.AccountBalanceChangedHandler,
-                   PopupClosedEvent.PopupClosedHandler {
+        PopupClosedEvent.PopupClosedHandler {
 
     public interface MyView extends View, HasUiHandlers<AccountSiderUiHandlers> {
         void setData(List<Account> accounts);
@@ -89,7 +89,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     @Override
     public void removeAccount(Account account) {
         Boolean decision = Window.confirm("Are you sure about removing this account ?");
-        if(decision) {
+        if (decision) {
             accountService.removeAccount(account.getId(), new MethodCallbackImpl<Void>() {
                 @Override
                 public void onSuccess(Method method, Void aVoid) {

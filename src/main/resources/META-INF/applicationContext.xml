@@ -10,24 +10,24 @@
             http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <!-- Scanning of properties files -->
-    <context:property-placeholder location="classpath*:META-INF/*.properties" />
+    <context:property-placeholder location="classpath*:META-INF/*.properties"/>
 
     <!-- Bean annotated scan -->
-    <context:component-scan base-package="com.nuvola.gxpenses.server" />
+    <context:component-scan base-package="com.nuvola.gxpenses.server"/>
 
     <!-- DBCP Datasource configuration -->
     <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
-        <property name="driverClassName" value="${database.driverClassName}" />
-        <property name="url" value="${database.url}" />
-        <property name="username" value="${database.username}" />
-        <property name="password" value="${database.password}" />
-        <property name="testOnBorrow" value="true" />
-        <property name="testOnReturn" value="true" />
-        <property name="testWhileIdle" value="true" />
-        <property name="timeBetweenEvictionRunsMillis" value="1800000" />
-        <property name="numTestsPerEvictionRun" value="3" />
-        <property name="minEvictableIdleTimeMillis" value="1800000" />
-        <property name="validationQuery" value="SELECT 1" />
+        <property name="driverClassName" value="${database.driverClassName}"/>
+        <property name="url" value="${database.url}"/>
+        <property name="username" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+        <property name="numTestsPerEvictionRun" value="3"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+        <property name="validationQuery" value="SELECT 1"/>
     </bean>
 
     <!-- EntityManager integration with DBCP datasource -->
@@ -40,11 +40,11 @@
 
     <!-- EntityManager Transaction manager -->
     <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
     <!-- Transaction advice configured using annotation -->
-    <tx:annotation-driven mode="proxy" transaction-manager="transactionManager" />
+    <tx:annotation-driven mode="proxy" transaction-manager="transactionManager"/>
 
     <!-- Scanning JPA repositories -->
     <jpa:repositories base-package="com.nuvola.gxpenses.server.repos" repository-impl-postfix="Impl"/>

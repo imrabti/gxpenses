@@ -15,8 +15,8 @@ import com.nuvola.gxpenses.shared.domaine.Account;
 
 public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers>
         implements AddAccountPresenter.MyView {
-	
-	public interface Binder extends UiBinder<PopupPanel, AddAccountView> {
+
+    public interface Binder extends UiBinder<PopupPanel, AddAccountView> {
     }
 
     @UiField
@@ -25,28 +25,28 @@ public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers
     AccountEditor accountEditor;
 
     @Inject
-	public AddAccountView(final EventBus eventBus, final Binder uiBinder,
+    public AddAccountView(final EventBus eventBus, final Binder uiBinder,
                           final UiHandlersStrategy<AddAccountUiHandlers> uiHandlersStrategy,
                           final AccountEditor accountEditor) {
         super(eventBus, uiHandlersStrategy);
         this.accountEditor = accountEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
-	}
+    }
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
         Account account = accountEditor.get();
-        if(account != null) {
+        if (account != null) {
             getUiHandlers().saveAccount(account);
             hide();
         }
     }
-	
-	@UiHandler("cancel")
-	void onCancel(ClickEvent event) {
-		hide();
-	}
+
+    @UiHandler("cancel")
+    void onCancel(ClickEvent event) {
+        hide();
+    }
 
     @Override
     public void showRelativeTo(Widget widget) {
