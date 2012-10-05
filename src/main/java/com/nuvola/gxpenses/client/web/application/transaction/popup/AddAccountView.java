@@ -21,7 +21,6 @@ public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers
 
     @UiField
     PopupPanel popup;
-
     @UiField(provided = true)
     AccountEditor accountEditor;
 

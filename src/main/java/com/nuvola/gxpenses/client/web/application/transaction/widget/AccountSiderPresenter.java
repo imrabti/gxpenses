@@ -12,7 +12,7 @@ import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
@@ -90,7 +90,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     public void removeAccount(Account account) {
         Boolean decision = Window.confirm("Are you sure about removing this account ?");
         if(decision) {
-            accountService.removeAccount(account.getId(), new MethodCallBackImpl<Void>() {
+            accountService.removeAccount(account.getId(), new MethodCallbackImpl<Void>() {
                 @Override
                 public void onSuccess(Method method, Void aVoid) {
                     AccountChangedEvent.fire(this);
@@ -128,7 +128,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     }
 
     private void fireLoadListAccounts() {
-        accountService.getAccounts(new MethodCallBackImpl<List<Account>>() {
+        accountService.getAccounts(new MethodCallbackImpl<List<Account>>() {
             @Override
             public void onSuccess(Method method, List<Account> accounts) {
                 getView().showTransferButton(accounts.size() >= 2);

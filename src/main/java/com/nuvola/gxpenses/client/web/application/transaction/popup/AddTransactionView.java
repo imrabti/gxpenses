@@ -22,7 +22,6 @@ public class AddTransactionView extends PopupViewWithUiHandlers<AddTransactionUi
 
     @UiField
     PopupPanel popup;
-
     @UiField(provided = true)
     TransactionEditor transactionEditor;
 

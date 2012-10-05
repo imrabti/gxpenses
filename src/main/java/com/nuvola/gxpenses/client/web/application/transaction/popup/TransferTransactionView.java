@@ -22,7 +22,6 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
 
     @UiField
     PopupPanel popup;
-
     @UiField(provided = true)
     TransferTransactionEditor transferTransactionEditor;
 

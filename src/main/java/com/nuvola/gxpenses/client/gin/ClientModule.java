@@ -16,10 +16,11 @@ import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.GxpensesRes;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.rest.UserService;
-import com.nuvola.gxpenses.client.util.SuggestionListFactory;
+import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
+import com.nuvola.gxpenses.client.rest.ValueListFactory;
 import com.nuvola.gxpenses.client.web.GxpensesModule;
 import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestServiceProxy;
@@ -33,10 +34,11 @@ public class ClientModule extends AbstractPresenterModule {
 
         bind(GxpensesRes.class).in(Singleton.class);
         bind(MessageBundle.class).in(Singleton.class);
-        requestStaticInjection(MethodCallBackImpl.class);
+        requestStaticInjection(MethodCallbackImpl.class);
 
         bind(BootStrapper.class).to(BootStrapperImpl.class).in(Singleton.class);
 		bind(SuggestionListFactory.class).in(Singleton.class);
+        bind(ValueListFactory.class).in(Singleton.class);
 
 		bind(String.class).annotatedWith(Currency.class).toProvider(CurrencyProvider.class);
 		bind(Integer.class).annotatedWith(PageSize.class).toProvider(PageSizeProvider.class);

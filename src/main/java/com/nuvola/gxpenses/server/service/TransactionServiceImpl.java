@@ -75,8 +75,8 @@ public class TransactionServiceImpl implements TransactionService {
     public void createNewTransferTransaction(TransferTransaction transfer) {
         if ((transfer.getSourceAccount() != null) && (transfer.getTargetAccount() != null)) {
             if(!(transfer.getSourceAccount().equals(transfer.getTargetAccount()) && (transfer.getAmount() > 0d))) {
-                Account sourceAccount = accountRepos.findOne(transfer.getSourceAccount());
-                Account destinationAccount = accountRepos.findOne(transfer.getTargetAccount());
+                Account sourceAccount = accountRepos.findOne(transfer.getSourceAccount().getId());
+                Account destinationAccount = accountRepos.findOne(transfer.getTargetAccount().getId());
                 String payeeStr = "Transfert from " + sourceAccount.getName() + " to " + destinationAccount.getName();
 
                 Transaction sourceTrans = new Transaction();
@@ -98,8 +98,8 @@ public class TransactionServiceImpl implements TransactionService {
                 sourceTrans.setDestTransaction(destTrans);
                 destTrans.setDestTransaction(sourceTrans);
 
-                accountRepos.updateAccountBalance(transfer.getSourceAccount(), -1, transfer.getAmount());
-                accountRepos.updateAccountBalance(transfer.getTargetAccount(), 1, transfer.getAmount());
+                accountRepos.updateAccountBalance(transfer.getSourceAccount().getId(), -1, transfer.getAmount());
+                accountRepos.updateAccountBalance(transfer.getTargetAccount().getId(), 1, transfer.getAmount());
             }
         }
     }

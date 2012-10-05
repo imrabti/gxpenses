@@ -15,7 +15,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.resource.GxpensesRes;
 import com.nuvola.gxpenses.client.util.EditorView;
-import com.nuvola.gxpenses.client.util.SuggestionListFactory;
+import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.ui.MultipleSuggestBox;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
@@ -33,16 +33,12 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
 
     @UiField(provided = true)
     SuggestBox payee;
-
     @UiField(provided = true)
     ValueListBox<TransactionType> type;
-
     @UiField(provided = true)
     MultipleSuggestBox tags;
-
     @UiField
     DateBox date;
-
     @UiField
     DoubleBox amount;
 

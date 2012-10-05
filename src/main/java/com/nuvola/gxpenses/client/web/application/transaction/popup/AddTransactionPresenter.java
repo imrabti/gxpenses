@@ -9,9 +9,9 @@ import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
-import com.nuvola.gxpenses.client.util.SuggestionListFactory;
+import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
@@ -49,7 +49,7 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
 
     @Override
     public void saveTransaction(final Transaction transaction) {
-        transactionService.createTransaction(transaction, new MethodCallBackImpl<Void>() {
+        transactionService.createTransaction(transaction, new MethodCallbackImpl<Void>() {
             @Override
             public void onSuccess(Method method, Void aVoid) {
                 suggestionListFactory.updatePayeeList(transaction.getPayee());

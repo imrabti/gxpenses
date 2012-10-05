@@ -19,7 +19,7 @@ import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallBackImpl;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.util.DateUtils;
 import com.nuvola.gxpenses.client.util.EmptyDisplay;
@@ -194,7 +194,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     public void removeTransaction(Transaction transaction) {
         Boolean decision = Window.confirm("Are you sure about removing this transaction ?");
         if (decision) {
-            transactionService.removeTransaction(transaction.getId(), new MethodCallBackImpl<Void>() {
+            transactionService.removeTransaction(transaction.getId(), new MethodCallbackImpl<Void>() {
                 @Override
                 public void onSuccess(Method method, Void aVoid) {
                     Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
@@ -233,7 +233,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         filter.setPageNumber(pageNumber);
         filter.setLength(length);
 
-        transactionService.getTransactions(filter, new MethodCallBackImpl<PagedData<Transaction>>() {
+        transactionService.getTransactions(filter, new MethodCallbackImpl<PagedData<Transaction>>() {
             @Override
             public void onSuccess(Method method, PagedData<Transaction> result) {
                 getView().setData(result.getData(), paginationStart, result.getTotalElements());
@@ -253,7 +253,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         filter.setTypeFilter(selectedTypeFilter);
         filter.setPeriodFilter(selectedPeriodeFilter);
 
-        accountService.totalAmount(filter, new MethodCallBackImpl<Double>() {
+        accountService.totalAmount(filter, new MethodCallbackImpl<Double>() {
             @Override
             public void onSuccess(Method method, Double totalAmount) {
                 getView().setTransactionTotal(totalAmount);
