@@ -13,7 +13,7 @@ import java.util.Date;
 @Component
 public class SecurityContextImpl implements SecurityContext {
 
-    private static final String USERNAME = "imrabti";
+    private static final String EMAIL = "imrabti@gmail.com";
 
     @Autowired
     private UserRepos userRepos;
@@ -21,7 +21,7 @@ public class SecurityContextImpl implements SecurityContext {
     @Override
     @Transactional
     public User getCurrentUser() {
-        User currentUser = userRepos.findByUserName(USERNAME);
+        User currentUser = userRepos.findByEmail(EMAIL);
 
         if (currentUser == null) {
             currentUser = setupTestUser();
@@ -32,8 +32,8 @@ public class SecurityContextImpl implements SecurityContext {
 
     private User setupTestUser() {
         User testUser = new User();
-        testUser.setUserName(USERNAME);
-        testUser.setEmail("imrabti@gmail.com");
+        testUser.setUserName("imrabti");
+        testUser.setEmail(EMAIL);
         testUser.setFirstName("Mrabti");
         testUser.setLastName("Idriss");
         testUser.setCurrency(CurrencyType.MAD);

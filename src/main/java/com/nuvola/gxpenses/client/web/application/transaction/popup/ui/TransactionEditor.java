@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.resource.GxpensesRes;
-import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
+import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.ui.MultipleSuggestBox;

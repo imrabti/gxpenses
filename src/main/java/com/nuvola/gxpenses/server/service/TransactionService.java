@@ -7,12 +7,12 @@ import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 public interface TransactionService {
-    public void createNewTransaction(Transaction transaction);
+    void createNewTransaction(Transaction transaction);
 
-    public void removeTransaction(Long transactionId);
+    void removeTransaction(Long transactionId);
 
-    public void createNewTransferTransaction(TransferTransaction transfer);
+    void createNewTransferTransaction(TransferTransaction transfer);
 
-    public PagedData<Transaction> findByAccountAndDateAndType(Long accountId, PeriodType periodFilter,
-                                                              TransactionType type, Integer pageNumber, Integer length);
+    PagedData<Transaction> findByAccountAndDateAndType(Long accountId, PeriodType periodFilter,
+                                                       TransactionType type, Integer pageNumber, Integer length);
 }

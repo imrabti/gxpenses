@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TagRepos extends JpaRepository<Tag, Long> {
+    List<Tag> findByUserId(Long userId);
+
     @Query("select t.value from Tag t where t.user.id = ?1")
-    List<String> findAllTagByUserId(Long userId);
+    List<String> findAllByUserId(Long userId);
 }

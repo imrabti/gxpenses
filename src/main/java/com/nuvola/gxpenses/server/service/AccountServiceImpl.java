@@ -49,12 +49,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateAccountBalance(Long accountId, Double transactionAmount, TransactionType type) {
-        int multiplier = type == TransactionType.EXPENSE ? -1 : 1;
-        accountRepos.updateAccountBalance(accountId, multiplier, transactionAmount);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public List<Account> findAllAccountsByUserId(Long userId) {
         return accountRepos.findByUserId(userId, new Sort("name"));
