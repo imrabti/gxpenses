@@ -4,6 +4,7 @@ import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.nuvola.gxpenses.client.mvp.uihandler.SetterUiHandlersStrategy;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.web.application.setting.SettingModule;
 import com.nuvola.gxpenses.client.web.application.transaction.TransactionModule;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderUiHandlers;
@@ -14,6 +15,7 @@ public class ApplicationModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new TransactionModule());
+        install(new SettingModule());
 
         bind(new TypeLiteral<UiHandlersStrategy<HeaderUiHandlers>>() {})
             .to(new TypeLiteral<SetterUiHandlersStrategy<HeaderUiHandlers>>() {});
