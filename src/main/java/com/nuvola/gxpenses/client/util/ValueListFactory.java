@@ -1,6 +1,8 @@
-package com.nuvola.gxpenses.client.rest;
+package com.nuvola.gxpenses.client.util;
 
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.rest.AccountService;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import org.fusesource.restygwt.client.Method;
 

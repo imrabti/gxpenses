@@ -11,8 +11,6 @@ public interface AccountService {
 
     void removeAccount(Long accountId);
 
-    void updateAccountBalance(Long accountId, Double transactionAmount, TransactionType type);
-
     List<Account> findAllAccountsByUserId(Long userId);
 
     Double totalAmountByAccountAndPeriodAndType(Long accountId, PeriodType periodeFilter, TransactionType type);

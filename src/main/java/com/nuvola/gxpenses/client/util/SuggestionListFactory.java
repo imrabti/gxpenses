@@ -1,7 +1,9 @@
-package com.nuvola.gxpenses.client.rest;
+package com.nuvola.gxpenses.client.util;
 
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.rest.UserService;
 import org.fusesource.restygwt.client.Method;
 
 import java.util.ArrayList;
@@ -64,7 +66,7 @@ public class SuggestionListFactory {
                 }
             }
 
-            userService.updateTags(toAdd, new MethodCallbackImpl<Void>() {
+            userService.createTags(toAdd, new MethodCallbackImpl<Void>() {
                 @Override
                 public void onSuccess(Method method, Void aVoid) {
                 }

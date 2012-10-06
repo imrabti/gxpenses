@@ -10,7 +10,7 @@ import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.rest.SuggestionListFactory;
+import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Account;

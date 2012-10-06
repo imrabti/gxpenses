@@ -5,6 +5,7 @@ import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface UserService extends RestService {
     @Path("/user/payees")
     void getPayees(MethodCallback<List<String>> callback);
 
-    @PUT
+    @POST
     @Path("/user/tags")
-    void updateTags(List<String> tags, MethodCallbackImpl<Void> callBack);
+    void createTags(List<String> tags, MethodCallbackImpl<Void> callBack);
 }

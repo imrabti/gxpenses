@@ -6,20 +6,15 @@ import com.nuvola.gxpenses.shared.domaine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Component
 @Path("/user")
-@Consumes({MediaType.APPLICATION_JSON})
-@Produces({MediaType.APPLICATION_JSON})
-public class UserResource {
+public class UserResource extends Resource {
 
     @Autowired
     private UserService userService;
@@ -45,11 +40,11 @@ public class UserResource {
         return userService.findAllPayeeForUser(currentUser.getId());
     }
 
-    @PUT
+    @POST
     @Path("/tags")
-    public Response updateTags(List<String> tags) {
+    public Response createTags(List<String> tags) {
         User currentUser = securityContext.getCurrentUser();
-        userService.updateUserTags(currentUser.getId(), tags);
+        userService.createTags(currentUser.getId(), tags);
         return Response.ok().build();
     }
 
