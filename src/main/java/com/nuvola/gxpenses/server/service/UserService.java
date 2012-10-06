@@ -1,11 +1,21 @@
 package com.nuvola.gxpenses.server.service;
 
+import com.nuvola.gxpenses.shared.domaine.User;
+
 import java.util.List;
 
 public interface UserService {
-    public List<String> findAllPayeeForUser(Long userId);
+    User findUserByEmail(String email);
 
-    public List<String> findAllTagsForUser(Long userId);
+    void updateUser(User user);
 
-    public void updateUserTags(Long userId, List<String> tags);
+    void updatePassword(Long userId, String newPassword);
+
+    List<String> findAllPayeeForUser(Long userId);
+
+    List<String> findAllTagsForUser(Long userId);
+
+    void createTags(Long userId, List<String> tags);
+
+    void updateTags(Long userId, List<String> tags);
 }

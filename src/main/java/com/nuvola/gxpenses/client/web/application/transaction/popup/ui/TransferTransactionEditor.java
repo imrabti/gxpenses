@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.rest.ValueListFactory;
+import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountRenderer;
 import com.nuvola.gxpenses.shared.domaine.Account;
