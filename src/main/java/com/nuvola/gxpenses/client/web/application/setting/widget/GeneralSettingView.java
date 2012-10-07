@@ -14,26 +14,26 @@ import com.nuvola.gxpenses.shared.domaine.User;
 public class GeneralSettingView extends ViewWithUiHandlers<GeneralSettingUiHandlers>
         implements GeneralSettingPresenter.MyView {
 
-	public interface Binder extends UiBinder<Widget, GeneralSettingView> {
+    public interface Binder extends UiBinder<Widget, GeneralSettingView> {
     }
 
     @UiField(provided = true)
     SettingEditor settingEditor;
 
     @Inject
-	public GeneralSettingView(final Binder uiBinder,
+    public GeneralSettingView(final Binder uiBinder,
                               final UiHandlersStrategy<GeneralSettingUiHandlers> uiHandlers,
                               final SettingEditor settingEditor) {
         super(uiHandlers);
         this.settingEditor = settingEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
-	}
+    }
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
         User user = settingEditor.get();
-        if(user != null) {
+        if (user != null) {
             getUiHandlers().saveSetting(user);
         }
     }
