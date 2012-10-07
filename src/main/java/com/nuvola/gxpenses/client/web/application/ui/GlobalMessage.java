@@ -5,14 +5,14 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.resource.Resources;
 
 public class GlobalMessage extends Widget implements HasText {
 
     private static final int MESSAGE_TIMEOUT = 10000;
 
     @Inject
-    public GlobalMessage(final GxpensesRes resources) {
+    public GlobalMessage(final Resources resources) {
         setElement(DOM.createElement("div"));
         getElement().setInnerText("Hello World");
         setStyleName(getElement(), resources.generalStyleCss().globalMsgInfo());

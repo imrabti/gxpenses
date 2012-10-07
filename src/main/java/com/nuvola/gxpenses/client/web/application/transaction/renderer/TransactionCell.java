@@ -15,7 +15,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
@@ -44,7 +44,7 @@ public class TransactionCell extends AbstractCell<Transaction> {
     }
 
     private final Template template;
-    private final GxpensesRes resources;
+    private final Resources resources;
     private final Delegate<Transaction> delegate;
     private final NumberFormat numberFormat;
     private final DateTimeFormat dateFormat;
@@ -52,7 +52,7 @@ public class TransactionCell extends AbstractCell<Transaction> {
     private Transaction selectedTransaction;
 
     @Inject
-    public TransactionCell(final Template template, final GxpensesRes resources,
+    public TransactionCell(final Template template, final Resources resources,
                            @Currency String currency,
                            @Assisted Delegate<Transaction> delegate) {
         super("click");

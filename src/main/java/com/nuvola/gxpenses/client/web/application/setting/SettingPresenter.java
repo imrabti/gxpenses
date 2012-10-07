@@ -15,6 +15,7 @@ import com.nuvola.gxpenses.client.web.application.setting.event.SettingsMenuChan
 import com.nuvola.gxpenses.client.web.application.setting.widget.GeneralSettingPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.widget.PasswordSettingPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.widget.SettingSiderPresenter;
+import com.nuvola.gxpenses.client.web.application.setting.widget.TagSettingPresenter;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -38,17 +39,20 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
     private final SettingSiderPresenter settingSiderPresenter;
     private final GeneralSettingPresenter generalSettingPresenter;
     private final PasswordSettingPresenter passwordSettingPresenter;
+    private final TagSettingPresenter tagSettingPresenter;
 
     @Inject
     public SettingPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                             final SettingSiderPresenter settingSiderPresenter,
                             final GeneralSettingPresenter generalSettingPresenter,
-                            final PasswordSettingPresenter passwordSettingPresenter) {
+                            final PasswordSettingPresenter passwordSettingPresenter,
+                            final TagSettingPresenter tagSettingPresenter) {
         super(eventBus, view, proxy);
 
         this.settingSiderPresenter = settingSiderPresenter;
         this.generalSettingPresenter = generalSettingPresenter;
         this.passwordSettingPresenter = passwordSettingPresenter;
+        this.tagSettingPresenter = tagSettingPresenter;
     }
 
     @Override
@@ -59,6 +63,9 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
                 break;
             case PASSWORD:
                 setInSlot(TYPE_SetMainContent, passwordSettingPresenter);
+                break;
+            case TAGS:
+                setInSlot(TYPE_SetMainContent, tagSettingPresenter);
                 break;
             default:
                 setInSlot(TYPE_SetMainContent, generalSettingPresenter);
