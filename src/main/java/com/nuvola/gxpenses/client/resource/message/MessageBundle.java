@@ -26,4 +26,6 @@ public interface MessageBundle extends Messages {
     String transactionTotal(String total);
 
     String settingsUpdated();
+
+    String passwordUpdated();
 }
