@@ -6,7 +6,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.resources.client.ImageResource.RepeatStyle;
 
-public interface GxpensesRes extends ClientBundle {
+public interface Resources extends ClientBundle {
     @Source("com/nuvola/gxpenses/client/resource/css/generalStyle.css")
     GeneralStyle generalStyleCss();
 

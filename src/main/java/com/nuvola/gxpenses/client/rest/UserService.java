@@ -16,14 +16,14 @@ public interface UserService extends RestService {
     void getLoggedInUser(MethodCallback<User> callback);
 
     @GET
-    @Path("/user/tags")
+    @Path("/user/tag")
     void getTags(MethodCallback<List<String>> callback);
 
     @GET
-    @Path("/user/payees")
+    @Path("/user/payee")
     void getPayees(MethodCallback<List<String>> callback);
 
     @POST
-    @Path("/user/tags")
+    @Path("/user/tag")
     void createTags(List<String> tags, MethodCallbackImpl<Void> callBack);
 }

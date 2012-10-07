@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.GxpensesSiderMenuStyle;
+import com.nuvola.gxpenses.client.resource.SiderMenuStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumCell;
 
 import java.util.Arrays;
@@ -45,7 +45,7 @@ public class SettingSiderView extends ViewWithUiHandlers<SettingSiderUiHandlers>
     @Inject
     public SettingSiderView(final Binder uiBinder,
                             final UiHandlersStrategy<SettingSiderUiHandlers> uiHandlers,
-                            final GxpensesSiderMenuStyle listResources) {
+                            final SiderMenuStyle listResources) {
         super(uiHandlers);
 
         settingsMenu = new ValuePicker<SettingsEnum>(new CellList<SettingsEnum>(new EnumCell<SettingsEnum>(), listResources));

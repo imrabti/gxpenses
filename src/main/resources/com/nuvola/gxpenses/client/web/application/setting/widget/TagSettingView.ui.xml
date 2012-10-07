@@ -1,0 +1,59 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:cell="urn:import:com.google.gwt.user.cellview.client">
+
+    <ui:with field='resource' type='com.nuvola.gxpenses.client.resource.Resources'/>
+
+    <ui:style>
+        .tagsListWrapper {
+            height: 400px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .actionBar {
+            background-color: #cfcfcf;
+            -moz-border-radius-bottomleft: 5px;
+            -webkit-border-bottom-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            -moz-border-radius-bottomright: 5px;
+            -webkit-border-bottom-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            padding: 6px;
+            margin-bottom: 10px;
+            float: right;
+        }
+
+        .clear {
+            clear: both;
+        }
+    </ui:style>
+
+    <g:HTMLPanel>
+        <g:ScrollPanel styleName="{style.tagsListWrapper}">
+            <cell:CellList ui:field="tagsList"/>
+        </g:ScrollPanel>
+        <div>
+            <g:HTMLPanel styleName="{style.actionBar}">
+                <g:Grid>
+                    <g:row>
+                        <g:customCell>
+                            <g:TextBox ui:field="tag" width="150px" styleName="{resource.generalStyleCss.textInput}"/>
+                        </g:customCell>
+                        <g:customCell>
+                            <g:Button ui:field="addTag" addStyleNames="{resource.buttonStyleCss.linkButton} {resource.buttonStyleCss.addButton}"/>
+                        </g:customCell>
+                    </g:row>
+                </g:Grid>
+            </g:HTMLPanel>
+            <div class="{style.clear}"/>
+        </div>
+
+        <g:HTMLPanel styleName="{resource.generalStyleCss.formButtons}">
+            <g:Button ui:field="save"
+                      addStyleNames="{resource.buttonStyleCss.button} {resource.buttonStyleCss.large} {resource.buttonStyleCss.gray}">
+                Save Settings
+            </g:Button>
+        </g:HTMLPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>

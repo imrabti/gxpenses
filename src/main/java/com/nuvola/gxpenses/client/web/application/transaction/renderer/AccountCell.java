@@ -14,7 +14,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.shared.domaine.Account;
 
 public class AccountCell extends AbstractCell<Account> {
@@ -27,14 +27,14 @@ public class AccountCell extends AbstractCell<Account> {
     }
 
     private final Template template;
-    private final GxpensesRes resources;
+    private final Resources resources;
     private final Delegate<Account> delegate;
     private final String currency;
 
     private Account selectedAccount;
 
     @Inject
-    public AccountCell(final Template template, final GxpensesRes resources,
+    public AccountCell(final Template template, final Resources resources,
                        @Currency String currency,
                        @Assisted Delegate<Account> delegate) {
         super("click");

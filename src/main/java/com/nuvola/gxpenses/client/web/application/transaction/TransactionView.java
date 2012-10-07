@@ -24,8 +24,8 @@ import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
-import com.nuvola.gxpenses.client.resource.GxpensesTransactionListStyle;
+import com.nuvola.gxpenses.client.resource.Resources;
+import com.nuvola.gxpenses.client.resource.TransactionListStyle;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.TransactionCellFactory;
 import com.nuvola.gxpenses.client.web.application.ui.ShowMorePagerPanel;
@@ -70,14 +70,14 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
     private final AsyncDataProvider<Transaction> dataProvider;
     private final SelectionModel<Transaction> selectionModel;
     private final MessageBundle messageBundle;
-    private final GxpensesRes resources;
+    private final Resources resources;
 
     @Inject
     public TransactionView(final Binder uiBinder,
                            final UiHandlersStrategy<TransactionUiHandlers> uiHandlers,
                            final TransactionCellFactory transactionCellFactory,
-                           final GxpensesTransactionListStyle listResources,
-                           final GxpensesRes resources, final MessageBundle messageBundle,
+                           final TransactionListStyle listResources,
+                           final Resources resources, final MessageBundle messageBundle,
                            @Currency String currency, @PageSize Integer pageSize) {
         super(uiHandlers);
 
