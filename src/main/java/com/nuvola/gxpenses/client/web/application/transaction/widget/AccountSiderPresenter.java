@@ -13,6 +13,7 @@ import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
@@ -41,6 +42,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     private final AddAccountPresenter addAccountPresenter;
     private final TransferTransactionPresenter transferTransactionPresenter;
     private final MessageBundle messageBundle;
+    private final ValueListFactory valueListFactory;
 
     private PeriodType currentPeriodType;
     private TransactionType currentTransactionType;
@@ -50,13 +52,15 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
                                  final MessageBundle messageBundle,
                                  final AccountService accountService,
                                  final AddAccountPresenter addAccountPresenter,
-                                 final TransferTransactionPresenter transferTransactionPresenter) {
+                                 final TransferTransactionPresenter transferTransactionPresenter,
+                                 final ValueListFactory valueListFactory) {
         super(eventBus, view);
 
         this.messageBundle = messageBundle;
         this.accountService = accountService;
         this.addAccountPresenter = addAccountPresenter;
         this.transferTransactionPresenter = transferTransactionPresenter;
+        this.valueListFactory = valueListFactory;
 
         currentPeriodType = PeriodType.THIS_MONTH;
         currentTransactionType = TransactionType.ALL;
@@ -93,6 +97,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
             accountService.removeAccount(account.getId(), new MethodCallbackImpl<Void>() {
                 @Override
                 public void onSuccess(Method method, Void aVoid) {
+                    valueListFactory.updateListAccount();
                     AccountChangedEvent.fire(this);
                     GlobalMessageEvent.fire(this, messageBundle.accountRemoved());
                     fireLoadListAccounts();
