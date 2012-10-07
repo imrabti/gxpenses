@@ -13,6 +13,7 @@ import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.event.SettingsMenuChangedEvent;
 import com.nuvola.gxpenses.client.web.application.setting.widget.GeneralSettingPresenter;
+import com.nuvola.gxpenses.client.web.application.setting.widget.PasswordSettingPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.widget.SettingSiderPresenter;
 
 import javax.validation.ConstraintViolation;
@@ -36,15 +37,18 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
 
     private final SettingSiderPresenter settingSiderPresenter;
     private final GeneralSettingPresenter generalSettingPresenter;
+    private final PasswordSettingPresenter passwordSettingPresenter;
 
     @Inject
     public SettingPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                             final SettingSiderPresenter settingSiderPresenter,
-                            final GeneralSettingPresenter generalSettingPresenter) {
+                            final GeneralSettingPresenter generalSettingPresenter,
+                            final PasswordSettingPresenter passwordSettingPresenter) {
         super(eventBus, view, proxy);
 
         this.settingSiderPresenter = settingSiderPresenter;
         this.generalSettingPresenter = generalSettingPresenter;
+        this.passwordSettingPresenter = passwordSettingPresenter;
     }
 
     @Override
@@ -52,6 +56,9 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
         switch (event.getSelectedMenu()) {
             case GENERAL:
                 setInSlot(TYPE_SetMainContent, generalSettingPresenter);
+                break;
+            case PASSWORD:
+                setInSlot(TYPE_SetMainContent, passwordSettingPresenter);
                 break;
             default:
                 setInSlot(TYPE_SetMainContent, generalSettingPresenter);
