@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
             if (!tags.contains(item.getValue())) {
                 tagRepos.delete(item);
             } else {
-                tags.remove(item);
+                tags.remove(item.getValue());
             }
         }
 

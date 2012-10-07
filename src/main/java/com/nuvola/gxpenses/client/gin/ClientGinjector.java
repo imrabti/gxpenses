@@ -7,7 +7,7 @@ import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.nuvola.gxpenses.client.BootStrapper;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.SettingPresenter;
@@ -20,7 +20,7 @@ public interface ClientGinjector extends Ginjector {
 
     PlaceManager getPlaceManager();
 
-    GxpensesRes getResources();
+    Resources getResources();
 
     BootStrapper getBootStrapper();
 

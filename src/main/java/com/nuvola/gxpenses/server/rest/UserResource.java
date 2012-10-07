@@ -27,21 +27,21 @@ public class UserResource extends Resource {
     }
 
     @GET
-    @Path("/tags")
+    @Path("/tag")
     public List<String> getTags() {
         User currentUser = securityContext.getCurrentUser();
         return userService.findAllTagsForUser(currentUser.getId());
     }
 
     @GET
-    @Path("/payees")
+    @Path("/payee")
     public List<String> getPayees() {
         User currentUser = securityContext.getCurrentUser();
         return userService.findAllPayeeForUser(currentUser.getId());
     }
 
     @POST
-    @Path("/tags")
+    @Path("/tag")
     public Response createTags(List<String> tags) {
         User currentUser = securityContext.getCurrentUser();
         userService.createTags(currentUser.getId(), tags);

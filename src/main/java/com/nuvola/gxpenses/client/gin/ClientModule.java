@@ -13,7 +13,7 @@ import com.nuvola.gxpenses.client.BootStrapperImpl;
 import com.nuvola.gxpenses.client.place.ClientPlaceManager;
 import com.nuvola.gxpenses.client.place.DefaultPlace;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
@@ -33,7 +33,7 @@ public class ClientModule extends AbstractPresenterModule {
         install(new DefaultModule(ClientPlaceManager.class));
         install(new GxpensesModule());
 
-        bind(GxpensesRes.class).in(Singleton.class);
+        bind(Resources.class).in(Singleton.class);
         bind(MessageBundle.class).in(Singleton.class);
         requestStaticInjection(MethodCallbackImpl.class);
 

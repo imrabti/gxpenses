@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
@@ -48,7 +48,7 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
     @Inject
     public TransactionEditor(final Binder uiBinder, final TransactionDriver driver,
                              final SuggestionListFactory suggestionListFactory,
-                             final GxpensesRes resources) {
+                             final Resources resources) {
         this.driver = driver;
         this.suggestionListFactory = suggestionListFactory;
 

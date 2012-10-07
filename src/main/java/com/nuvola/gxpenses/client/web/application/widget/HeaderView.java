@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.place.PlaceType;
-import com.nuvola.gxpenses.client.resource.GxpensesNavigationListStyle;
+import com.nuvola.gxpenses.client.resource.NavigationListStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumCell;
 
 public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
@@ -23,14 +23,13 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
 
     @UiField(provided = true)
     ValuePicker<PlaceType> placesBox;
-
     @UiField
     Label username;
 
     @Inject
     public HeaderView(final Binder uiBinder,
                       final UiHandlersStrategy<HeaderUiHandlers> uiHandlers,
-                      final GxpensesNavigationListStyle listResources) {
+                      final NavigationListStyle listResources) {
         super(uiHandlers);
 
         CellList<PlaceType> placeList = new CellList<PlaceType>(new EnumCell<PlaceType>(), listResources);
@@ -44,6 +43,7 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
 
     @UiHandler("settings")
     public void onSettingsClicked(ClickEvent event) {
+        placesBox.setValue(PlaceType.NONE);
         getUiHandlers().changePlace(PlaceType.SETTINGS);
     }
 

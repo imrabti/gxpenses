@@ -19,8 +19,8 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.GxpensesListStyle;
-import com.nuvola.gxpenses.client.resource.GxpensesRes;
+import com.nuvola.gxpenses.client.resource.AccountListStyle;
+import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountCellFactory;
 import com.nuvola.gxpenses.shared.domaine.Account;
@@ -50,14 +50,14 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
     private final ProvidesKey<Account> keyProvider;
     private final ListDataProvider<Account> dataProvider;
     private final SingleSelectionModel<Account> selectionModel;
-    private final GxpensesRes resources;
+    private final Resources resources;
 
     @Inject
     public AccountSiderView(final Binder uiBinder,
                             final UiHandlersStrategy<AccountSiderUiHandlers> uiHandlers,
                             final AccountCellFactory accountCellFactory,
-                            final GxpensesListStyle listResources,
-                            final GxpensesRes resources,
+                            final AccountListStyle accountListResources,
+                            final Resources resources,
                             @Currency String currency) {
         super(uiHandlers);
 
@@ -67,7 +67,7 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
 
         periodType = new ValueListBox<PeriodType>(new EnumRenderer<PeriodType>());
         transactionType = new ValueListBox<TransactionType>(new EnumRenderer<TransactionType>());
-        accountList = new CellList<Account>(accountCellFactory.create(setupRemoveAction()), listResources);
+        accountList = new CellList<Account>(accountCellFactory.create(setupRemoveAction()), accountListResources);
         selectionModel = new SingleSelectionModel<Account>(keyProvider);
 
         //Initialize ValueListBox elements

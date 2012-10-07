@@ -25,6 +25,6 @@ public interface SettingService extends RestService {
     void updateUserPassword(Password password, MethodCallback<ValidatedResponse<Password>> callback);
 
     @PUT
-    @Path("/setting/tags")
+    @Path("/setting/tag")
     void updateUserTags(List<String> tags, MethodCallback<Void> callback);
 }

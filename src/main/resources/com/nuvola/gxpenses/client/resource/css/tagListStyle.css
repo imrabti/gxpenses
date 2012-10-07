@@ -1,0 +1,62 @@
+@external removeButton;
+
+.cellListWidget {
+}
+
+.cellListEvenItem {
+    font-size: 14px;
+    display: inline-block;
+    color: #545454;
+    cursor: pointer;
+    zoom: 1;
+    margin-right: 8px;
+    text-align: center;
+    padding: 8px;
+    background-color: #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.cellListOddItem {
+    font-size: 14px;
+    display: inline-block;
+    color: #545454;
+    cursor: pointer;
+    zoom: 1;
+    margin-right: 8px;
+    text-align: center;
+    padding: 8px;
+    background-color: #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.cellListOddItem .removeButton {
+    display: none;
+}
+
+.cellListEvenItem .removeButton {
+    display: none;
+}
+
+.cellListSelectedItem {
+    font-size: 14px;
+    color: #ffffff;
+    background-image: none;
+    background-color: #545454;
+    padding: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+@sprite .cellListSelectedItem .removeButton {
+    display: inline-block;
+    float: left;
+    gwt-image: "removeSmall";
+    margin-right: 4px;
+    margin-top: 2px;
+}

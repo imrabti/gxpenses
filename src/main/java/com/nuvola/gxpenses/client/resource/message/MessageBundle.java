@@ -28,4 +28,6 @@ public interface MessageBundle extends Messages {
     String settingsUpdated();
 
     String passwordUpdated();
+
+    String tagsUpdated();
 }

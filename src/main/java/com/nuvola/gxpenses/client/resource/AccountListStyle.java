@@ -5,13 +5,13 @@ import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.resources.client.ImageResource.RepeatStyle;
 import com.google.gwt.user.cellview.client.CellList;
 
-public interface GxpensesTransactionListStyle extends CellList.Resources {
-    @Source({CellList.Style.DEFAULT_CSS, "com/nuvola/gxpenses/client/resource/css/listTransactionStyle.css"})
+public interface AccountListStyle extends CellList.Resources {
+    @Source({CellList.Style.DEFAULT_CSS, "com/nuvola/gxpenses/client/resource/css/accountListStyle.css"})
     ListStyle cellListStyle();
 
-    @Source("com/nuvola/gxpenses/client/resource/images/remove_list.png")
+    @Source("com/nuvola/gxpenses/client/resource/images/remove_small.png")
     @ImageOptions(repeatStyle = RepeatStyle.None)
-    ImageResource removeList();
+    ImageResource removeSmall();
 
     interface ListStyle extends CellList.Style {
     }

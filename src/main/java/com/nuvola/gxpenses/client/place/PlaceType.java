@@ -8,7 +8,8 @@ public enum PlaceType {
     TRANSACTIONS("Transactions"),
     BUDGETS("Budgets"),
     REPORTS("Reports"),
-    SETTINGS("Settings");
+    SETTINGS("Settings"),
+    NONE("None");
 
     private String label;
 
