@@ -192,7 +192,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     public void removeTransaction(Transaction transaction) {
-        Boolean decision = Window.confirm("Are you sure about removing this transaction ?");
+        Boolean decision = Window.confirm(messageBundle.transactionConf());
         if (decision) {
             transactionService.removeTransaction(transaction.getId(), new MethodCallbackImpl<Void>() {
                 @Override

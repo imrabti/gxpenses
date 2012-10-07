@@ -12,6 +12,7 @@ import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.event.SettingsMenuChangedEvent;
+import com.nuvola.gxpenses.client.web.application.setting.widget.GeneralSettingPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.widget.SettingSiderPresenter;
 
 import javax.validation.ConstraintViolation;
@@ -34,18 +35,28 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
     public static final Object TYPE_SetMainContent = new Object();
 
     private final SettingSiderPresenter settingSiderPresenter;
+    private final GeneralSettingPresenter generalSettingPresenter;
 
     @Inject
     public SettingPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                            final SettingSiderPresenter settingSiderPresenter) {
+                            final SettingSiderPresenter settingSiderPresenter,
+                            final GeneralSettingPresenter generalSettingPresenter) {
         super(eventBus, view, proxy);
 
         this.settingSiderPresenter = settingSiderPresenter;
+        this.generalSettingPresenter = generalSettingPresenter;
     }
 
     @Override
     public void onSettingsChanged(SettingsMenuChangedEvent event) {
-        // TODO : For each type of menu set in the correct presenter widget
+        switch (event.getSelectedMenu()) {
+            case GENERAL:
+                setInSlot(TYPE_SetMainContent, generalSettingPresenter);
+                break;
+            default:
+                setInSlot(TYPE_SetMainContent, generalSettingPresenter);
+                break;
+        }
     }
 
     @Override
@@ -65,6 +76,7 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
         super.onReveal();
 
         SetVisibleSiderEvent.fire(this, settingSiderPresenter);
+        setInSlot(TYPE_SetMainContent, generalSettingPresenter);
     }
 
 }
