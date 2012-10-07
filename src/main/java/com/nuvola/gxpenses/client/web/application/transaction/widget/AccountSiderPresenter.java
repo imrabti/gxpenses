@@ -88,7 +88,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
 
     @Override
     public void removeAccount(Account account) {
-        Boolean decision = Window.confirm("Are you sure about removing this account ?");
+        Boolean decision = Window.confirm(messageBundle.accountConf());
         if (decision) {
             accountService.removeAccount(account.getId(), new MethodCallbackImpl<Void>() {
                 @Override
