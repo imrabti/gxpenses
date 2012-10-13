@@ -17,7 +17,7 @@ public class Account implements Dto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    private Long id;
     private String name;
     @Enumerated
     private AccountType type;

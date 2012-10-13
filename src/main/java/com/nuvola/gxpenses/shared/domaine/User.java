@@ -18,7 +18,7 @@ public class User implements Dto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    private Long id;
     private String userName;
     private String email;
     private String password;
