@@ -15,7 +15,7 @@ public class PasswordEditor extends Composite implements EditorView<Password> {
     public interface Binder extends UiBinder<HTMLPanel, PasswordEditor> {
     }
 
-    public interface PasswordDriver extends SimpleBeanEditorDriver<Password, PasswordEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<Password, PasswordEditor> {
     }
 
     @UiField
@@ -25,10 +25,10 @@ public class PasswordEditor extends Composite implements EditorView<Password> {
     @UiField
     PasswordTextBox passwordConf;
 
-    private final PasswordDriver driver;
+    private final Driver driver;
 
     @Inject
-    public PasswordEditor(final Binder uiBinder, final PasswordDriver driver) {
+    public PasswordEditor(final Binder uiBinder, final Driver driver) {
         this.driver = driver;
 
         initWidget(uiBinder.createAndBindUi(this));

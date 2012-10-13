@@ -16,10 +16,9 @@ import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.AccountListStyle;
+import com.nuvola.gxpenses.client.resource.SiderListStyle;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountCellFactory;
@@ -56,9 +55,8 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
     public AccountSiderView(final Binder uiBinder,
                             final UiHandlersStrategy<AccountSiderUiHandlers> uiHandlers,
                             final AccountCellFactory accountCellFactory,
-                            final AccountListStyle accountListResources,
-                            final Resources resources,
-                            @Currency String currency) {
+                            final SiderListStyle siderListResources,
+                            final Resources resources) {
         super(uiHandlers);
 
         this.resources = resources;
@@ -67,7 +65,7 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
 
         periodType = new ValueListBox<PeriodType>(new EnumRenderer<PeriodType>());
         transactionType = new ValueListBox<TransactionType>(new EnumRenderer<TransactionType>());
-        accountList = new CellList<Account>(accountCellFactory.create(setupRemoveAction()), accountListResources);
+        accountList = new CellList<Account>(accountCellFactory.create(setupRemoveAction()), siderListResources);
         selectionModel = new SingleSelectionModel<Account>(keyProvider);
 
         //Initialize ValueListBox elements

@@ -28,7 +28,7 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
     public interface Binder extends UiBinder<HTMLPanel, TransactionEditor> {
     }
 
-    public interface TransactionDriver extends SimpleBeanEditorDriver<Transaction, TransactionEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<Transaction, TransactionEditor> {
     }
 
     @UiField(provided = true)
@@ -42,11 +42,11 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
     @UiField
     DoubleBox amount;
 
-    private final TransactionDriver driver;
+    private final Driver driver;
     private final SuggestionListFactory suggestionListFactory;
 
     @Inject
-    public TransactionEditor(final Binder uiBinder, final TransactionDriver driver,
+    public TransactionEditor(final Binder uiBinder, final Driver driver,
                              final SuggestionListFactory suggestionListFactory,
                              final Resources resources) {
         this.driver = driver;

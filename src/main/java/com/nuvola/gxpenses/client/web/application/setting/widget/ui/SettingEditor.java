@@ -21,7 +21,7 @@ public class SettingEditor extends Composite implements EditorView<User> {
     public interface Binder extends UiBinder<HTMLPanel, SettingEditor> {
     }
 
-    public interface SettingDriver extends SimpleBeanEditorDriver<User, SettingEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<User, SettingEditor> {
     }
 
     @UiField
@@ -37,10 +37,10 @@ public class SettingEditor extends Composite implements EditorView<User> {
     @UiField(provided = true)
     ValueListBox<PaginationType> pageSize;
 
-    private final SettingDriver driver;
+    private final Driver driver;
 
     @Inject
-    public SettingEditor(final Binder uiBinder, final SettingDriver driver) {
+    public SettingEditor(final Binder uiBinder, final Driver driver) {
         this.driver = driver;
 
         currency = new ValueListBox<CurrencyType>(new EnumRenderer<CurrencyType>());

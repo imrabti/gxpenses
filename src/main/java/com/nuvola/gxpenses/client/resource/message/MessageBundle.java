@@ -30,4 +30,6 @@ public interface MessageBundle extends Messages {
     String passwordUpdated();
 
     String tagsUpdated();
+
+    String budgetAdded();
 }
