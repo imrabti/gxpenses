@@ -52,10 +52,9 @@ public class TransactionServiceImpl implements TransactionService {
             transactionCal.set(Calendar.SECOND, currentCal.get(Calendar.SECOND));
             transaction.setDate(transactionCal.getTime());
         }
-        transaction = transactionRepos.save(transaction);
 
-        int multiplier = transaction.getType() == TransactionType.EXPENSE ? -1 : 1;
-        accountRepos.updateAccountBalance(transaction.getAccount().getId(), multiplier, transaction.getAmount());
+        transaction = transactionRepos.save(transaction);
+        accountRepos.updateAccountBalance(transaction.getAccount().getId(), transaction.getAmount());
     }
 
     @Override
@@ -82,7 +81,7 @@ public class TransactionServiceImpl implements TransactionService {
                 sourceTrans.setPayee(payeeStr);
                 sourceTrans.setType(TransactionType.EXPENSE);
                 sourceTrans.setDate(new Date());
-                sourceTrans.setAmount(transfer.getAmount());
+                sourceTrans.setAmount(-1 * transfer.getAmount());
                 sourceTrans.setAccount(sourceAccount);
                 sourceTrans = transactionRepos.save(sourceTrans);
 
@@ -90,15 +89,15 @@ public class TransactionServiceImpl implements TransactionService {
                 destTrans.setPayee(payeeStr);
                 destTrans.setType(TransactionType.INCOME);
                 destTrans.setDate(new Date());
-                destTrans.setAmount(transfer.getAmount());
+                destTrans.setAmount(1 * transfer.getAmount());
                 destTrans.setAccount(destinationAccount);
                 destTrans = transactionRepos.save(destTrans);
 
                 sourceTrans.setDestTransaction(destTrans);
                 destTrans.setDestTransaction(sourceTrans);
 
-                accountRepos.updateAccountBalance(transfer.getSourceAccount().getId(), -1, transfer.getAmount());
-                accountRepos.updateAccountBalance(transfer.getTargetAccount().getId(), 1, transfer.getAmount());
+                accountRepos.updateAccountBalance(transfer.getSourceAccount().getId(), sourceTrans.getAmount());
+                accountRepos.updateAccountBalance(transfer.getTargetAccount().getId(), destTrans.getAmount());
             }
         }
     }
@@ -122,9 +121,22 @@ public class TransactionServiceImpl implements TransactionService {
         return new PagedData<Transaction>(transactions.getContent(), (int) transactions.getTotalElements());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Double totalAmountByAccountAndPeriodAndType(Long accountId, PeriodType periodFilter, TransactionType type) {
+        Date startDate = DateUtils.getStartDate(periodFilter, new Date());
+        Date endDate = DateUtils.getEndDate(periodFilter, new Date());
+
+        if (type == TransactionType.ALL) {
+            return transactionRepos.totalByAccountAndDate(accountId, startDate, endDate);
+        } else {
+            return transactionRepos.totalByAccountAndTypeAndDate(accountId, type, startDate, endDate);
+        }
+    }
+
     private void updateAccountBalanceInvert(Transaction transaction) {
         int multiplier = transaction.getType() == TransactionType.EXPENSE ? 1 : -1;
-        accountRepos.updateAccountBalance(transaction.getAccount().getId(), multiplier, transaction.getAmount());
+        accountRepos.updateAccountBalance(transaction.getAccount().getId(), multiplier * transaction.getAmount());
     }
 
 }

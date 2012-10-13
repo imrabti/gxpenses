@@ -15,4 +15,6 @@ public interface TransactionService {
 
     PagedData<Transaction> findByAccountAndDateAndType(Long accountId, PeriodType periodFilter,
                                                        TransactionType type, Integer pageNumber, Integer length);
+
+    Double totalAmountByAccountAndPeriodAndType(Long accountId, PeriodType periodFilter, TransactionType type);
 }

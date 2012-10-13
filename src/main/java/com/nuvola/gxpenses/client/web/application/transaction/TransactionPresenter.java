@@ -18,7 +18,6 @@ import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.AccountService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.util.DateUtils;
@@ -73,7 +72,6 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     private final TransactionService transactionService;
-    private final AccountService accountService;
     private final MessageBundle messageBundle;
     private final Integer defaultPageSize;
 
@@ -88,7 +86,6 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     @Inject
     public TransactionPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                                 final TransactionService transactionService,
-                                final AccountService accountService,
                                 final MessageBundle messageBundle,
                                 final AccountSiderPresenter accountSiderPresenter,
                                 final AddTransactionPresenter addTransactionPresenter,
@@ -96,7 +93,6 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         super(eventBus, view, proxy);
 
         this.transactionService = transactionService;
-        this.accountService = accountService;
         this.messageBundle = messageBundle;
         this.defaultPageSize = defaultPageSize;
         this.accountSiderPresenter = accountSiderPresenter;
@@ -259,7 +255,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         filter.setTypeFilter(selectedTypeFilter);
         filter.setPeriodFilter(selectedPeriodeFilter);
 
-        accountService.totalAmount(filter, new MethodCallbackImpl<Double>() {
+        transactionService.totalAmount(filter, new MethodCallbackImpl<Double>() {
             @Override
             public void onSuccess(Method method, Double totalAmount) {
                 getView().setTransactionTotal(totalAmount);

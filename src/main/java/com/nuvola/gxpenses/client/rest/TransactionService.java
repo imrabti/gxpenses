@@ -28,4 +28,8 @@ public interface TransactionService extends RestService {
     @POST
     @Path("/transaction/filter")
     void getTransactions(TransactionFilter filter, MethodCallback<PagedData<Transaction>> callback);
+
+    @POST
+    @Path("/transaction/total")
+    void totalAmount(TransactionFilter filter, MethodCallback<Double> callback);
 }

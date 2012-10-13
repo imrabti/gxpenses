@@ -169,7 +169,10 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     @Override
     public void setTransactionTotal(Double total) {
-        accountBalance.setText(messageBundle.transactionTotal(NumberFormat.getCurrencyFormat(currency).format(total)));
+        if (total != null) {
+            accountBalance.setText(messageBundle.transactionTotal(
+                    NumberFormat.getCurrencyFormat(currency).format(total)));
+        }
     }
 
     @Override

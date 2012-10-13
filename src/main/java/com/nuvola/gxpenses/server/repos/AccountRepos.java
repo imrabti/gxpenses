@@ -12,6 +12,6 @@ public interface AccountRepos extends JpaRepository<Account, Long> {
     List<Account> findByUserId(Long userId, Sort sort);
 
     @Modifying
-    @Query("update Account a set a.balance = a.balance + (?2 * ?3) where a.id = ?1")
-    void updateAccountBalance(Long accountId, Integer multi, Double amount);
+    @Query("update Account a set a.balance = a.balance + ?2 where a.id = ?1")
+    void updateAccountBalance(Long accountId, Double amount);
 }
