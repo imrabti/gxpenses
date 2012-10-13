@@ -27,4 +27,8 @@ public interface TransactionRepos extends JpaRepository<Transaction, Long> {
     @Query("select sum(t.amount) from Transaction t where t.account.id = ?1 " +
             "and t.type = ?2 and t.date between ?3 and ?4")
     Double totalByAccountAndTypeAndDate(Long accountId, TransactionType type, Date from, Date to);
+
+    @Query("select sum(t.amount) from Transaction t where t.tags like ?1 " +
+            "and t.account.id in ?2 and t.type = 2 and t.date between ?3 and ?4")
+    Double totalByTagAndAccountsAndDate(String tag, List<Long> accountsId, Date from, Date to);
 }
