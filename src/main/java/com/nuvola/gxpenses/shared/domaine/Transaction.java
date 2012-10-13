@@ -19,7 +19,7 @@ public class Transaction implements Dto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    private Long id;
     private String payee;
     @Enumerated
     private TransactionType type;

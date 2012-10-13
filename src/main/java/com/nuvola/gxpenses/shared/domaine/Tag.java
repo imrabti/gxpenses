@@ -15,7 +15,7 @@ public class Tag implements Dto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    private Long id;
     private String value;
     @ManyToOne
     private User user;
