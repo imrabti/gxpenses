@@ -87,7 +87,7 @@ public class TransactionCell extends AbstractCell<Transaction> {
         if (value != null) {
             SafeHtml safeDate = SafeHtmlUtils.fromString(dateFormat.format(value.getDate()));
             SafeHtml safePayee = SafeHtmlUtils.fromString(value.getPayee());
-            SafeHtml safeAmount = getSafeAmount(value.getAmount(), value.getType());
+            SafeHtml safeAmount = getSafeAmount(value.getAmount());
 
             String dateStyle = resources.generalStyleCss().date();
             String payeeStyle = resources.generalStyleCss().payee();
@@ -116,14 +116,8 @@ public class TransactionCell extends AbstractCell<Transaction> {
         }
     }
 
-    private SafeHtml getSafeAmount(Double amount, TransactionType type) {
-        String balance;
-        if (type == TransactionType.EXPENSE) {
-            balance = numberFormat.format(amount);
-        } else {
-            balance = numberFormat.format(-amount);
-        }
-
+    private SafeHtml getSafeAmount(Double amount) {
+        String balance = numberFormat.format(amount);
         return SafeHtmlUtils.fromString(balance);
     }
 

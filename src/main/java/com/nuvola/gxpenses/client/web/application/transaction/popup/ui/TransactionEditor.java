@@ -83,6 +83,8 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
         if (driver.hasErrors()) {
             return null;
         } else {
+            int multiplier = transaction.getType() == TransactionType.EXPENSE ? -1 : 1;
+            transaction.setAmount(transaction.getAmount() * multiplier);
             return transaction;
         }
     }
