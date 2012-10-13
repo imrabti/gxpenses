@@ -16,6 +16,7 @@ import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.AccountService;
+import com.nuvola.gxpenses.client.rest.BudgetService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
@@ -89,6 +90,17 @@ public class ClientModule extends AbstractPresenterModule {
         ((RestServiceProxy) settingServiceService).setResource(resource);
 
         return settingServiceService;
+    }
+
+    @Provides
+    @Singleton
+    @Inject
+    public BudgetService provideBudgetService(@Named("rest") String url) {
+        BudgetService budgetService = GWT.create(BudgetService.class);
+        Resource resource = new Resource(url);
+        ((RestServiceProxy) budgetService).setResource(resource);
+
+        return budgetService;
     }
 
 }
