@@ -23,11 +23,11 @@ public class Budget implements Dto {
     @Enumerated
     private FrequencyType periodicity;
     @Transient
-    private Double totalAlowed;
+    private Double totalAllowed;
     @Transient
     private Double totalConsumed;
     @Transient
-    private Integer purcentageConsumed;
+    private Integer percentageConsumed;
     @ManyToOne
     private User user;
 
@@ -55,12 +55,12 @@ public class Budget implements Dto {
         this.periodicity = periodicity;
     }
 
-    public Double getTotalAlowed() {
-        return totalAlowed;
+    public Double getTotalAllowed() {
+        return totalAllowed;
     }
 
-    public void setTotalAlowed(Double totalAlowed) {
-        this.totalAlowed = totalAlowed;
+    public void setTotalAllowed(Double totalAllowed) {
+        this.totalAllowed = totalAllowed;
     }
 
     public Double getTotalConsumed() {
@@ -71,12 +71,12 @@ public class Budget implements Dto {
         this.totalConsumed = totalConsumed;
     }
 
-    public Integer getPurcentageConsumed() {
-        return purcentageConsumed;
+    public Integer getPercentageConsumed() {
+        return percentageConsumed;
     }
 
-    public void setPurcentageConsumed(Integer purcentageConsumed) {
-        this.purcentageConsumed = purcentageConsumed;
+    public void setPercentageConsumed(Integer percentageConsumed) {
+        this.percentageConsumed = percentageConsumed;
     }
 
     public User getUser() {
