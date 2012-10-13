@@ -2,10 +2,8 @@ package com.nuvola.gxpenses.server.service;
 
 import com.nuvola.gxpenses.server.repos.AccountRepos;
 import com.nuvola.gxpenses.server.repos.TransactionRepos;
-import com.nuvola.gxpenses.server.util.DateUtils;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
-import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -52,28 +50,6 @@ public class AccountServiceImpl implements AccountService {
     @Transactional(readOnly = true)
     public List<Account> findAllAccountsByUserId(Long userId) {
         return accountRepos.findByUserId(userId, new Sort("name"));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Double totalAmountByAccountAndPeriodAndType(Long accountId, PeriodType periodeFilter, TransactionType type) {
-        Date startDate = DateUtils.getStartDate(periodeFilter, new Date());
-        Date endDate = DateUtils.getEndDate(periodeFilter, new Date());
-
-        List<Transaction> transactions;
-        if (type == TransactionType.ALL) {
-            transactions = transactionRepos.findByAccountIdAndDateBetween(accountId, startDate, endDate);
-        } else {
-            transactions = transactionRepos.findByAccountIdAndDateBetweenAndType(accountId, startDate, endDate, type);
-        }
-
-        double totalAmount = 0d;
-        for (Transaction transaction : transactions) {
-            int multiplier = (transaction.getType() == TransactionType.EXPENSE) ? -1 : 1;
-            totalAmount += transaction.getAmount() * multiplier;
-        }
-
-        return totalAmount;
     }
 
 }

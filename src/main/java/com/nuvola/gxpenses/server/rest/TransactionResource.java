@@ -48,4 +48,11 @@ public class TransactionResource extends Resource {
                 filter.getTypeFilter(), filter.getPageNumber(), filter.getLength());
     }
 
+    @POST
+    @Path("/total")
+    public Double totalAmount(TransactionFilter filter) {
+        return transactionService.totalAmountByAccountAndPeriodAndType(filter.getAccountId(),
+                filter.getPeriodFilter(), filter.getTypeFilter());
+    }
+
 }

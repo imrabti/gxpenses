@@ -12,6 +12,4 @@ public interface AccountService {
     void removeAccount(Long accountId);
 
     List<Account> findAllAccountsByUserId(Long userId);
-
-    Double totalAmountByAccountAndPeriodAndType(Long accountId, PeriodType periodeFilter, TransactionType type);
 }

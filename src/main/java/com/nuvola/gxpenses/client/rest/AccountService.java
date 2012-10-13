@@ -1,7 +1,6 @@
 package com.nuvola.gxpenses.client.rest;
 
 import com.nuvola.gxpenses.shared.domaine.Account;
-import com.nuvola.gxpenses.shared.dto.TransactionFilter;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 
@@ -24,8 +23,4 @@ public interface AccountService extends RestService {
     @DELETE
     @Path("/account/{id}")
     void removeAccount(@PathParam("id") Long accountId, MethodCallback<Void> callback);
-
-    @POST
-    @Path("/account/total")
-    void totalAmount(TransactionFilter filter, MethodCallback<Double> callback);
 }
