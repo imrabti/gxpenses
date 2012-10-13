@@ -10,6 +10,7 @@ import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
+import com.nuvola.gxpenses.client.web.application.budget.BudgetPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.SettingPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.TransactionPresenter;
 
@@ -29,6 +30,8 @@ public interface ClientGinjector extends Ginjector {
     Provider<ApplicationPresenter> getApplicationPresenter();
 
     Provider<TransactionPresenter> getTransactionPresenter();
+
+    AsyncProvider<BudgetPresenter> getBudgetPresenter();
 
     AsyncProvider<SettingPresenter> getSettingPresenter();
 
