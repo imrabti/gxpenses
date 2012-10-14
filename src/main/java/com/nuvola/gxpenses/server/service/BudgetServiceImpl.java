@@ -65,6 +65,7 @@ public class BudgetServiceImpl implements BudgetService {
 
             budget.setTotalAllowed(totalAllowed);
             budget.setTotalConsumed(totalConsumed);
+            budget.setPercentageConsumed((int)((totalAllowed / totalConsumed) * 100));
         }
 
         return budgets;

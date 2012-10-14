@@ -23,4 +23,9 @@ public enum FrequencyType {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return label;
+    }
+
 }

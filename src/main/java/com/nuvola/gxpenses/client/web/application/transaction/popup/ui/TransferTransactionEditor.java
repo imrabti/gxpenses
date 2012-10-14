@@ -19,8 +19,7 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
     public interface Binder extends UiBinder<HTMLPanel, TransferTransactionEditor> {
     }
 
-    public interface TransferTransactionDriver extends
-            SimpleBeanEditorDriver<TransferTransaction, TransferTransactionEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<TransferTransaction, TransferTransactionEditor> {
     }
 
     @UiField(provided = true)
@@ -31,10 +30,10 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
     DoubleBox amount;
 
     private final ValueListFactory valueListFactory;
-    private final TransferTransactionDriver driver;
+    private final Driver driver;
 
     @Inject
-    public TransferTransactionEditor(final Binder uiBinder, final TransferTransactionDriver driver,
+    public TransferTransactionEditor(final Binder uiBinder, final Driver driver,
                                      final ValueListFactory valueListFactory) {
         this.driver = driver;
         this.valueListFactory = valueListFactory;

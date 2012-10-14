@@ -21,22 +21,20 @@ public class AccountEditor extends Composite implements EditorView<Account> {
     public interface Binder extends UiBinder<HTMLPanel, AccountEditor> {
     }
 
-    public interface AccountDriver extends SimpleBeanEditorDriver<Account, AccountEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<Account, AccountEditor> {
     }
 
     @UiField
     TextBox name;
-
     @UiField(provided = true)
     ValueListBox<AccountType> type;
-
     @UiField
     DoubleBox balance;
 
-    private final AccountDriver driver;
+    private final Driver driver;
 
     @Inject
-    public AccountEditor(final Binder uiBinder, final AccountDriver driver) {
+    public AccountEditor(final Binder uiBinder, final Driver driver) {
         this.driver = driver;
 
         //Initialize ValusListBox elements

@@ -1,4 +1,4 @@
-package com.nuvola.gxpenses.client.web.application.transaction.popup;
+package com.nuvola.gxpenses.client.web.application.budget.popup;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -10,26 +10,25 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.AccountEditor;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetEditor;
+import com.nuvola.gxpenses.shared.domaine.Budget;
 
-public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers>
-        implements AddAccountPresenter.MyView {
+public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> implements AddBudgetPresenter.MyView {
 
-    public interface Binder extends UiBinder<PopupPanel, AddAccountView> {
+    public interface Binder extends UiBinder<PopupPanel, AddBudgetView> {
     }
 
     @UiField
     PopupPanel popup;
     @UiField(provided = true)
-    AccountEditor accountEditor;
+    BudgetEditor budgetEditor;
 
     @Inject
-    public AddAccountView(final EventBus eventBus, final Binder uiBinder,
-                          final UiHandlersStrategy<AddAccountUiHandlers> uiHandlersStrategy,
-                          final AccountEditor accountEditor) {
+    public AddBudgetView(final EventBus eventBus, final Binder uiBinder,
+                         final UiHandlersStrategy<AddBudgetUiHandler> uiHandlersStrategy,
+                         final BudgetEditor budgetEditor) {
         super(eventBus, uiHandlersStrategy);
-        this.accountEditor = accountEditor;
+        this.budgetEditor = budgetEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
     }
@@ -42,15 +41,15 @@ public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers
     }
 
     @Override
-    public void edit(Account account) {
-        accountEditor.edit(account);
+    public void edit(Budget budget) {
+        budgetEditor.edit(budget);
     }
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        Account account = accountEditor.get();
-        if (account != null) {
-            getUiHandlers().saveAccount(account);
+        Budget budget = budgetEditor.get();
+        if (budget != null) {
+            getUiHandlers().saveBudget(budget);
             hide();
         }
     }
