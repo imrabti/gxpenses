@@ -121,6 +121,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     @Override
     protected void onReveal() {
         super.onReveal();
+
         fireLoadListAccounts();
     }
 
