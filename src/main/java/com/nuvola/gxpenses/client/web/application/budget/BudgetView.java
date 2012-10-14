@@ -3,9 +3,11 @@ package com.nuvola.gxpenses.client.web.application.budget;
 import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
@@ -25,6 +27,7 @@ import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.resource.BigTableStyle;
 import com.nuvola.gxpenses.client.resource.Resources;
+import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetProgressCell;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetProgressFooterCell;
 import com.nuvola.gxpenses.client.web.application.renderer.AmountCell;
@@ -62,6 +65,7 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     private final ProvidesKey<BudgetElement> keyProvider;
     private final ListDataProvider<BudgetElement> dataProvider;
     private final Resources resources;
+    private final MessageBundle messageBundle;
 
     private final TowSideTextCell towSideTextCell;
     private final BudgetProgressCell budgetProgressCell;
@@ -75,16 +79,18 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     public BudgetView(final Binder uiBinder,
                       final UiHandlersStrategy<BudgetUiHandlers> uiHandlers,
                       final BigTableStyle bigTableStyle, final Resources resources,
-                      final BudgetProgressCell budgetProgressCell,
+                      final MessageBundle messageBundle, final BudgetProgressCell budgetProgressCell,
                       final BudgetProgressFooterCell budgetProgressFooterCell,
                       final TowSideTextCell towSideTextCell, final AmountCell amountCell,
                       @Currency String currency) {
         super(uiHandlers);
 
         this.resources = resources;
+        this.messageBundle = messageBundle;
         this.currency = currency;
         this.keyProvider = setupKeyProvider();
         this.dataProvider = new ListDataProvider<BudgetElement>(keyProvider);
+        this.budgetTotal = new BudgetProgressTotal();
         this.budgetProgressCell = budgetProgressCell;
         this.budgetProgressFooterCell = budgetProgressFooterCell;
         this.towSideTextCell = towSideTextCell;
@@ -171,6 +177,25 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     @Override
     public Boolean isEmptyVisible() {
         return emptyPanel.isVisible();
+    }
+
+    @UiHandler("settingButton")
+    void onSettingClicked(ClickEvent event) {
+        getUiHandlers().elementSetting((Widget) event.getSource());
+
+        settingButton.setText(messageBundle.elementSettings());
+        settingButton.removeStyleName(resources.buttonStyleCss().settingButton());
+        settingButton.addStyleName(resources.buttonStyleCss().settingButtonText());
+    }
+
+    @UiHandler("nextButton")
+    void onNextClicked(ClickEvent event) {
+        getUiHandlers().nextPeriod();
+    }
+
+    @UiHandler("previousButton")
+    void onPreviousClicked(ClickEvent event) {
+        getUiHandlers().previousPeriod();
     }
 
     private ProvidesKey<BudgetElement> setupKeyProvider() {

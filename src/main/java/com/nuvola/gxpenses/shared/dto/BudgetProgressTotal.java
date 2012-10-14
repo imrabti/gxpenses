@@ -5,6 +5,11 @@ public class BudgetProgressTotal implements Dto {
     private Double totalAllowed;
     private Double totalConsumed;
 
+    public BudgetProgressTotal() {
+        totalAllowed = 0d;
+        totalConsumed = 0d;
+    }
+
     public BudgetProgressTotal(Double totalAllowed, Double totalConsumed) {
         this.totalAllowed = totalAllowed;
         this.totalConsumed = totalConsumed;

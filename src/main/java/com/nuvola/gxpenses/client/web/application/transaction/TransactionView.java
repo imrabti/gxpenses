@@ -188,7 +188,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         getUiHandlers().addNewTransaction((Widget) event.getSource());
 
         addTransactionButton.setText(messageBundle.transactionNew());
-        addTransactionButton.removeStyleName(resources.buttonStyleCss().settingButton());
+        addTransactionButton.removeStyleName(resources.buttonStyleCss().addButtonAlt());
         addTransactionButton.addStyleName(resources.buttonStyleCss().addButtonAltText());
     }
 

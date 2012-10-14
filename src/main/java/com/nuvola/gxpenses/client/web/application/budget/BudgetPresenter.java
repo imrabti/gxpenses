@@ -1,5 +1,6 @@
 package com.nuvola.gxpenses.client.web.application.budget;
 
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -65,6 +66,18 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
         this.budgetSiderPresenter = budgetSiderPresenter;
 
         getView().setUiHandlers(this);
+    }
+
+    public void elementSetting(Widget relativeTo) {
+
+    }
+
+    public void nextPeriod() {
+
+    }
+
+    public void previousPeriod() {
+
     }
 
     @Override
