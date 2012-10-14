@@ -99,13 +99,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         dataProvider.addDataDisplay(transactionList);
 
         initWidget(uiBinder.createAndBindUi(this));
-
-        titlePanel.setVisible(false);
-        pagerPanel.setVisible(false);
-        headerPanel.setVisible(false);
-        footerPanel.setVisible(false);
-        noTransactionsPanel.setVisible(false);
-        emptyPanel.setVisible(true);
+        hideTransactionsPanel();
     }
 
     @Override

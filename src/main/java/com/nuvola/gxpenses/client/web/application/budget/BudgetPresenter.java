@@ -13,13 +13,35 @@ import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.BudgetService;
+import com.nuvola.gxpenses.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.widget.BudgetSiderPresenter;
+import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
+
+import java.util.List;
 
 public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPresenter.MyProxy>
         implements BudgetUiHandlers {
 
-    public interface MyView extends View, HasUiHandlers<BudgetUiHandlers> {
+    public interface MyView extends View, EmptyDisplay, HasUiHandlers<BudgetUiHandlers> {
+        void setData(List<BudgetElement> data, BudgetProgressTotal total);
+
+        void setBudgetName(String name);
+
+        void setPeriod(String periodName);
+
+        void showElementsPanel();
+
+        void hideElementsPanel();
+
+        void showEmptyPanel();
+
+        void hideEmptyPanel();
+
+        void switchBudgetSettingsStyle();
+
+        Boolean isEmptyVisible();
     }
 
     @ProxyCodeSplit
