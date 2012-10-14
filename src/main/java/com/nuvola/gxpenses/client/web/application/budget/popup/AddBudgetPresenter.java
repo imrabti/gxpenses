@@ -11,6 +11,7 @@ import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.BudgetService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Budget;
 import com.nuvola.gxpenses.shared.type.FrequencyType;
 import org.fusesource.restygwt.client.Method;
@@ -47,6 +48,7 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
         budgetService.createBudget(budget, new MethodCallbackImpl<Void>() {
             @Override
             public void onSuccess(Method method, Void aVoid) {
+                BudgetElementsChangedEvent.fire(this);
                 GlobalMessageEvent.fire(this, messageBundle.budgetAdded());
             }
         });
