@@ -190,7 +190,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     public void removeTransaction(Transaction transaction) {
         Boolean decision = Window.confirm(messageBundle.transactionConf());
         if (decision) {
-            transactionService.removeTransaction(transaction.getId(), new MethodCallbackImpl<Void>() {
+            transactionService.removeTransaction(transaction.getId().toString(), new MethodCallbackImpl<Void>() {
                 @Override
                 public void onSuccess(Method method, Void aVoid) {
                     Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);

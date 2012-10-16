@@ -94,7 +94,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     public void removeAccount(Account account) {
         Boolean decision = Window.confirm(messageBundle.accountConf());
         if (decision) {
-            accountService.removeAccount(account.getId(), new MethodCallbackImpl<Void>() {
+            accountService.removeAccount(account.getId().toString(), new MethodCallbackImpl<Void>() {
                 @Override
                 public void onSuccess(Method method, Void aVoid) {
                     valueListFactory.updateListAccount();

@@ -134,8 +134,8 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         emptyPanel.setVisible(false);
         noElementsPanel.setVisible(false);
         titlePanel.setVisible(true);
-        headerPanel.setVisible(true);
         elementsTable.setVisible(true);
+        headerPanel.setVisible(true);
     }
 
     @Override
@@ -148,21 +148,19 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     }
 
     @Override
-    public void showEmptyPanel() {
+    public void showNoBudgetsPanel() {
         noElementsPanel.setVisible(true);
         titlePanel.setVisible(true);
         elementsTable.setVisible(false);
         headerPanel.setVisible(false);
-        emptyPanel.setVisible(false);
     }
 
     @Override
-    public void hideEmptyPanel() {
+    public void hideNoBudgetsPanel() {
         noElementsPanel.setVisible(false);
         titlePanel.setVisible(true);
         elementsTable.setVisible(true);
         headerPanel.setVisible(true);
-        emptyPanel.setVisible(false);
     }
 
     @Override

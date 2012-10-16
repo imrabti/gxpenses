@@ -34,4 +34,8 @@ public interface MessageBundle extends Messages {
     String budgetAdded();
 
     String elementSettings();
+
+    String noBudgets();
+
+    String noSelectedBudget();
 }
