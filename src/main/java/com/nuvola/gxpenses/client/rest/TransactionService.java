@@ -19,7 +19,7 @@ public interface TransactionService extends RestService {
 
     @DELETE
     @Path("/transaction/{id}")
-    void removeTransaction(@PathParam("id") Long transactionId, MethodCallback<Void> callback);
+    void removeTransaction(@PathParam("id") String transactionId, MethodCallback<Void> callback);
 
     @POST
     @Path("/transaction/transfer")

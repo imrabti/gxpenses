@@ -99,13 +99,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         dataProvider.addDataDisplay(transactionList);
 
         initWidget(uiBinder.createAndBindUi(this));
-
-        titlePanel.setVisible(false);
-        pagerPanel.setVisible(false);
-        headerPanel.setVisible(false);
-        footerPanel.setVisible(false);
-        noTransactionsPanel.setVisible(false);
-        emptyPanel.setVisible(true);
+        hideTransactionsPanel();
     }
 
     @Override
@@ -194,7 +188,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         getUiHandlers().addNewTransaction((Widget) event.getSource());
 
         addTransactionButton.setText(messageBundle.transactionNew());
-        addTransactionButton.removeStyleName(resources.buttonStyleCss().settingButton());
+        addTransactionButton.removeStyleName(resources.buttonStyleCss().addButtonAlt());
         addTransactionButton.addStyleName(resources.buttonStyleCss().addButtonAltText());
     }
 

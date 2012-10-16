@@ -74,6 +74,10 @@
             cursor: hand;
         }
 
+        .settingsStyle:hover {
+            color: #6fa944;
+        }
+
         .userInfos {
             float: right;
             background-color: #545454;

@@ -20,17 +20,4 @@ public interface BudgetService extends RestService {
     @GET
     @Path("/budget/{period}")
     void getBudgets(@PathParam("period") String period, MethodCallback<List<Budget>> callback);
-
-    @POST
-    @Path("/budget/element/{id}")
-    void createBudgetElement(@PathParam("id") Long id, BudgetElement budgetElement, MethodCallback<Void> callback);
-
-    @DELETE
-    @Path("/budget/element")
-    void removeBudgetElement(BudgetElement budgetElement, MethodCallback<Void> callback);
-
-    @GET
-    @Path("/budget/element/{id}/{period}")
-    void getBudgetElements(@PathParam("id") Long id, @PathParam("period") String period,
-                           MethodCallback<List<BudgetElement>> callback);
 }

@@ -32,4 +32,10 @@ public interface MessageBundle extends Messages {
     String tagsUpdated();
 
     String budgetAdded();
+
+    String elementSettings();
+
+    String noBudgets();
+
+    String noSelectedBudget();
 }

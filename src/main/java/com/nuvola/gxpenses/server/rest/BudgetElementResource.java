@@ -2,11 +2,12 @@ package com.nuvola.gxpenses.server.rest;
 
 import com.nuvola.gxpenses.server.service.BudgetService;
 import com.nuvola.gxpenses.server.util.SecurityContext;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.shared.domaine.BudgetElement;
 import com.nuvola.gxpenses.shared.domaine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -18,8 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
-@Path("/budget")
-public class BudgetResource extends Resource {
+@Path("/element")
+public class BudgetElementResource extends Resource {
 
     @Autowired
     private BudgetService budgetService;
@@ -27,17 +28,26 @@ public class BudgetResource extends Resource {
     private SecurityContext securityContext;
 
     @POST
-    public Response createBudget(Budget budget) {
-        budgetService.createBudget(budget);
+    @Path("/{id}")
+    public Response createBudgetElement(@PathParam("id") String id, BudgetElement budgetElement) {
+        budgetService.createBudgetElement(Long.parseLong(id), budgetElement);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    public Response removeBudgetElement(BudgetElement budgetElement) {
+        budgetService.removeBudgetElement(budgetElement);
         return Response.ok().build();
     }
 
     @GET
-    @Path("/{period}")
-    public List<Budget> getBudgets(@PathParam("period") String period) throws ParseException {
+    @Path("/{id}/{period}")
+    public List<BudgetElement> getBudgetElements(@PathParam("id") String id,
+                                                 @PathParam("period") String period) throws ParseException {
         User currentUser = securityContext.getCurrentUser();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return budgetService.findAllBudgetsByUserId(currentUser.getId(), dateFormat.parse(period));
+        return budgetService.findAllBudgetElementsByBudget(Long.parseLong(id), currentUser.getId(),
+                dateFormat.parse(period));
     }
 
 }

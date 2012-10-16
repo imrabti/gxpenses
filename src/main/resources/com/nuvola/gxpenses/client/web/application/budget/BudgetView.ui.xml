@@ -29,7 +29,7 @@
 
         <g:layer left="20px" top="60px" right="20px" height="40px">
             <g:HTMLPanel ui:field="headerPanel" styleName="{resource.generalStyleCss.subTitle}">
-                <g:Label text="Periode" ui:field="periode"/>
+                <g:Label text="Periode" ui:field="period"/>
             </g:HTMLPanel>
         </g:layer>
 
