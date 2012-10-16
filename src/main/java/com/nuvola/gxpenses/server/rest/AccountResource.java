@@ -38,8 +38,8 @@ public class AccountResource extends Resource {
 
     @DELETE
     @Path("/{id}")
-    public Response removeAccount(@PathParam("id") Long id) {
-        accountService.removeAccount(id);
+    public Response removeAccount(@PathParam("id") String id) {
+        accountService.removeAccount(Long.parseLong(id));
         return Response.ok().build();
     }
 

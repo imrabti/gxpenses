@@ -29,8 +29,8 @@ public class TransactionResource extends Resource {
 
     @DELETE
     @Path("/{id}")
-    public Response removeTransaction(@PathParam("id") Long id) {
-        transactionService.removeTransaction(id);
+    public Response removeTransaction(@PathParam("id") String id) {
+        transactionService.removeTransaction(Long.parseLong(id));
         return Response.ok().build();
     }
 

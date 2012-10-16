@@ -22,5 +22,5 @@ public interface AccountService extends RestService {
 
     @DELETE
     @Path("/account/{id}")
-    void removeAccount(@PathParam("id") Long accountId, MethodCallback<Void> callback);
+    void removeAccount(@PathParam("id") String accountId, MethodCallback<Void> callback);
 }
