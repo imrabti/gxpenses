@@ -17,13 +17,13 @@ import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.BudgetElementService;
-import com.nuvola.gxpenses.client.rest.BudgetService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.util.DateUtils;
 import com.nuvola.gxpenses.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
+import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetElementPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.widget.BudgetSiderPresenter;
 import com.nuvola.gxpenses.shared.domaine.Budget;
 import com.nuvola.gxpenses.shared.domaine.BudgetElement;
@@ -65,8 +65,9 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     private final BudgetElementService budgetElementService;
     private final MessageBundle messageBundle;
-    private final BudgetSiderPresenter budgetSiderPresenter;
     private final DateTimeFormat dateFormat;
+    private final BudgetSiderPresenter budgetSiderPresenter;
+    private final AddBudgetElementPresenter addBudgetElementPresenter;
 
     private Budget currentBudget;
     private Date currentDate;
@@ -74,12 +75,14 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
     @Inject
     public BudgetPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                            final BudgetElementService budgetElementService, final MessageBundle messageBundle,
-                           final BudgetSiderPresenter budgetSiderPresenter) {
+                           final BudgetSiderPresenter budgetSiderPresenter,
+                           final AddBudgetElementPresenter addBudgetElementPresenter) {
         super(eventBus, view, proxy);
 
         this.budgetElementService = budgetElementService;
         this.messageBundle = messageBundle;
         this.budgetSiderPresenter = budgetSiderPresenter;
+        this.addBudgetElementPresenter = addBudgetElementPresenter;
         this.dateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
 
         getView().setUiHandlers(this);
@@ -87,7 +90,9 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @Override
     public void elementSetting(Widget relativeTo) {
-
+        addBudgetElementPresenter.setRelativeTo(relativeTo);
+        addBudgetElementPresenter.setSelectedBudget(currentBudget);
+        addToPopupSlot(addBudgetElementPresenter, false);
     }
 
     @Override

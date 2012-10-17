@@ -44,6 +44,7 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
         getView().setUiHandlers(this);
     }
 
+    @Override
     public void saveBudget(Budget budget) {
         budgetService.createBudget(budget, new MethodCallbackImpl<Void>() {
             @Override

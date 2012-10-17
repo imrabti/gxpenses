@@ -167,8 +167,8 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     public void switchBudgetSettingsStyle() {
         if (!settingButton.getText().equals("")) {
             settingButton.setText("");
-            settingButton.removeStyleName(resources.buttonStyleCss().addButtonAltText());
-            settingButton.addStyleName(resources.buttonStyleCss().addButtonAlt());
+            settingButton.removeStyleName(resources.buttonStyleCss().settingButtonText());
+            settingButton.addStyleName(resources.buttonStyleCss().settingButton());
         }
     }
 
@@ -208,8 +208,8 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     private void initCellTable() {
         setupTagColumn();
         setupProgressColumn();
-        setupBudgetAmount();
-        setupBudgetLeft();
+        setupBudgetAmountColumn();
+        setupBudgetLeftColumn();
     }
 
     private void setupTagColumn() {
@@ -250,7 +250,7 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         elementsTable.setColumnWidth(progressColumn, 220, Style.Unit.PX);
     }
 
-    private void setupBudgetAmount() {
+    private void setupBudgetAmountColumn() {
         NumberCell numberCell = new NumberCell(NumberFormat.getCurrencyFormat(currency));
         Column<BudgetElement, Number> amountColumn = new Column<BudgetElement, Number>(numberCell) {
             @Override
@@ -270,7 +270,7 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         elementsTable.setColumnWidth(amountColumn, 100, Style.Unit.PX);
     }
 
-    private void setupBudgetLeft() {
+    private void setupBudgetLeftColumn() {
         Column<BudgetElement, Double> resultColumn = new Column<BudgetElement, Double>(amountCell) {
             @Override
             public Double getValue(BudgetElement object) {

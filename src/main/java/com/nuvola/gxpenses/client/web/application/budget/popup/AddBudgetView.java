@@ -28,6 +28,7 @@ public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> i
                          final UiHandlersStrategy<AddBudgetUiHandler> uiHandlersStrategy,
                          final BudgetEditor budgetEditor) {
         super(eventBus, uiHandlersStrategy);
+
         this.budgetEditor = budgetEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
