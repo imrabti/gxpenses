@@ -1,5 +1,6 @@
 package com.nuvola.gxpenses.server.service;
 
+import com.google.common.base.Objects;
 import com.nuvola.gxpenses.server.repos.AccountRepos;
 import com.nuvola.gxpenses.server.repos.BudgetElementRepos;
 import com.nuvola.gxpenses.server.repos.BudgetRepos;
@@ -65,10 +66,16 @@ public class BudgetServiceImpl implements BudgetService {
 
             budget.setTotalAllowed(totalAllowed);
             budget.setTotalConsumed(totalConsumed);
-            budget.setPercentageConsumed((int)((totalAllowed / totalConsumed) * 100));
+            budget.setPercentageConsumed((int)((totalConsumed / totalAllowed) * 100));
         }
 
         return budgets;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId) {
+        return budgetElementRepos.findByBudgetId(budgetId);
     }
 
     @Override
@@ -81,9 +88,9 @@ public class BudgetServiceImpl implements BudgetService {
         Date endDate = DateUtils.getLastDateFrequency(budget.getPeriodicity(), period);
 
         for (BudgetElement budgetElement : budgetElements) {
-            Double consumedAmount = transactionRepos.totalByTagAndAccountsAndDate(budgetElement.getTag(),
+            Double consumedAmount = transactionRepos.totalByTagAndAccountsAndDate("%" + budgetElement.getTag() + "%",
                     accounts, startDate, endDate);
-            budgetElement.setConsumedAmount(Math.abs(consumedAmount));
+            budgetElement.setConsumedAmount(Math.abs(Objects.firstNonNull(consumedAmount, 0d)));
             budgetElement.setLeftAmount(budgetElement.getAmount() - budgetElement.getConsumedAmount());
         }
 

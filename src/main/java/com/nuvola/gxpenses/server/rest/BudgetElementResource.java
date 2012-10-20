@@ -41,6 +41,12 @@ public class BudgetElementResource extends Resource {
     }
 
     @GET
+    @Path("/{id}")
+    public List<BudgetElement> getBudgetElements(@PathParam("id") String id) {
+        return budgetService.findAllBudgetElementsByBudget(Long.parseLong(id));
+    }
+
+    @GET
     @Path("/{id}/{period}")
     public List<BudgetElement> getBudgetElements(@PathParam("id") String id,
                                                  @PathParam("period") String period) throws ParseException {
