@@ -33,7 +33,7 @@ import com.nuvola.gxpenses.shared.domaine.BudgetElement;
 import java.util.List;
 
 public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetElementUiHandlers>
-        implements AddBudgetElementPresenter.MyView {
+        implements AddBudgetElementPresenter.MyView, BudgetElementEditor.Handler {
 
     public interface Binder extends UiBinder<PopupPanel, AddBudgetElementView> {
     }
@@ -73,6 +73,7 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
         dataProvider.addDataDisplay(elementsTable);
 
         initWidget(uiBinder.createAndBindUi(this));
+        budgetElementEditor.setHandler(this);
         initCellTable();
     }
 
@@ -93,6 +94,11 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
         dataProvider.getList().clear();
         dataProvider.getList().addAll(budgetElements);
         dataProvider.refresh();
+    }
+
+    @Override
+    public void onBudgetElementAdded(BudgetElement budgetElement) {
+        getUiHandlers().addNewBudgetElement(budgetElement);
     }
 
     @UiHandler("popup")

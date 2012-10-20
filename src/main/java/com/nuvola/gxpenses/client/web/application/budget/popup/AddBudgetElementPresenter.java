@@ -6,10 +6,12 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
+import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.BudgetElementService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Budget;
 import com.nuvola.gxpenses.shared.domaine.BudgetElement;
 import org.fusesource.restygwt.client.Method;
@@ -47,7 +49,16 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
 
     @Override
     public void addNewBudgetElement(BudgetElement budgetElement) {
-
+        budgetElementService.createBudgetElement(selectedBudget.getId().toString(), budgetElement,
+                new MethodCallbackImpl<Void>() {
+            @Override
+            public void onSuccess(Method method, Void aVoid) {
+                BudgetElementsChangedEvent.fire(this);
+                GlobalMessageEvent.fire(this, messageBundle.budgetElementAdded());
+                prepareNewBudgetElement();
+                fireLoadBudgetElementById();
+            }
+        });
     }
 
     @Override

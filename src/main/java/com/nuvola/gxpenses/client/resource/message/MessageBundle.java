@@ -33,6 +33,10 @@ public interface MessageBundle extends Messages {
 
     String budgetAdded();
 
+    String budgetElementAdded();
+
+    String budgetElementRemoved();
+
     String elementSettings();
 
     String noBudgets();
