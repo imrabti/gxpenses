@@ -15,5 +15,7 @@ public interface BudgetService {
 
     List<Budget> findAllBudgetsByUserId(Long userId, Date period);
 
+    List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId);
+
     List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId, Long userId, Date period);
 }

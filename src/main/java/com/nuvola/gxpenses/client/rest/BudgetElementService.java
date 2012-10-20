@@ -21,6 +21,10 @@ public interface BudgetElementService extends RestService {
     void removeBudgetElement(BudgetElement budgetElement, MethodCallback<Void> callback);
 
     @GET
+    @Path("/element/{id}")
+    void getBudgetElements(@PathParam("id") String id, MethodCallback<List<BudgetElement>> callback);
+
+    @GET
     @Path("/element/{id}/{period}")
     void getBudgetElements(@PathParam("id") String id, @PathParam("period") String period,
                            MethodCallback<List<BudgetElement>> callback);

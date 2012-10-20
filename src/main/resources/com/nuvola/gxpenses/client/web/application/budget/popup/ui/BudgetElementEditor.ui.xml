@@ -1,0 +1,33 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field='resource' type='com.nuvola.gxpenses.client.resource.Resources'/>
+
+    <ui:style>
+        .actionBar {
+            background-color: #cfcfcf;
+            -moz-border-radius-bottomleft: 5px;
+            -webkit-border-bottom-left-radius: 5px;
+            -moz-border-radius-bottomright: 5px;
+            -webkit-border-bottom-right-radius: 5px;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.actionBar}">
+        <g:Grid width="100%">
+            <g:row>
+                <g:customCell>
+                    <g:SuggestBox ui:field="tag" width="150px" styleName="{resource.generalStyleCss.textInput}"/>
+                </g:customCell>
+                <g:customCell>
+                    <g:DoubleBox ui:field="amount" width="140px" styleName="{resource.generalStyleCss.textInput}"/>
+                </g:customCell>
+                <g:customCell>
+                    <g:Button ui:field="addElement" addStyleNames="{resource.buttonStyleCss.linkButton} {resource.buttonStyleCss.addButton}"/>
+                </g:customCell>
+            </g:row>
+        </g:Grid>
+    </g:HTMLPanel>
+</ui:UiBinder>
