@@ -1,4 +1,4 @@
-package com.nuvola.gxpenses.client.web.welcome.entrypoint.widget;
+package com.nuvola.gxpenses.client.web.welcome.entrypoint.login;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Widget;

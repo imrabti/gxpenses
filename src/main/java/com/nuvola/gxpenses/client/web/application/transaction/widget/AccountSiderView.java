@@ -18,7 +18,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.SiderListStyle;
+import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountCellFactory;

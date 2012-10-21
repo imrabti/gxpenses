@@ -3,18 +3,9 @@
              xmlns:f='urn:import:com.nuvola.gxpenses.client.web.application.ui'
              xmlns:s='urn:import:com.nuvola.gxpenses.client.web.application.widget'>
 
-    <ui:image field='rootBack' src="../../resource/images/back.png"/>
+    <ui:with field="resource" type="com.nuvola.gxpenses.client.resource.Resources"/>
 
     <ui:style>
-        @sprite .root {
-            gwt-image: "rootBack";
-            background-repeat: repeat-x;
-            width: 100%;
-            height: 100%;
-            font-family: arial, sans-serif;
-            font-size: 12px;
-        }
-
         .mainContainer {
             border-right: 1px dashed #bebebe;
             min-width: 800px;
@@ -28,7 +19,7 @@
     </ui:style>
 
     <g:SimpleLayoutPanel>
-        <g:DockLayoutPanel unit='PX' styleName="{style.root}">
+        <g:DockLayoutPanel unit='PX' styleName="{resource.generalStyleCss.applicationWrapper}">
             <!-- Main header of the application -->
             <g:north size="64">
                 <g:HTMLPanel>

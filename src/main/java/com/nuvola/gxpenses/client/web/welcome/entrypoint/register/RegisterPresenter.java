@@ -1,4 +1,4 @@
-package com.nuvola.gxpenses.client.web.welcome.entrypoint.widget;
+package com.nuvola.gxpenses.client.web.welcome.entrypoint.register;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -12,20 +12,20 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
 
-public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresenter.MyProxy>
-        implements LoginUiHandlers {
+public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy>
+        implements RegisterUiHandlers {
 
-    public interface MyView extends View, HasUiHandlers<LoginUiHandlers> {
+    public interface MyView extends View, HasUiHandlers<RegisterUiHandlers> {
     }
 
     @ProxyStandard
-    @NameToken(NameTokens.login)
-    public interface MyProxy extends ProxyPlace<LoginPresenter> {
+    @NameToken(NameTokens.register)
+    public interface MyProxy extends ProxyPlace<RegisterPresenter> {
     }
 
     @Inject
-    public LoginPresenter(final EventBus eventBus, final MyView view,
-                               final MyProxy proxy) {
+    public RegisterPresenter(final EventBus eventBus, final MyView view,
+                          final MyProxy proxy) {
         super(eventBus, view, proxy);
 
         getView().setUiHandlers(this);

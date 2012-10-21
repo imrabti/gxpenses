@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.SiderMenuStyle;
+import com.nuvola.gxpenses.client.resource.style.list.SiderMenuStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumCell;
 
 import java.util.Arrays;

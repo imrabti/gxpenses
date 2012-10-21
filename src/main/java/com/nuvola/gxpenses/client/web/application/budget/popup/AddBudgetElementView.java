@@ -24,7 +24,7 @@ import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.resource.Resources;
-import com.nuvola.gxpenses.client.resource.SmallTableStyle;
+import com.nuvola.gxpenses.client.resource.style.table.SmallTableStyle;
 import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetElementEditor;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.RemoveBudgetElementCellFactory;
 import com.nuvola.gxpenses.client.web.application.renderer.ClickableIconCell;

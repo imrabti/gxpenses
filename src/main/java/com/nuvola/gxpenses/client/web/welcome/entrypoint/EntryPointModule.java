@@ -4,12 +4,12 @@ import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.nuvola.gxpenses.client.mvp.uihandler.SetterUiHandlersStrategy;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.web.welcome.entrypoint.widget.LoginPresenter;
-import com.nuvola.gxpenses.client.web.welcome.entrypoint.widget.LoginUiHandlers;
-import com.nuvola.gxpenses.client.web.welcome.entrypoint.widget.LoginView;
-import com.nuvola.gxpenses.client.web.welcome.entrypoint.widget.RegisterPresenter;
-import com.nuvola.gxpenses.client.web.welcome.entrypoint.widget.RegisterUiHandlers;
-import com.nuvola.gxpenses.client.web.welcome.entrypoint.widget.RegisterView;
+import com.nuvola.gxpenses.client.web.welcome.entrypoint.login.LoginPresenter;
+import com.nuvola.gxpenses.client.web.welcome.entrypoint.login.LoginUiHandlers;
+import com.nuvola.gxpenses.client.web.welcome.entrypoint.login.LoginView;
+import com.nuvola.gxpenses.client.web.welcome.entrypoint.register.RegisterPresenter;
+import com.nuvola.gxpenses.client.web.welcome.entrypoint.register.RegisterUiHandlers;
+import com.nuvola.gxpenses.client.web.welcome.entrypoint.register.RegisterView;
 
 public class EntryPointModule extends AbstractPresenterModule {
 
