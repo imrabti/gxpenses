@@ -1,17 +1,22 @@
 package com.nuvola.gxpenses.client.web.welcome.entrypoint.widget;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
+import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 
-public class LoginView {
-    interface LoginViewUiBinder extends UiBinder<HTMLPanel, LoginView> {
+public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements LoginPresenter.MyView {
+
+    public interface Binder extends UiBinder<Widget, LoginView> {
     }
 
-    private static LoginViewUiBinder ourUiBinder = GWT.create(LoginViewUiBinder.class);
+    @Inject
+    public LoginView(final Binder uiBinder,
+                     final UiHandlersStrategy<LoginUiHandlers> uiHandlers) {
+        super(uiHandlers);
 
-    public LoginView() {
-        HTMLPanel rootElement = ourUiBinder.createAndBindUi(this);
-
+        initWidget(uiBinder.createAndBindUi(this));
     }
+
 }

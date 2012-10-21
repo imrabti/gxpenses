@@ -45,7 +45,7 @@ public class ClientModule extends AbstractPresenterModule {
 
         bind(String.class).annotatedWith(Currency.class).toProvider(CurrencyProvider.class);
         bind(Integer.class).annotatedWith(PageSize.class).toProvider(PageSizeProvider.class);
-        bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.transaction);
+        bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.login);
         bindConstant().annotatedWith(Names.named("rest")).to("http://127.0.0.1:8888/rest");
     }
 

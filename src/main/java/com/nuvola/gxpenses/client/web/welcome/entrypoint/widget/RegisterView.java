@@ -1,17 +1,22 @@
 package com.nuvola.gxpenses.client.web.welcome.entrypoint.widget;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
+import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 
-public class RegisterView {
-    interface RegisterViewUiBinder extends UiBinder<HTMLPanel, RegisterView> {
+public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> implements RegisterPresenter.MyView {
+
+    public interface Binder extends UiBinder<Widget, RegisterView> {
     }
 
-    private static RegisterViewUiBinder ourUiBinder = GWT.create(RegisterViewUiBinder.class);
+    @Inject
+    public RegisterView(final Binder uiBinder,
+                        final UiHandlersStrategy<RegisterUiHandlers> uiHandlers) {
+        super(uiHandlers);
 
-    public RegisterView() {
-        HTMLPanel rootElement = ourUiBinder.createAndBindUi(this);
-
+        initWidget(uiBinder.createAndBindUi(this));
     }
+
 }

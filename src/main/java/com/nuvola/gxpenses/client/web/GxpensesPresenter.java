@@ -14,6 +14,7 @@ import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 public class GxpensesPresenter extends Presenter<GxpensesPresenter.MyView, GxpensesPresenter.MyProxy> {
 
     public interface MyView extends View {
+        public void hideLoading();
     }
 
     @ProxyStandard
@@ -32,6 +33,12 @@ public class GxpensesPresenter extends Presenter<GxpensesPresenter.MyView, Gxpen
     @Override
     protected void revealInParent() {
         RevealRootLayoutContentEvent.fire(this, this);
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+        getView().hideLoading();
     }
 
 }

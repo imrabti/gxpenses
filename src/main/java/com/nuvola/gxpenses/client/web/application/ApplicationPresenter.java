@@ -20,8 +20,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
         implements SetVisibleSiderEvent.SetVisibleSiderHandler, GlobalMessageEvent.GlobalMessageHandler {
 
     public interface MyView extends View {
-        public void hideLoading();
-
         public void showAjaxLoader(int timeout);
 
         public void hideAjaxLoader();
@@ -32,8 +30,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     @ProxyStandard
     public interface MyProxy extends Proxy<ApplicationPresenter> {
     }
-
-    private static final int LOADING_TIMEOUT = 250;
 
     @ContentSlot
     public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
@@ -78,7 +74,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     protected void onReveal() {
         super.onReveal();
         setInSlot(TYPE_SetHeaderContent, headerPresenter);
-        getView().hideLoading();
     }
 
 }
