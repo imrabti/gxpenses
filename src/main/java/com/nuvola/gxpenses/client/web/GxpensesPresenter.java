@@ -16,12 +16,12 @@ public class GxpensesPresenter extends Presenter<GxpensesPresenter.MyView, Gxpen
     public interface MyView extends View {
     }
 
-    @ContentSlot
-    public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
-
     @ProxyStandard
     public interface MyProxy extends Proxy<GxpensesPresenter> {
     }
+
+    @ContentSlot
+    public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 
     @Inject
     public GxpensesPresenter(final EventBus eventBus, final MyView view,

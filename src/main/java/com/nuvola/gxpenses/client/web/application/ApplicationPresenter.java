@@ -9,10 +9,11 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
+import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
-import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
+import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
@@ -62,7 +63,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
     @Override
     protected void revealInParent() {
-        RevealRootLayoutContentEvent.fire(this, this);
+        RevealContentEvent.fire(this, GxpensesPresenter.TYPE_SetMainContent, this);
     }
 
     @Override

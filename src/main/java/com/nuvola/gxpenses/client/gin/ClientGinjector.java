@@ -13,6 +13,7 @@ import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.BudgetPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.SettingPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.TransactionPresenter;
+import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
 
 @GinModules(value = {ClientModule.class})
 public interface ClientGinjector extends Ginjector {
@@ -26,6 +27,8 @@ public interface ClientGinjector extends Ginjector {
     BootStrapper getBootStrapper();
 
     Provider<GxpensesPresenter> getGxpensesPresenter();
+
+    Provider<EntryPointPresenter> getEntryPointPresenter();
 
     Provider<ApplicationPresenter> getApplicationPresenter();
 
