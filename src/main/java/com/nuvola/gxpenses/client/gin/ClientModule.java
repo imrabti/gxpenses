@@ -21,7 +21,9 @@ import com.nuvola.gxpenses.client.rest.BudgetService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.client.security.AuthenticationService;
+import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.security.SecureDispatcher;
+import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.rest.UserService;
@@ -44,6 +46,8 @@ public class ClientModule extends AbstractPresenterModule {
         bind(BootStrapper.class).to(BootStrapperImpl.class).in(Singleton.class);
         bind(SuggestionListFactory.class).in(Singleton.class);
         bind(ValueListFactory.class).in(Singleton.class);
+        bind(SecurityUtils.class).in(Singleton.class);
+        bind(LoggedInGatekeeper.class).in(Singleton.class);
 
         bind(String.class).annotatedWith(Currency.class).toProvider(CurrencyProvider.class);
         bind(Integer.class).annotatedWith(PageSize.class).toProvider(PageSizeProvider.class);
