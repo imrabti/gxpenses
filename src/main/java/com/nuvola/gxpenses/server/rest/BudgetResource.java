@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.server.rest;
 
+import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.server.service.BudgetService;
-import com.nuvola.gxpenses.server.util.SecurityContext;
 import com.nuvola.gxpenses.shared.domaine.Budget;
 import com.nuvola.gxpenses.shared.domaine.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class BudgetResource extends Resource {
     @Autowired
     private BudgetService budgetService;
     @Autowired
-    private SecurityContext securityContext;
+    private SecurityContextProvider securityContext;
 
     @POST
     public Response createBudget(Budget budget) {

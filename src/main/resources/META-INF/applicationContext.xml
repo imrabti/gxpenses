@@ -48,5 +48,4 @@
 
     <!-- Scanning JPA repositories -->
     <jpa:repositories base-package="com.nuvola.gxpenses.server.repos" repository-impl-postfix="Impl"/>
-
 </beans>
