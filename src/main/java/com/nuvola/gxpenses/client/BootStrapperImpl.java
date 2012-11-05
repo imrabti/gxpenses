@@ -5,6 +5,7 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
@@ -22,6 +23,7 @@ public class BootStrapperImpl implements BootStrapper {
     private final UserService userService;
     private final ValueListFactory valueListFactory;
     private final SuggestionListFactory suggestionListFactory;
+    private final SecurityUtils securityUtils;
 
     private final MethodCallback<User> getCurrentUserCallback;
 
@@ -29,8 +31,10 @@ public class BootStrapperImpl implements BootStrapper {
 
     @Inject
     public BootStrapperImpl(final UserService userService, final PlaceManager placeManager,
+                            final SecurityUtils securityUtils,
                             final ValueListFactory valueListFactory,
                             final SuggestionListFactory suggestionListFactory) {
+        this.securityUtils = securityUtils;
         this.userService = userService;
         this.placeManager = placeManager;
         this.valueListFactory = valueListFactory;
@@ -47,12 +51,17 @@ public class BootStrapperImpl implements BootStrapper {
 
     @Override
     public void init() {
-        userService.getLoggedInUser(getCurrentUserCallback);
+        if (securityUtils.isLoggedIn()) {
+            userService.getLoggedInUser(getCurrentUserCallback);
+        } else {
+            bounceToLogin();
+        }
     }
 
     @Override
     public void logout() {
-        // TODO : call service clear session
+        securityUtils.clearCredentials();
+        bounceToLogin();
     }
 
     @Override
@@ -63,15 +72,28 @@ public class BootStrapperImpl implements BootStrapper {
     private void onGetCurrentUser() {
         if (currentUser == null) {
             logger.info("User is not authentified -- access denied...");
-            PlaceRequest place = new PlaceRequest(NameTokens.getLogin());
-            placeManager.revealPlace(place);
+            bounceToLogin();
         } else {
             suggestionListFactory.getListPayee();
             suggestionListFactory.getListTags();
             valueListFactory.getListAccounts();
 
-            placeManager.revealCurrentPlace();
+            if (placeManager.getCurrentPlaceRequest().matchesNameToken(NameTokens.getLogin())) {
+                bounceToTransactions();
+            } else {
+                placeManager.revealCurrentPlace();
+            }
         }
+    }
+
+    private void bounceToTransactions() {
+        PlaceRequest place = new PlaceRequest(NameTokens.getTransaction());
+        placeManager.revealPlace(place);
+    }
+
+    private void bounceToLogin() {
+        PlaceRequest place = new PlaceRequest(NameTokens.getLogin());
+        placeManager.revealPlace(place);
     }
 
 }

@@ -3,6 +3,10 @@ package com.nuvola.gxpenses.client.resource.message;
 import com.google.gwt.i18n.client.Messages;
 
 public interface MessageBundle extends Messages {
+    String wrongLoginOrPassword();
+
+    String loginPasswordRequired();
+
     String noAccounts();
 
     String noSelectedAccount();

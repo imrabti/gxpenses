@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.server.rest;
 
+import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.server.service.UserService;
-import com.nuvola.gxpenses.server.util.SecurityContext;
 import com.nuvola.gxpenses.shared.domaine.User;
 import com.nuvola.gxpenses.shared.dto.Password;
 import com.nuvola.gxpenses.shared.dto.ValidatedResponse;
@@ -21,7 +21,7 @@ public class SettingResource extends Resource {
     @Autowired
     private UserService userService;
     @Autowired
-    private SecurityContext securityContext;
+    private SecurityContextProvider securityContext;
 
     @GET
     public User getLoggedInUserSettings() {

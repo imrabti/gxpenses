@@ -22,7 +22,8 @@
             </div>
 
             <div>
-                <g:Button text="Login" styleName="{resource.buttonStyleCss.button} {resource.buttonStyleCss.large}"/>
+                <g:Button ui:field="login" text="Login"
+                          styleName="{resource.buttonStyleCss.button} {resource.buttonStyleCss.large}"/>
             </div>
         </div>
     </g:HTMLPanel>
