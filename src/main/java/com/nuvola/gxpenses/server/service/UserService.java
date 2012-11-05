@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserService {
     User findUserByEmail(String email);
 
+    void createUser(User user);
+
     void updateUser(User user);
 
     void updatePassword(Long userId, String newPassword);

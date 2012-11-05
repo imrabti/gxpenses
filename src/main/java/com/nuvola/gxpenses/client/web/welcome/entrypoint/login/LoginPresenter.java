@@ -14,6 +14,7 @@ import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.security.AuthenticationService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
+import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
 import com.nuvola.gxpenses.shared.dto.UserCredentials;
 import org.fusesource.restygwt.client.Method;
@@ -21,7 +22,7 @@ import org.fusesource.restygwt.client.Method;
 public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresenter.MyProxy>
         implements LoginUiHandlers {
 
-    public interface MyView extends View, HasUiHandlers<LoginUiHandlers> {
+    public interface MyView extends View, HasUiHandlers<LoginUiHandlers>, EditorView<UserCredentials> {
         void displayLoginError(Boolean visible);
     }
 
@@ -48,13 +49,12 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
     }
 
     @Override
-    public void login(final String email, final String password) {
-        UserCredentials credentials = new UserCredentials(email, password);
+    public void login(final UserCredentials credentials) {
         authenticationService.authenticate(credentials, new MethodCallbackImpl<Boolean>() {
             @Override
             public void onSuccess(Method method, Boolean authenticated) {
                 if (authenticated) {
-                    securityUtils.setCredentials(email, password);
+                    securityUtils.setCredentials(credentials.getUsername(), credentials.getPassword());
                     bootStrapper.init();
                 } else {
                     getView().displayLoginError(true);
@@ -72,7 +72,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
     protected void onReveal() {
         super.onReveal();
 
-        getView().displayLoginError(false);
+        getView().edit(new UserCredentials());
     }
 
 }
