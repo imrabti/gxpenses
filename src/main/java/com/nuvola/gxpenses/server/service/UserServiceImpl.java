@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
-        user.setPassword(SecurityUtils.encodePasswordSha1(user.getPassword(), user.getUserName()));
         user.setCurrency(CurrencyType.US_DOLLAR);
         user.setPageSize(PaginationType.PAGE_40);
         user.setDateCreation(new Date());
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(Long userId, String newPassword) {
         User user = userRepos.findOne(userId);
-        user.setPassword(SecurityUtils.encodePasswordSha1(newPassword, user.getUserName()));
+        user.setPassword(newPassword);
     }
 
     @Override
