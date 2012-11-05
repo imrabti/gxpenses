@@ -7,6 +7,8 @@ public interface MessageBundle extends Messages {
 
     String loginPasswordRequired();
 
+    String registerInfoMissing();
+
     String noAccounts();
 
     String noSelectedAccount();

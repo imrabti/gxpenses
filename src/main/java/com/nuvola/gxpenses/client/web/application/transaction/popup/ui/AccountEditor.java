@@ -46,11 +46,13 @@ public class AccountEditor extends Composite implements EditorView<Account> {
         driver.initialize(this);
     }
 
+    @Override
     public void edit(Account account) {
         name.setFocus(true);
         driver.edit(account);
     }
 
+    @Override
     public Account get() {
         Account account = driver.flush();
         if (driver.hasErrors()) {

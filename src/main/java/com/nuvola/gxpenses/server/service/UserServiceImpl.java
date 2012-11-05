@@ -6,10 +6,13 @@ import com.nuvola.gxpenses.server.repos.UserRepos;
 import com.nuvola.gxpenses.server.util.SecurityUtils;
 import com.nuvola.gxpenses.shared.domaine.Tag;
 import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.shared.type.CurrencyType;
+import com.nuvola.gxpenses.shared.type.PaginationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +30,15 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User findUserByEmail(String email) {
         return userRepos.findByEmail(email);
+    }
+
+    @Override
+    public void createUser(User user) {
+        user.setPassword(SecurityUtils.encodePasswordSha1(user.getPassword(), user.getUserName()));
+        user.setCurrency(CurrencyType.US_DOLLAR);
+        user.setPageSize(PaginationType.PAGE_40);
+        user.setDateCreation(new Date());
+        userRepos.save(user);
     }
 
     @Override

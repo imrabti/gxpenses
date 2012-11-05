@@ -45,6 +45,7 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
         driver.initialize(this);
     }
 
+    @Override
     public void edit(TransferTransaction transfertTransaction) {
         sourceAccount.setAcceptableValues(valueListFactory.getListAccounts());
         targetAccount.setAcceptableValues(valueListFactory.getListAccounts());
@@ -53,6 +54,7 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
         driver.edit(transfertTransaction);
     }
 
+    @Override
     public TransferTransaction get() {
         TransferTransaction transfertTransaction = driver.flush();
         if (driver.hasErrors()) {

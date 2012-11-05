@@ -13,7 +13,7 @@
 
             <g:Label text="Email" styleName="{resource.generalStyleCss.textLabel}"/>
             <div class="{resource.generalStyleCss.textInputWrap}">
-                <g:TextBox ui:field="email" styleName="{resource.generalStyleCss.textInputBig}"/>
+                <g:TextBox ui:field="username" styleName="{resource.generalStyleCss.textInputBig}"/>
             </div>
 
             <g:Label text="Password" styleName="{resource.generalStyleCss.textLabel}"/>

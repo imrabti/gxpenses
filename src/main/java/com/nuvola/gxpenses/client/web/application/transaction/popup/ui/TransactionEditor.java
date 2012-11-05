@@ -72,12 +72,14 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
         driver.initialize(this);
     }
 
+    @Override
     public void edit(Transaction transaction) {
         initSuggestionList();
         payee.setFocus(true);
         driver.edit(transaction);
     }
 
+    @Override
     public Transaction get() {
         Transaction transaction = driver.flush();
         if (driver.hasErrors()) {
