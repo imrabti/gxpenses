@@ -1,4 +1,4 @@
-package com.nuvola.gxpenses.client.resource;
+package com.nuvola.gxpenses.client.resource.style.list;
 
 import com.google.gwt.user.cellview.client.CellList;
 

@@ -5,6 +5,12 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.resources.client.ImageResource.RepeatStyle;
+import com.nuvola.gxpenses.client.resource.style.GeneralStyle;
+import com.nuvola.gxpenses.client.resource.style.component.ButtonStyle;
+import com.nuvola.gxpenses.client.resource.style.component.DatePickerStyle;
+import com.nuvola.gxpenses.client.resource.style.component.PopupStyle;
+import com.nuvola.gxpenses.client.resource.style.component.ProgressBarStyle;
+import com.nuvola.gxpenses.client.resource.style.component.SuggestionBoxStyle;
 
 public interface Resources extends ClientBundle {
     @Source("com/nuvola/gxpenses/client/resource/css/generalStyle.css")
@@ -24,6 +30,18 @@ public interface Resources extends ClientBundle {
 
     @Source("com/nuvola/gxpenses/client/resource/css/progressStyle.css")
     ProgressBarStyle progressBarStyle();
+
+    @Source("com/nuvola/gxpenses/client/resource/images/gxpenses_logo_big.png")
+    @ImageOptions(repeatStyle = RepeatStyle.None)
+    ImageResource gxpensesLogo();
+
+    @Source("com/nuvola/gxpenses/client/resource/images/loginBack.png")
+    @ImageOptions(repeatStyle = RepeatStyle.Horizontal)
+    ImageResource entryPointBack();
+
+    @Source("com/nuvola/gxpenses/client/resource/images/back.png")
+    @ImageOptions(repeatStyle = RepeatStyle.Horizontal)
+    ImageResource applicationBack();
 
     @Source("com/nuvola/gxpenses/client/resource/images/popupBack.png")
     @ImageOptions(repeatStyle = RepeatStyle.Horizontal)
@@ -72,146 +90,4 @@ public interface Resources extends ClientBundle {
     @Source("com/nuvola/gxpenses/client/resource/images/arrow_up.png")
     @ImageOptions(repeatStyle = RepeatStyle.None)
     ImageResource arrowUpImage();
-
-    interface GeneralStyle extends CssResource {
-        String emptyMessageStyle();
-
-        String rightArrow();
-
-        String upArrow();
-
-        String accountBalance();
-
-        String accountBalanceSelected();
-
-        String budgetAllowed();
-
-        String budgetAllowedSelected();
-
-        String smallTitle();
-
-        String bigTitle();
-
-        String subTitle();
-
-        String amountExpense();
-
-        String amountIncome();
-
-        String tag();
-
-        String date();
-
-        String payee();
-
-        String tagWhite();
-
-        String dateWhite();
-
-        String payeeWhite();
-
-        String amountWhite();
-
-        String amountExpenseTrans();
-
-        String amountIncomeTrans();
-
-        String transactionListHeader();
-
-        String transactionListFooter();
-
-        String globalMsgInfo();
-
-        String ajaxLoader();
-
-        String textInput();
-
-        String label();
-
-        String formButtons();
-
-        String errorBox();
-    }
-
-    interface PopupStyle extends CssResource {
-        @ClassName("gwt-PopupPanel")
-        String gwtPopupPanel();
-
-        String buttonContainer();
-    }
-
-    interface ButtonStyle extends CssResource {
-        String button();
-
-        String small();
-
-        String medium();
-
-        String large();
-
-        String green();
-
-        String red();
-
-        String gray();
-
-        String toolBarbutton();
-
-        String linkButton();
-
-        String singleButton();
-
-        String leftButton();
-
-        String rightButton();
-
-        String settingButton();
-
-        String settingButtonText();
-
-        String addButtonAlt();
-
-        String addButtonAltText();
-
-        String nextButton();
-
-        String previousButton();
-
-        String addButton();
-
-        String transfertButton();
-
-        String transfertButtonText();
-    }
-
-    interface SuggestionBoxStyle extends CssResource {
-        @ClassName("gwt-SuggestBox")
-        String gwtSuggestBox();
-
-        @ClassName("gwt-SuggestBoxPopup")
-        String gwtSuggestBoxPoup();
-    }
-
-    interface DatePickerStyle extends CssResource {
-        @ClassName("gwt-DatePicker")
-        String gwtDatePicker();
-    }
-
-    interface ProgressBarStyle extends CssResource {
-        String smallProgress();
-
-        String smallProgressSelected();
-
-        String bigProgress();
-
-        String bigProgressTotal();
-
-        String green();
-
-        String red();
-
-        String orange();
-
-        String gray();
-    }
 }

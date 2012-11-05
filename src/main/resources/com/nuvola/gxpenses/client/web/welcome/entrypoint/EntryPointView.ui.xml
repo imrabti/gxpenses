@@ -1,0 +1,45 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field="resource" type="com.nuvola.gxpenses.client.resource.Resources"/>
+
+    <ui:style>
+        .outerBox{
+            width: 300px;
+            height: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            top: 50% !important;
+            margin-top: -200px;
+        }
+
+        .logo {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .copyFooter {
+            text-align: center;
+            color: #545454;
+            text-shadow: 0 1px 1px rgba(255,255,255, 1);
+        }
+    </ui:style>
+    
+    <g:SimpleLayoutPanel styleName="{resource.generalStyleCss.entryPointWrapper}">
+        <g:LayoutPanel>
+            <g:layer top="0" bottom="0">
+                <g:HTMLPanel styleName="{style.outerBox}">
+                    <div class="{style.logo}">
+                        <g:Image resource="{resource.gxpensesLogo}"/>
+                    </div>
+                    <g:SimplePanel ui:field="main"/>
+                </g:HTMLPanel>
+            </g:layer>
+            <g:layer bottom="5" height="20">
+                <g:HTMLPanel styleName="{style.copyFooter}">
+                    Copyright Nuvola 2011
+                </g:HTMLPanel>
+            </g:layer>
+        </g:LayoutPanel>
+    </g:SimpleLayoutPanel>
+</ui:UiBinder>

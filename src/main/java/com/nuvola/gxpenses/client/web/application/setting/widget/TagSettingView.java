@@ -16,7 +16,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.TagListStyle;
+import com.nuvola.gxpenses.client.resource.style.list.TagListStyle;
 import com.nuvola.gxpenses.client.web.application.setting.renderer.TagCellFactory;
 
 import java.util.List;

@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
@@ -18,6 +19,7 @@ import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.BudgetElementService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.util.DateUtils;
 import com.nuvola.gxpenses.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
@@ -60,6 +62,7 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @ProxyCodeSplit
     @NameToken(NameTokens.budget)
+    @UseGatekeeper(LoggedInGatekeeper.class)
     public interface MyProxy extends ProxyPlace<BudgetPresenter> {
     }
 
