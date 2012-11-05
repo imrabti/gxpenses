@@ -1,5 +1,98 @@
 @external error;
 
+@sprite .entryPointWrapper {
+    gwt-image: "entryPointBack";
+    background-repeat: repeat;
+    width: 100%;
+    height: 100%;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+}
+
+@sprite .applicationWrapper {
+    gwt-image: "applicationBack";
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 100%;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+}
+
+.box {
+    text-align: left;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #bebebe;
+    -moz-border-radius : 8px;
+    -webkit-border-radius : 8px;
+    -moz-box-shadow: 0 1px 0 #EBEBEB;
+    -webkit-box-shadow: 0 1px 0 #EBEBEB;
+    box-shadow: 0 1px 0 #EBEBEB;
+}
+
+.box h2 {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    color: #444;
+    font-size: 15px;
+    border-bottom: 1px solid #BBB;
+    background-color: #F0F0F0;
+    background-image: -webkit-linear-gradient(top,white 0,#F0F0F0 100%);
+    background-image: linear-gradient(top,white 0,#F0F0F0 100%);
+    background: -moz-linear-gradient(top, #FFFFFF, #F0F0F0);
+    -webkit-border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0;
+    -moz-box-shadow: 0 1px 0 #F0F0F0;
+    -webkit-box-shadow: 0 1px 0 #F0F0F0;
+    box-shadow: 0 1px 0 #F0F0F0;
+    text-shadow: white 0 1px 0;
+    -moz-background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.errorLogin {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #a70f1a;
+    font-size: 14px;
+    color: #7e0a12;
+}
+
+.textInputWrap {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    margin-bottom: 15px;
+    margin-top: 6px;
+}
+
+.textLabel {
+    font-size: 14px;
+    color: #9f9f9f;
+}
+
+.textInputBig {
+    width: 248px;
+    height: 24px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border: none;
+    line-height: 1em;
+    padding: 0 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3) inset;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3) inset;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3) inset;
+    color: #454545;
+    font-size: 16px;
+    padding-top: 8px;
+}
+
 .emptyMessageStyle {
     font-family: "Architects Daughter", cursive;
     font-size: 20px;

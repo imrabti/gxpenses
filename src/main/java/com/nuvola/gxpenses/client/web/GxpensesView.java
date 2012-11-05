@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web;
 
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
@@ -27,6 +29,12 @@ public class GxpensesView extends ViewImpl implements GxpensesPresenter.MyView {
                 main.setWidget(content);
             }
         }
+    }
+
+    @Override
+    public void hideLoading() {
+        Element loading = Document.get().getElementById("loading");
+        loading.getParentElement().removeChild(loading);
     }
 
 }

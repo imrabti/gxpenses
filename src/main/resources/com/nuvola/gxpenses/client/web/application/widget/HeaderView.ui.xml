@@ -116,8 +116,7 @@
                             <g:Label text="Settings" ui:field="settings" styleName="{style.settingsStyle}"/>
                         </li>
                         <li>
-                            <g:Anchor text="Logout" ui:field="logout"
-                                      href="/gxpensesApp/resources/j_spring_security_logout"/>
+                            <g:Label text="Logout" ui:field="logout" styleName="{style.settingsStyle}"/>
                         </li>
                     </ul>
                 </div>

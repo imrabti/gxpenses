@@ -9,18 +9,17 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
+import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
-import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
+import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
         implements SetVisibleSiderEvent.SetVisibleSiderHandler, GlobalMessageEvent.GlobalMessageHandler {
 
     public interface MyView extends View {
-        public void hideLoading();
-
         public void showAjaxLoader(int timeout);
 
         public void hideAjaxLoader();
@@ -31,8 +30,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     @ProxyStandard
     public interface MyProxy extends Proxy<ApplicationPresenter> {
     }
-
-    private static final int LOADING_TIMEOUT = 250;
 
     @ContentSlot
     public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
@@ -62,7 +59,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
     @Override
     protected void revealInParent() {
-        RevealRootLayoutContentEvent.fire(this, this);
+        RevealContentEvent.fire(this, GxpensesPresenter.TYPE_SetMainContent, this);
     }
 
     @Override
@@ -77,7 +74,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     protected void onReveal() {
         super.onReveal();
         setInSlot(TYPE_SetHeaderContent, headerPresenter);
-        getView().hideLoading();
     }
 
 }

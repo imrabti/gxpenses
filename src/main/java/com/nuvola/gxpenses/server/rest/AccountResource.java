@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.server.rest;
 
+import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.server.service.AccountService;
-import com.nuvola.gxpenses.server.util.SecurityContext;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.domaine.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class AccountResource extends Resource {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private SecurityContext securityContext;
+    private SecurityContextProvider securityContext;
 
     @GET
     public List<Account> getAccounts() {
