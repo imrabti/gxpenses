@@ -22,6 +22,7 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.client.security.AuthenticationService;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
+import com.nuvola.gxpenses.client.security.RegistrationService;
 import com.nuvola.gxpenses.client.security.SecureDispatcher;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
@@ -64,6 +65,17 @@ public class ClientModule extends AbstractPresenterModule {
         ((RestServiceProxy) authenticationService).setResource(resource);
 
         return authenticationService;
+    }
+
+    @Provides
+    @Singleton
+    @Inject
+    public RegistrationService provideRegistrationService(@Named("rest") String url) {
+        RegistrationService registrationService = GWT.create(RegistrationService.class);
+        Resource resource = new Resource(url);
+        ((RestServiceProxy) registrationService).setResource(resource);
+
+        return registrationService;
     }
 
     @Provides
