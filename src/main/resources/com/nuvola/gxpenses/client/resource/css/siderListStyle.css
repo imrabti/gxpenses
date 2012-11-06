@@ -1,4 +1,4 @@
-@external removeButton;
+@external removeButton, elementBalance, progress;
 
 .cellListWidget {
 }
@@ -52,4 +52,51 @@
     -webkit-border-bottom-left-radius: 6px;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
+}
+
+.cellListEvenItem .elementBalance, .cellListOddItem .elementBalance {
+    border-radius: 8px;
+    background-color: #cecece;
+    padding: 3px;
+    font-weight: bold;
+    color: #454545;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+}
+
+.cellListSelectedItem .elementBalance {
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 3px;
+    font-weight: bold;
+    color: #555;
+}
+
+.cellListOddItem .progress, .cellListEvenItem .progress {
+    height: 6px;
+    background-color: #aeaeae;
+    width: 252px;
+    top: 20px;
+    border-radius: 5px;
+}
+
+.cellListOddItem .progress div, .cellListEvenItem .progress div {
+    background-color: #41A600;
+    height: 6px;
+    width: 0%;
+    border-radius: 5px;
+}
+
+.cellListSelectedItem .progress {
+    height: 6px;
+    background-color: #555;
+    width: 252px;
+    top: 20px;
+    border-radius: 5px;
+}
+
+.cellListSelectedItem .progress div {
+    background-color: #FFFFFF;
+    height: 6px;
+    width: 0%;
+    border-radius: 5px;
 }
