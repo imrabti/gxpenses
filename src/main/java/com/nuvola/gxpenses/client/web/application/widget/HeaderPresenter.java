@@ -13,7 +13,9 @@ import com.nuvola.gxpenses.client.place.PlaceType;
 public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> implements HeaderUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
-        public void setUserName(String username);
+        void setUserName(String username);
+
+        void setSelectedMenu(PlaceType selectedMenu);
     }
 
     private final PlaceManager placeManager;
@@ -44,6 +46,8 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     @Override
     protected void onReveal() {
         super.onReveal();
+
+        getView().setSelectedMenu(PlaceType.getPlaceByName(placeManager.getCurrentPlaceRequest().getNameToken()));
         getView().setUserName(bootStrapper.getCurrentUser().getUserName());
     }
 

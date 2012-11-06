@@ -31,10 +31,6 @@
         <beans:property name="key" value="acegi" />
     </beans:bean>
 
-    <user-service id="userDetailsService">
-        <user name="imrabti@gmail.com" password="linuxyoper" authorities="ROLE_USER"/>
-    </user-service>
-
     <beans:bean id="authenticationProvider" class="org.springframework.security.authentication.ProviderManager">
         <beans:constructor-arg>
             <beans:list>
