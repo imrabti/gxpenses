@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <cloudfoundry.version>0.8.1</cloudfoundry.version>
         <gwt.version>2.5.0</gwt.version>
         <gwt-maven-plugin.version>2.5.0-rc2</gwt-maven-plugin.version>
         <gwtp.version>0.8-SNAPSHOT</gwtp.version>
@@ -44,6 +45,11 @@
             <id>sonatype.snapshots</id>
             <name>Sonatype snapshot repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>org.springframework.maven.milestone</id>
+            <name>Spring Framework Maven Milestone Repository</name>
+            <url>http://maven.springframework.org/milestone</url>
         </repository>
     </repositories>
 
@@ -157,6 +163,13 @@
     </build>
 
     <dependencies>
+        <!-- Cloudfoundry runtime -->
+        <dependency>
+            <groupId>org.cloudfoundry</groupId>
+            <artifactId>cloudfoundry-runtime</artifactId>
+            <version>${cloudfoundry.version}</version>
+        </dependency>
+
         <!-- GWT 2.5 RC1 bug #7527, moved com/google/gwt/core/client/GWTBridge to com/google/gwt/core/shared/GWTBridge -->
         <dependency>
             <groupId>com.google.web.bindery</groupId>
@@ -188,6 +201,28 @@
         <dependency>
             <groupId>com.gwtplatform</groupId>
             <artifactId>gwtp-mvp-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-server-guice</artifactId>
+            <version>${gwtp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-shared</artifactId>
+            <version>${gwtp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-processors</artifactId>
             <version>${gwtp.version}</version>
             <scope>provided</scope>
         </dependency>
