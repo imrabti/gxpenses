@@ -16,7 +16,6 @@ import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalan
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
-import org.fusesource.restygwt.client.Method;
 
 public class AddTransactionPresenter extends PresenterWidget<AddTransactionPresenter.MyView>
         implements AddTransactionUiHandler {
@@ -51,7 +50,7 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
     public void saveTransaction(final Transaction transaction) {
         transactionService.createTransaction(transaction, new MethodCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Method method, Void aVoid) {
+            public void handleSuccess(Void aVoid) {
                 suggestionListFactory.updatePayeeList(transaction.getPayee());
                 suggestionListFactory.updateTagsList(transaction.getTags());
 

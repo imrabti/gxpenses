@@ -14,7 +14,6 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Budget;
 import com.nuvola.gxpenses.shared.domaine.BudgetElement;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
         budgetElementService.createBudgetElement(selectedBudget.getId().toString(), budgetElement,
                 new MethodCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Method method, Void aVoid) {
+            public void handleSuccess(Void aVoid) {
                 BudgetElementsChangedEvent.fire(this);
                 GlobalMessageEvent.fire(this, messageBundle.budgetElementAdded());
                 prepareNewBudgetElement();
@@ -98,7 +97,7 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
         budgetElementService.getBudgetElements(selectedBudget.getId().toString(),
                 new MethodCallbackImpl<List<BudgetElement>>() {
             @Override
-            public void onSuccess(Method method, List<BudgetElement> budgetElements) {
+            public void handleSuccess(List<BudgetElement> budgetElements) {
                 getView().setData(budgetElements);
             }
         });

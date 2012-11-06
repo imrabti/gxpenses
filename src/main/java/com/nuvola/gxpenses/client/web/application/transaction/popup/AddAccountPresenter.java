@@ -15,7 +15,6 @@ import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.type.AccountType;
-import org.fusesource.restygwt.client.Method;
 
 public class AddAccountPresenter extends PresenterWidget<AddAccountPresenter.MyView> implements AddAccountUiHandlers {
 
@@ -52,7 +51,7 @@ public class AddAccountPresenter extends PresenterWidget<AddAccountPresenter.MyV
     public void saveAccount(Account account) {
         accountService.createAccount(account, new MethodCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Method method, Void aVoid) {
+            public void handleSuccess(Void aVoid) {
                 valueListFactory.updateListAccount();
                 GlobalMessageEvent.fire(this, messageBundle.accountAdded());
                 AccountBalanceChangedEvent.fire(this);

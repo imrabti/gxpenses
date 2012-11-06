@@ -4,7 +4,6 @@ import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.UserService;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +25,7 @@ public class SuggestionListFactory {
         if (listTags == null) {
             userService.getTags(new MethodCallbackImpl<List<String>>() {
                 @Override
-                public void onSuccess(Method method, List<String> tags) {
+                public void handleSuccess(List<String> tags) {
                     listTags = tags;
                 }
             });
@@ -39,7 +38,7 @@ public class SuggestionListFactory {
         if (listPayee == null) {
             userService.getPayees(new MethodCallbackImpl<List<String>>() {
                 @Override
-                public void onSuccess(Method method, List<String> payees) {
+                public void handleSuccess(List<String> payees) {
                     listPayee = payees;
                 }
             });
@@ -68,7 +67,7 @@ public class SuggestionListFactory {
 
             userService.createTags(toAdd, new MethodCallbackImpl<Void>() {
                 @Override
-                public void onSuccess(Method method, Void aVoid) {
+                public void handleSuccess(Void aVoid) {
                 }
             });
         }

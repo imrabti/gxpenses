@@ -11,7 +11,6 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.shared.domaine.User;
 import com.nuvola.gxpenses.shared.dto.ValidatedResponse;
-import org.fusesource.restygwt.client.Method;
 
 public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPresenter.MyView>
         implements GeneralSettingUiHandlers {
@@ -40,7 +39,7 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
     public void saveSetting(User editedUser) {
         settingService.updateUserSettings(editedUser, new MethodCallbackImpl<ValidatedResponse<User>>() {
             @Override
-            public void onSuccess(Method method, ValidatedResponse<User> userValidatedResponse) {
+            public void handleSuccess(ValidatedResponse<User> userValidatedResponse) {
                 GlobalMessageEvent.fire(this, messageBundle.settingsUpdated());
             }
         });
@@ -52,7 +51,7 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
 
         settingService.getLoggedInUserSettings(new MethodCallbackImpl<User>() {
             @Override
-            public void onSuccess(Method method, User user) {
+            public void handleSuccess(User user) {
                 currentUser = user;
                 getView().edit(currentUser);
             }

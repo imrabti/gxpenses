@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.rest.AccountService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.shared.domaine.Account;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class ValueListFactory {
     public void updateListAccount() {
         accountService.getAccounts(new MethodCallbackImpl<List<Account>>() {
             @Override
-            public void onSuccess(Method method, List<Account> accounts) {
+            public void handleSuccess(List<Account> accounts) {
                 listAccounts = accounts;
             }
         });
