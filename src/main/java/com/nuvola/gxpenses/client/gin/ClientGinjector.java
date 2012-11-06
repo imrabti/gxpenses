@@ -1,6 +1,5 @@
 package com.nuvola.gxpenses.client.gin;
 
-import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import com.google.inject.Provider;
@@ -43,8 +42,8 @@ public interface ClientGinjector extends Ginjector {
 
     Provider<TransactionPresenter> getTransactionPresenter();
 
-    AsyncProvider<BudgetPresenter> getBudgetPresenter();
+    Provider<BudgetPresenter> getBudgetPresenter();
 
-    AsyncProvider<SettingPresenter> getSettingPresenter();
+    Provider<SettingPresenter> getSettingPresenter();
 
 }
