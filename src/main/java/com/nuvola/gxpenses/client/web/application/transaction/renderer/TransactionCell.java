@@ -15,9 +15,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
-import com.nuvola.gxpenses.shared.type.TransactionType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,40 +23,33 @@ import java.util.List;
 public class TransactionCell extends AbstractCell<Transaction> {
 
     public interface Template extends SafeHtmlTemplates {
-        @Template("<span class=\"removeButton\"></span><div style=\"float:left;\" class=\"{4}\">{0}</div>" +
-                "<div style=\"float:left;\"><p class=\"{5}\">{1}</p><p>{2}</p></div>" +
-                "<div style=\"float:right;\" class=\"{6}\">{3}</div>" +
-                "<div style=\"clear:both;\"></div>")
-        SafeHtml transactionTemplate(SafeHtml date, SafeHtml payee, SafeHtml tags, SafeHtml amount,
-                                     String dateCss, String payeeCss, String amountCss);
+        @Template("<span class=\"removeButton\"></span><div style=\"float:left;\" class=\"date\">{0}</div>" +
+                  "<div style=\"float:left;\"><p class=\"payee\">{1}</p><p>{2}</p></div>" +
+                  "<div style=\"float:right;\" class=\"amount\">{3}</div>" +
+                  "<div style=\"clear:both;\"></div>")
+        SafeHtml transactionTemplate(SafeHtml date, SafeHtml payee, SafeHtml tags, SafeHtml amount);
 
-        @Template("<span class=\"removeButton\"></span><div style=\"float:left;\" class=\"{3}\">{0}</div>" +
-                "<div style=\"float:left;\"><p class=\"{4}\" style=\"padding-top: 10px;\">{1}</p></div>" +
-                "<div style=\"float:right;\" class=\"{5}\">{2}</div>" +
-                "<div style=\"clear:both;\"></div>")
-        SafeHtml transactionTemplateWithoutTags(SafeHtml date, SafeHtml payee, SafeHtml amount,
-                                                String dateCss, String payeeCss, String amountCss);
+        @Template("<span class=\"removeButton\"></span><div style=\"float:left;\" class=\"date\">{0}</div>" +
+                  "<div style=\"float:left;\"><p class=\"payee\" style=\"padding-top: 10px;\">{1}</p></div>" +
+                  "<div style=\"float:right;\" class=\"amount\">{2}</div>" +
+                  "<div style=\"clear:both;\"></div>")
+        SafeHtml transactionTemplateWithoutTags(SafeHtml date, SafeHtml payee, SafeHtml amount);
 
-        @Template("<span class=\"{1}\"><span>{0}</span></span>")
-        SafeHtml tagTemplate(SafeHtml name, String tagCssClass);
+        @Template("<span class=\"tag\"><span>{0}</span></span>")
+        SafeHtml tagTemplate(SafeHtml name);
     }
 
     private final Template template;
-    private final Resources resources;
     private final Delegate<Transaction> delegate;
     private final NumberFormat numberFormat;
     private final DateTimeFormat dateFormat;
 
-    private Transaction selectedTransaction;
-
     @Inject
-    public TransactionCell(final Template template, final Resources resources,
-                           @Currency String currency,
+    public TransactionCell(final Template template, @Currency String currency,
                            @Assisted Delegate<Transaction> delegate) {
         super("click");
 
         this.template = template;
-        this.resources = resources;
         this.delegate = delegate;
 
         numberFormat = NumberFormat.getCurrencyFormat(currency);
@@ -70,7 +61,6 @@ public class TransactionCell extends AbstractCell<Transaction> {
                                ValueUpdater<Transaction> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
         if ("click".equals(event.getType())) {
-            selectedTransaction = value;
             EventTarget eventTarget = event.getEventTarget();
             if (!Element.is(eventTarget)) {
                 return;
@@ -89,29 +79,15 @@ public class TransactionCell extends AbstractCell<Transaction> {
             SafeHtml safePayee = SafeHtmlUtils.fromString(value.getPayee());
             SafeHtml safeAmount = getSafeAmount(value.getAmount());
 
-            String dateStyle = resources.generalStyleCss().date();
-            String payeeStyle = resources.generalStyleCss().payee();
-            String tagStyle = resources.generalStyleCss().tag();
-            String amountStyle = getAmountStyle(value.getType());
-
-            if (value == selectedTransaction) {
-                dateStyle = resources.generalStyleCss().dateWhite();
-                payeeStyle = resources.generalStyleCss().payeeWhite();
-                amountStyle = resources.generalStyleCss().amountWhite();
-                tagStyle = resources.generalStyleCss().tagWhite();
-            }
-
             SafeHtmlBuilder tagsBuilder = new SafeHtmlBuilder();
             if (value.getTags() != null) {
-                renderTags(value.getTags(), tagStyle, tagsBuilder);
+                renderTags(value.getTags(), tagsBuilder);
             }
 
             if (value.getTags() != null) {
-                sb.append(template.transactionTemplate(safeDate, safePayee, tagsBuilder.toSafeHtml(), safeAmount,
-                        dateStyle, payeeStyle, amountStyle));
+                sb.append(template.transactionTemplate(safeDate, safePayee, tagsBuilder.toSafeHtml(), safeAmount));
             } else {
-                sb.append(template.transactionTemplateWithoutTags(safeDate, safePayee, safeAmount, dateStyle,
-                        payeeStyle, amountStyle));
+                sb.append(template.transactionTemplateWithoutTags(safeDate, safePayee, safeAmount));
             }
         }
     }
@@ -121,21 +97,13 @@ public class TransactionCell extends AbstractCell<Transaction> {
         return SafeHtmlUtils.fromString(balance);
     }
 
-    private String getAmountStyle(TransactionType type) {
-        if (type == TransactionType.INCOME) {
-            return resources.generalStyleCss().amountIncomeTrans();
-        } else {
-            return resources.generalStyleCss().amountExpenseTrans();
-        }
-    }
-
-    private void renderTags(String value, String tagCss, SafeHtmlBuilder sb) {
+    private void renderTags(String value, SafeHtmlBuilder sb) {
         SafeHtml safeTag;
         List<String> tags = Arrays.asList(value.split(","));
 
         for (String tag : tags) {
             safeTag = SafeHtmlUtils.fromString(tag);
-            sb.append(template.tagTemplate(safeTag, tagCss));
+            sb.append(template.tagTemplate(safeTag));
         }
     }
 

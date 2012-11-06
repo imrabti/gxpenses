@@ -1,5 +1,6 @@
 package com.nuvola.gxpenses.client.web.application.budget.renderer;
 
+import com.google.common.base.Objects;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.safecss.shared.SafeStyles;
@@ -39,23 +40,23 @@ public class BudgetProgressCell extends AbstractCell<BudgetElement> {
     @Override
     public void render(Context context, BudgetElement value, SafeHtmlBuilder sb) {
         NumberFormat format = NumberFormat.getFormat("###,##0.00");
-        Integer purcentage = (int)((value.getConsumedAmount() * 100) / value.getAmount());
+        Integer percentage = (int)((Objects.firstNonNull(value.getConsumedAmount(), 0d) * 100) / value.getAmount());
 
-        SafeHtml safeConsumed = SafeHtmlUtils.fromString(purcentage > 20 ? currency +
-                format.format(value.getConsumedAmount()) : "");
+        SafeHtml safeConsumed = SafeHtmlUtils.fromString(percentage > 20 ? currency +
+                format.format(Objects.firstNonNull(value.getConsumedAmount(), 0d)) : "");
         String style = resources.progressBarStyle().bigProgress() + " ";
 
-        if(purcentage > 0) {
-            if(purcentage > 100) {
+        if(percentage > 0) {
+            if(percentage > 100) {
                 style += resources.progressBarStyle().red();
-            } else if(purcentage > 70 && purcentage < 100) {
+            } else if(percentage > 70 && percentage < 100) {
                 style += resources.progressBarStyle().orange();
             } else {
                 style += resources.progressBarStyle().green();
             }
 
-            purcentage = purcentage > 100 ? 100 : purcentage;
-            SafeStyles safePurcentage = SafeStylesUtils.fromTrustedString("width: " + purcentage +"%;");
+            percentage = percentage > 100 ? 100 : percentage;
+            SafeStyles safePurcentage = SafeStylesUtils.fromTrustedString("width: " + percentage +"%;");
             sb.append(template.progressTemplate(safeConsumed, safePurcentage, style));
         } else {
             safeConsumed = SafeHtmlUtils.fromString(currency + format.format(0d));

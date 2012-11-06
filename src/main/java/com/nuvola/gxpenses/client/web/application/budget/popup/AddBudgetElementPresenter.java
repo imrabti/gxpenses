@@ -1,5 +1,6 @@
 package com.nuvola.gxpenses.client.web.application.budget.popup;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -62,7 +63,17 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
 
     @Override
     public void removeBudgetElement(BudgetElement budgetElement) {
-
+        Boolean decision = Window.confirm(messageBundle.budgetElementConf());
+        if (decision) {
+            budgetElementService.removeBudgetElement(budgetElement.getId().toString(), new MethodCallbackImpl<Void>() {
+                @Override
+                public void handleSuccess(Void result) {
+                    BudgetElementsChangedEvent.fire(this);
+                    GlobalMessageEvent.fire(this, messageBundle.budgetElementRemoved());
+                    fireLoadBudgetElementById();
+                }
+            });
+        }
     }
 
     @Override

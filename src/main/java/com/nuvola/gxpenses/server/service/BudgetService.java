@@ -11,7 +11,7 @@ public interface BudgetService {
 
     void createBudgetElement(Long budgetId, BudgetElement element);
 
-    void removeBudgetElement(BudgetElement element);
+    void removeBudgetElement(Long budgetElementId);
 
     List<Budget> findAllBudgetsByUserId(Long userId, Date period);
 

@@ -23,14 +23,6 @@ public interface GeneralStyle extends CssResource {
 
     String upArrow();
 
-    String accountBalance();
-
-    String accountBalanceSelected();
-
-    String budgetAllowed();
-
-    String budgetAllowedSelected();
-
     String smallTitle();
 
     String bigTitle();
@@ -40,24 +32,6 @@ public interface GeneralStyle extends CssResource {
     String amountExpense();
 
     String amountIncome();
-
-    String tag();
-
-    String date();
-
-    String payee();
-
-    String tagWhite();
-
-    String dateWhite();
-
-    String payeeWhite();
-
-    String amountWhite();
-
-    String amountExpenseTrans();
-
-    String amountIncomeTrans();
 
     String transactionListHeader();
 

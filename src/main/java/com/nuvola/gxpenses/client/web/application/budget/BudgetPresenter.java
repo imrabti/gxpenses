@@ -148,7 +148,9 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @Override
     public void onBudgetElementsChanged(BudgetElementsChangedEvent event) {
-        fireLoadBudgetElementByIdAndPeriod();
+        if (currentBudget != null) {
+            fireLoadBudgetElementByIdAndPeriod();
+        }
     }
 
     @Override

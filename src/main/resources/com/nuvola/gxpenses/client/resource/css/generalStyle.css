@@ -118,40 +118,6 @@
     z-index: 11;
 }
 
-.accountBalance {
-    border-radius: 8px;
-    background-color: #cecece;
-    padding: 3px;
-    font-weight: bold;
-    color: #454545;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
-}
-
-.accountBalanceSelected {
-    border-radius: 8px;
-    background-color: #fff;
-    padding: 3px;
-    font-weight: bold;
-    color: #555;
-}
-
-.budgetAllowed {
-    border-radius: 8px;
-    background-color: #cecece;
-    padding: 3px;
-    font-weight: bold;
-    color: #454545;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
-}
-
-.budgetAllowedSelected {
-    border-radius: 8px;
-    background-color: #fff;
-    padding: 3px;
-    font-weight: bold;
-    color: #555;
-}
-
 .smallTitle {
     font-weight: bold;
     font-size: 14px;
@@ -183,95 +149,6 @@
 
 .amountIncome {
     color: #063;
-}
-
-.tag {
-    background-color: #57A02F;
-    background: literal("-moz-linear-gradient(top,  #77BB4E,  #57A02F)") repeat scroll 0 0 transparent;
-    background: literal("-webkit-gradient(linear, left top, left bottom, from(#77BB4E), to(#57A02F))");
-    border: 1px solid #3F980E;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    display: inline-block;
-    margin-right: 5px;
-}
-
-.tag span {
-    border-top: 1px solid #9BCE7C;
-    display: inline-block;
-    padding: 0 5px 3px 5px;
-    color: #FFF;
-}
-
-.tagWhite {
-    background-color: #FFF;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    display: inline-block;
-    margin-right: 5px;
-}
-
-.tagWhite span {
-    display: inline-block;
-    padding: 0 5px 3px 5px;
-    color: #444;
-}
-
-.date {
-    width: 60px;
-    text-align: center;
-    color: #666;
-    font-size: 14px;
-    padding-top: 6px;
-    margin-right: 10px;
-}
-
-.payee {
-    font-size: 16px;
-    color: #444;
-    margin-bottom: 5px;
-}
-
-.dateWhite {
-    width: 60px;
-    text-align: center;
-    color: #FFF;
-    font-size: 14px;
-    padding-top: 7px;
-    margin-right: 10px;
-}
-
-.payeeWhite {
-    font-weight: bold;
-    font-size: 16px;
-    color: #FFF;
-    margin-bottom: 5px;
-}
-
-.amountWhite {
-    color: #FFF;
-    font-weight: bold;
-    font-size: 15px;
-    padding-top: 10px;
-    margin-right: 5px;
-}
-
-.amountExpenseTrans {
-    color: #E80C02;
-    font-weight: bold;
-    font-size: 15px;
-    padding-top: 10px;
-    margin-right: 5px;
-}
-
-.amountIncomeTrans {
-    color: #063;
-    font-weight: bold;
-    font-size: 15px;
-    padding-top: 10px;
-    margin-right: 5px;
 }
 
 .transactionListHeader {

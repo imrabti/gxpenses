@@ -169,9 +169,11 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     public void onAccountBalanceChanged(AccountBalanceChangedEvent event) {
-        Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
-        fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
-        fireLoadTotalAmountTransactionRequest();
+        if (selectedAccount != null) {
+            Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
+            fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
+            fireLoadTotalAmountTransactionRequest();
+        }
     }
 
     @Override

@@ -61,11 +61,12 @@ public class TransactionServiceImpl implements TransactionService {
     public void removeTransaction(Long transactionId) {
         Transaction transaction = transactionRepos.findOne(transactionId);
         if (transaction.getDestTransaction() != null) {
-            updateAccountBalanceInvert(transaction.getDestTransaction());
+            accountRepos.updateAccountBalanceInv(transaction.getDestTransaction().getAccount().getId(),
+                    transaction.getAmount());
             transactionRepos.delete(transaction.getDestTransaction());
         }
 
-        updateAccountBalanceInvert(transaction);
+        accountRepos.updateAccountBalanceInv(transaction.getAccount().getId(), transaction.getAmount());
         transactionRepos.delete(transaction);
     }
 
@@ -132,11 +133,6 @@ public class TransactionServiceImpl implements TransactionService {
         } else {
             return transactionRepos.totalByAccountAndTypeAndDate(accountId, type, startDate, endDate);
         }
-    }
-
-    private void updateAccountBalanceInvert(Transaction transaction) {
-        int multiplier = transaction.getType() == TransactionType.EXPENSE ? 1 : -1;
-        accountRepos.updateAccountBalance(transaction.getAccount().getId(), multiplier * transaction.getAmount());
     }
 
 }
