@@ -39,6 +39,8 @@ public interface MessageBundle extends Messages {
 
     String budgetAdded();
 
+    String budgetElementConf();
+
     String budgetElementAdded();
 
     String budgetElementRemoved();

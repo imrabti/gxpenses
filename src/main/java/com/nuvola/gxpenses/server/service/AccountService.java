@@ -1,8 +1,6 @@
 package com.nuvola.gxpenses.server.service;
 
 import com.nuvola.gxpenses.shared.domaine.Account;
-import com.nuvola.gxpenses.shared.type.PeriodType;
-import com.nuvola.gxpenses.shared.type.TransactionType;
 
 import java.util.List;
 

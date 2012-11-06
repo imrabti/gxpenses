@@ -17,8 +17,8 @@ public interface BudgetElementService extends RestService {
     void createBudgetElement(@PathParam("id") String id, BudgetElement budgetElement, MethodCallback<Void> callback);
 
     @DELETE
-    @Path("/element")
-    void removeBudgetElement(BudgetElement budgetElement, MethodCallback<Void> callback);
+    @Path("/element/{id}")
+    void removeBudgetElement(@PathParam("id") String budgetElementId, MethodCallback<Void> callback);
 
     @GET
     @Path("/element/{id}")
