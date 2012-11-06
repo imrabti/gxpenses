@@ -14,7 +14,6 @@ import com.nuvola.gxpenses.client.web.application.budget.event.BudgetChangedEven
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetPresenter;
 import com.nuvola.gxpenses.shared.domaine.Budget;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.Date;
 import java.util.List;
@@ -76,7 +75,7 @@ public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.M
     private void fireLoadListBudgets() {
         budgetService.getBudgets(dateFormat.format(new Date()), new MethodCallbackImpl<List<Budget>>() {
             @Override
-            public void onSuccess(Method method, List<Budget> budgets) {
+            public void handleSuccess(List<Budget> budgets) {
                 getView().setData(budgets);
 
                 NoElementFoundEvent.fire(this, budgets.size());

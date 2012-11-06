@@ -11,7 +11,6 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.shared.dto.Password;
 import com.nuvola.gxpenses.shared.dto.ValidatedResponse;
-import org.fusesource.restygwt.client.Method;
 
 public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPresenter.MyView>
         implements PasswordSettingUiHandlers {
@@ -38,7 +37,7 @@ public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPre
     public void savePassword(Password password) {
         settingService.updateUserPassword(password, new MethodCallbackImpl<ValidatedResponse<Password>>() {
             @Override
-            public void onSuccess(Method method, ValidatedResponse<Password> passwordValidatedResponse) {
+            public void handleSuccess(ValidatedResponse<Password> passwordValidatedResponse) {
                 GlobalMessageEvent.fire(this, messageBundle.passwordUpdated());
             }
         });

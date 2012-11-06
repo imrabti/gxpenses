@@ -11,7 +11,6 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class TagSettingPresenter extends PresenterWidget<TagSettingPresenter.MyV
     public void saveTags(List<String> tags) {
         settingService.updateUserTags(tags, new MethodCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Method method, Void aVoid) {
+            public void handleSuccess(Void aVoid) {
                 suggestionListFactory.reloadTagsList();
                 GlobalMessageEvent.fire(this, messageBundle.tagsUpdated());
             }
@@ -57,7 +56,7 @@ public class TagSettingPresenter extends PresenterWidget<TagSettingPresenter.MyV
 
         userService.getTags(new MethodCallbackImpl<List<String>>() {
             @Override
-            public void onSuccess(Method method, List<String> tags) {
+            public void handleSuccess(List<String> tags) {
                 getView().setData(tags);
             }
         });

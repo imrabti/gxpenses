@@ -177,7 +177,7 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
         budgetElementService.getBudgetElements(currentBudget.getId().toString(), dateFormat.format(currentDate),
                 new MethodCallbackImpl<List<BudgetElement>>() {
             @Override
-            public void onSuccess(Method method, List<BudgetElement> budgetElements) {
+            public void handleSuccess(List<BudgetElement> budgetElements) {
                 getView().setData(budgetElements, new BudgetProgressTotal(currentBudget.getTotalAllowed(),
                         currentBudget.getTotalConsumed()));
 
