@@ -11,12 +11,15 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
+import com.nuvola.gxpenses.client.event.HideLoadingEvent;
+import com.nuvola.gxpenses.client.event.ShowLoadingEvent;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.SiderHolderPresenter;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
-        implements GlobalMessageEvent.GlobalMessageHandler {
+        implements GlobalMessageEvent.GlobalMessageHandler, ShowLoadingEvent.ShowLoadingHandler,
+        HideLoadingEvent.HideLoadingHandler {
 
     public interface MyView extends View {
         public void showAjaxLoader(int timeout);
@@ -34,6 +37,8 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
     public static final Object TYPE_SetHeaderContent = new Object();
     public static final Object TYPE_SetSiderContent = new Object();
+
+    private static final int LOADING_TIMEOUT = 250;
 
     private final HeaderPresenter headerPresenter;
     private final SiderHolderPresenter siderHolderPresenter;
@@ -54,6 +59,16 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     }
 
     @Override
+    public void onHideLoading(HideLoadingEvent event) {
+        getView().hideAjaxLoader();
+    }
+
+    @Override
+    public void onShowLoading(ShowLoadingEvent event) {
+        getView().showAjaxLoader(LOADING_TIMEOUT);
+    }
+
+    @Override
     protected void revealInParent() {
         RevealContentEvent.fire(this, GxpensesPresenter.TYPE_SetMainContent, this);
     }
@@ -63,6 +78,8 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
         super.onBind();
 
         addRegisteredHandler(GlobalMessageEvent.getType(), this);
+        addRegisteredHandler(ShowLoadingEvent.getType(), this);
+        addRegisteredHandler(HideLoadingEvent.getType(), this);
     }
 
     @Override

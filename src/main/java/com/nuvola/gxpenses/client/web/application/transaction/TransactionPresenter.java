@@ -36,7 +36,6 @@ import com.nuvola.gxpenses.shared.dto.PagedData;
 import com.nuvola.gxpenses.shared.dto.TransactionFilter;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.List;
 
@@ -195,7 +194,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         if (decision) {
             transactionService.removeTransaction(transaction.getId().toString(), new MethodCallbackImpl<Void>() {
                 @Override
-                public void onSuccess(Method method, Void aVoid) {
+                public void handleSuccess(Void aVoid) {
                     Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
                     fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
                     fireLoadTotalAmountTransactionRequest();
@@ -240,7 +239,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
         transactionService.getTransactions(filter, new MethodCallbackImpl<PagedData<Transaction>>() {
             @Override
-            public void onSuccess(Method method, PagedData<Transaction> result) {
+            public void handleSuccess(PagedData<Transaction> result) {
                 getView().setData(result.getData(), paginationStart, result.getTotalElements());
 
                 if (result.getData().size() > 0) {
@@ -260,7 +259,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
         transactionService.totalAmount(filter, new MethodCallbackImpl<Double>() {
             @Override
-            public void onSuccess(Method method, Double totalAmount) {
+            public void handleSuccess(Double totalAmount) {
                 getView().setTransactionTotal(totalAmount);
             }
         });

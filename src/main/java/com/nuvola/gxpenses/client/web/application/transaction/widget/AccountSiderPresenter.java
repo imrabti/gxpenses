@@ -22,7 +22,6 @@ import com.nuvola.gxpenses.client.web.application.transaction.popup.TransferTran
 import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.List;
 
@@ -96,7 +95,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
         if (decision) {
             accountService.removeAccount(account.getId().toString(), new MethodCallbackImpl<Void>() {
                 @Override
-                public void onSuccess(Method method, Void aVoid) {
+                public void handleSuccess(Void aVoid) {
                     valueListFactory.updateListAccount();
                     AccountChangedEvent.fire(this);
                     GlobalMessageEvent.fire(this, messageBundle.accountRemoved());
@@ -136,7 +135,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     private void fireLoadListAccounts() {
         accountService.getAccounts(new MethodCallbackImpl<List<Account>>() {
             @Override
-            public void onSuccess(Method method, List<Account> accounts) {
+            public void handleSuccess(List<Account> accounts) {
                 getView().showTransferButton(accounts.size() >= 2);
                 getView().setData(accounts);
 

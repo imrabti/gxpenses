@@ -13,7 +13,6 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.shared.dto.TransferTransaction;
-import org.fusesource.restygwt.client.Method;
 
 public class TransferTransactionPresenter extends PresenterWidget<TransferTransactionPresenter.MyView>
         implements TransferTransactionUiHandlers {
@@ -44,7 +43,7 @@ public class TransferTransactionPresenter extends PresenterWidget<TransferTransa
     public void saveTransfer(TransferTransaction transferTransaction) {
         transactionService.createTransfer(transferTransaction, new MethodCallbackImpl() {
             @Override
-            public void onSuccess(Method method, Object o) {
+            public void handleSuccess(Object o) {
                 GlobalMessageEvent.fire(this, messageBundle.transfertAdded());
                 AccountBalanceChangedEvent.fire(this);
             }

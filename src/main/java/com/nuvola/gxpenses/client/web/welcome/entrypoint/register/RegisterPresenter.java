@@ -17,7 +17,6 @@ import com.nuvola.gxpenses.client.security.RegistrationService;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
 import com.nuvola.gxpenses.shared.domaine.User;
-import org.fusesource.restygwt.client.Method;
 
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy>
         implements RegisterUiHandlers {
@@ -48,7 +47,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     public void register(User user) {
         registrationService.register(user, new MethodCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Method method, Void aVoid) {
+            public void handleSuccess(Void aVoid) {
                 PlaceRequest place = new PlaceRequest(NameTokens.getLogin());
                 placeManager.revealPlace(place);
             }

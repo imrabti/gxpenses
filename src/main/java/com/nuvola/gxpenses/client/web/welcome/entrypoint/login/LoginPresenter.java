@@ -17,7 +17,6 @@ import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
 import com.nuvola.gxpenses.shared.dto.UserCredentials;
-import org.fusesource.restygwt.client.Method;
 
 public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresenter.MyProxy>
         implements LoginUiHandlers {
@@ -52,7 +51,7 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
     public void login(final UserCredentials credentials) {
         authenticationService.authenticate(credentials, new MethodCallbackImpl<Boolean>() {
             @Override
-            public void onSuccess(Method method, Boolean authenticated) {
+            public void handleSuccess(Boolean authenticated) {
                 if (authenticated) {
                     securityUtils.setCredentials(credentials.getUsername(), credentials.getPassword());
                     bootStrapper.init();

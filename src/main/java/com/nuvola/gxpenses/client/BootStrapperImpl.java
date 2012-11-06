@@ -10,7 +10,6 @@ import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.shared.domaine.User;
-import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.logging.Logger;
@@ -42,7 +41,7 @@ public class BootStrapperImpl implements BootStrapper {
 
         getCurrentUserCallback = new MethodCallbackImpl<User>() {
             @Override
-            public void onSuccess(Method method, User user) {
+            public void handleSuccess(User user) {
                 currentUser = user;
                 onGetCurrentUser();
             }

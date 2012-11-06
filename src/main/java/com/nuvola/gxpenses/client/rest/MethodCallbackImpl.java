@@ -4,6 +4,8 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.nuvola.gxpenses.client.event.HideLoadingEvent;
+import com.nuvola.gxpenses.client.event.ShowLoadingEvent;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -17,10 +19,25 @@ public abstract class MethodCallbackImpl<T> implements MethodCallback<T>, HasHan
     @Inject
     protected static EventBus eventBus;
 
+    public MethodCallbackImpl() {
+        ShowLoadingEvent.fire(this);
+    }
+
+    @Override
+    public void onSuccess(Method method, T response) {
+        HideLoadingEvent.fire(this);
+
+        handleSuccess(response);
+    }
+
     @Override
     public void onFailure(Method method, Throwable throwable) {
+        HideLoadingEvent.fire(this);
+
         logger.log(Level.SEVERE, throwable.getMessage());
     }
+
+    public abstract void handleSuccess(T result);
 
     @Override
     public void fireEvent(GwtEvent<?> event) {
