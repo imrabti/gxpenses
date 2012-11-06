@@ -45,8 +45,8 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     @Override
-    public void removeBudgetElement(BudgetElement element) {
-        budgetElementRepos.delete(element);
+    public void removeBudgetElement(Long budgetElementId) {
+        budgetElementRepos.delete(budgetElementId);
     }
 
     @Override
@@ -60,8 +60,8 @@ public class BudgetServiceImpl implements BudgetService {
 
             List<BudgetElement> budgetElements = findAllBudgetElementsByBudget(budget.getId(), userId, period);
             for (BudgetElement budgetElement : budgetElements) {
-                totalConsumed += budgetElement.getConsumedAmount();
-                totalAllowed += budgetElement.getAmount();
+                totalConsumed += Objects.firstNonNull(budgetElement.getConsumedAmount(), 0d);
+                totalAllowed += Objects.firstNonNull(budgetElement.getAmount(), 0d);
             }
 
             budget.setTotalAllowed(totalAllowed);
@@ -87,11 +87,13 @@ public class BudgetServiceImpl implements BudgetService {
         Date startDate = DateUtils.getStartDateFrequency(budget.getPeriodicity(), period);
         Date endDate = DateUtils.getLastDateFrequency(budget.getPeriodicity(), period);
 
-        for (BudgetElement budgetElement : budgetElements) {
-            Double consumedAmount = transactionRepos.totalByTagAndAccountsAndDate("%" + budgetElement.getTag() + "%",
-                    accounts, startDate, endDate);
-            budgetElement.setConsumedAmount(Math.abs(Objects.firstNonNull(consumedAmount, 0d)));
-            budgetElement.setLeftAmount(budgetElement.getAmount() - budgetElement.getConsumedAmount());
+        if (accounts != null && accounts.size() > 0) {
+            for (BudgetElement budgetElement : budgetElements) {
+                Double consumedAmount = transactionRepos.totalByTagAndAccountsAndDate("%" + budgetElement.getTag() + "%",
+                        accounts, startDate, endDate);
+                budgetElement.setConsumedAmount(Math.abs(Objects.firstNonNull(consumedAmount, 0d)));
+                budgetElement.setLeftAmount(budgetElement.getAmount() - budgetElement.getConsumedAmount());
+            }
         }
 
         return budgetElements;

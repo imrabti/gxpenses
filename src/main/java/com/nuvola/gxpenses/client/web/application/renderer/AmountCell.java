@@ -1,6 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.renderer;
 
 
+import com.google.common.base.Objects;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
@@ -33,8 +34,8 @@ public class AmountCell extends AbstractCell<Double> {
     @Override
     public void render(Context context, Double value, SafeHtmlBuilder sb) {
         NumberFormat format = NumberFormat.getFormat("###,##0.00");
-        SafeHtml safeAmount = SafeHtmlUtils.fromString(currency + format.format(value));
-        String style = value > 0d ? resources.generalStyleCss().amountIncome() :
+        SafeHtml safeAmount = SafeHtmlUtils.fromString(currency + format.format(Objects.firstNonNull(value, 0d)));
+        String style = Objects.firstNonNull(value, 0d) > 0d ? resources.generalStyleCss().amountIncome() :
                 resources.generalStyleCss().amountExpense();
         sb.append(template.amountTemplate(safeAmount, style));
     }

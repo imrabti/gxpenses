@@ -35,8 +35,9 @@ public class BudgetElementResource extends Resource {
     }
 
     @DELETE
-    public Response removeBudgetElement(BudgetElement budgetElement) {
-        budgetService.removeBudgetElement(budgetElement);
+    @Path("/{id}")
+    public Response removeBudgetElement(@PathParam("id") String id) {
+        budgetService.removeBudgetElement(Long.parseLong(id));
         return Response.ok().build();
     }
 

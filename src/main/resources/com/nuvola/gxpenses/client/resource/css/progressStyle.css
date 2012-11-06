@@ -1,33 +1,3 @@
-.smallProgress {
-    height: 6px;
-    background-color: #aeaeae;
-    width: 252px;
-    top: 20px;
-    border-radius: 5px;
-}
-
-.smallProgress div {
-    background-color: #41A600;
-    height: 6px;
-    width: 0%;
-    border-radius: 5px;
-}
-
-.smallProgressSelected {
-    height: 6px;
-    background-color: #555;
-    width: 252px;
-    top: 20px;
-    border-radius: 5px;
-}
-
-.smallProgressSelected div {
-    background-color: #FFFFFF;
-    height: 6px;
-    width: 0%;
-    border-radius: 5px;
-}
-
 .bigProgress {
     height: 25px;
     position: relative;

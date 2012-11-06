@@ -14,33 +14,27 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.shared.domaine.Account;
 
 public class AccountCell extends AbstractCell<Account> {
 
     public interface Template extends SafeHtmlTemplates {
         @Template("<span class=\"removeButton\"></span><div style=\"float:left; padding: 3px; margin: 4px;\">{0}</div>" +
-                "<div style=\"float:right; margin: 4px;\" class=\"{2}\">{1}</div>" +
-                "<div style=\"clear:both;\"></div>")
-        SafeHtml accountTemplate(SafeHtml name, SafeHtml balance, String cssClass);
+                  "<div style=\"float:right; margin: 4px;\" class=\"elementBalance\">{1}</div>" +
+                  "<div style=\"clear:both;\"></div>")
+        SafeHtml accountTemplate(SafeHtml name, SafeHtml balance);
     }
 
     private final Template template;
-    private final Resources resources;
     private final Delegate<Account> delegate;
     private final String currency;
 
-    private Account selectedAccount;
-
     @Inject
-    public AccountCell(final Template template, final Resources resources,
-                       @Currency String currency,
+    public AccountCell(final Template template, @Currency String currency,
                        @Assisted Delegate<Account> delegate) {
         super("click");
 
         this.template = template;
-        this.resources = resources;
         this.currency = currency;
         this.delegate = delegate;
     }
@@ -50,7 +44,6 @@ public class AccountCell extends AbstractCell<Account> {
                                ValueUpdater<Account> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
         if ("click".equals(event.getType())) {
-            selectedAccount = value;
             EventTarget eventTarget = event.getEventTarget();
             if (!Element.is(eventTarget)) {
                 return;
@@ -69,15 +62,8 @@ public class AccountCell extends AbstractCell<Account> {
 
         SafeHtml safeName = SafeHtmlUtils.fromString(value.getName());
         SafeHtml safeBalance = SafeHtmlUtils.fromString(balance + " " + currency);
-        String balanceStyle;
 
-        if (value == selectedAccount) {
-            balanceStyle = resources.generalStyleCss().accountBalanceSelected();
-        } else {
-            balanceStyle = resources.generalStyleCss().accountBalance();
-        }
-
-        sb.append(template.accountTemplate(safeName, safeBalance, balanceStyle));
+        sb.append(template.accountTemplate(safeName, safeBalance));
     }
 
 }
