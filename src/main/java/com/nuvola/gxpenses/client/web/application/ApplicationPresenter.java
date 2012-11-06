@@ -6,18 +6,17 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
-import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
-import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
+import com.nuvola.gxpenses.client.web.application.widget.SiderHolderPresenter;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
-        implements SetVisibleSiderEvent.SetVisibleSiderHandler, GlobalMessageEvent.GlobalMessageHandler {
+        implements GlobalMessageEvent.GlobalMessageHandler {
 
     public interface MyView extends View {
         public void showAjaxLoader(int timeout);
@@ -37,19 +36,16 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     public static final Object TYPE_SetSiderContent = new Object();
 
     private final HeaderPresenter headerPresenter;
+    private final SiderHolderPresenter siderHolderPresenter;
 
     @Inject
     public ApplicationPresenter(final EventBus eventBus, final MyView view,
-                                final MyProxy proxy, final HeaderPresenter headerPresenter) {
+                                final MyProxy proxy, final HeaderPresenter headerPresenter,
+                                final SiderHolderPresenter siderHolderPresenter) {
         super(eventBus, view, proxy);
 
         this.headerPresenter = headerPresenter;
-    }
-
-    @Override
-    @ProxyEvent
-    public void onVisibleSider(SetVisibleSiderEvent event) {
-        setInSlot(TYPE_SetSiderContent, event.getSider());
+        this.siderHolderPresenter = siderHolderPresenter;
     }
 
     @Override
@@ -66,14 +62,15 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     protected void onBind() {
         super.onBind();
 
-        addRegisteredHandler(SetVisibleSiderEvent.getType(), this);
         addRegisteredHandler(GlobalMessageEvent.getType(), this);
     }
 
     @Override
     protected void onReveal() {
         super.onReveal();
+
         setInSlot(TYPE_SetHeaderContent, headerPresenter);
+        setInSlot(TYPE_SetSiderContent, siderHolderPresenter);
     }
 
 }
