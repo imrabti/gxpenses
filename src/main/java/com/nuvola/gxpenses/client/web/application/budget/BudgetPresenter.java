@@ -8,7 +8,7 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
-import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
@@ -60,7 +60,7 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
         Boolean isEmptyVisible();
     }
 
-    @ProxyCodeSplit
+    @ProxyStandard
     @NameToken(NameTokens.budget)
     @UseGatekeeper(LoggedInGatekeeper.class)
     public interface MyProxy extends ProxyPlace<BudgetPresenter> {

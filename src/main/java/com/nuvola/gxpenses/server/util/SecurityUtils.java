@@ -9,4 +9,5 @@ public class SecurityUtils {
         PasswordEncoder encoder = new ShaPasswordEncoder();
         return encoder.encodePassword(password, salt);
     }
+
 }

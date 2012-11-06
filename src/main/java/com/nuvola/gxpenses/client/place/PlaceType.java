@@ -25,9 +25,22 @@ public enum PlaceType {
         List<PlaceType> menu = new ArrayList<PlaceType>();
         menu.add(TRANSACTIONS);
         menu.add(BUDGETS);
-        menu.add(REPORTS);
 
         return menu;
+    }
+
+    public static PlaceType getPlaceByName(String name) {
+        if (name.equals(TRANSACTIONS.getLabel())) {
+            return TRANSACTIONS;
+        } else if (name.equals(BUDGETS.getLabel())) {
+            return BUDGETS;
+        } else if (name.equals(REPORTS.getLabel())) {
+            return REPORTS;
+        } else if (name.equals(SETTINGS.getLabel())) {
+            return SETTINGS;
+        } else {
+            return NONE;
+        }
     }
 
     @Override

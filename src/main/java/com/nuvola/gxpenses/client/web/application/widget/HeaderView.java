@@ -41,25 +41,34 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
         initWidget(uiBinder.createAndBindUi(this));
     }
 
+    @Override
+    public void setUserName(String username) {
+        this.username.setText(username);
+    }
+
+    @Override
+    public void setSelectedMenu(PlaceType selectedMenu) {
+        if (selectedMenu == PlaceType.SETTINGS) {
+            placesBox.setValue(PlaceType.NONE);
+        } else {
+            placesBox.setValue(selectedMenu);
+        }
+    }
+
     @UiHandler("settings")
-    public void onSettingsClicked(ClickEvent event) {
+    void onSettingsClicked(ClickEvent event) {
         placesBox.setValue(PlaceType.NONE);
         getUiHandlers().changePlace(PlaceType.SETTINGS);
     }
 
     @UiHandler("placesBox")
-    public void onPlaceChanged(ValueChangeEvent<PlaceType> event) {
+    void onPlaceChanged(ValueChangeEvent<PlaceType> event) {
         getUiHandlers().changePlace(event.getValue());
     }
 
     @UiHandler("logout")
-    public void onLogoutClicked(ClickEvent event) {
+    void onLogoutClicked(ClickEvent event) {
         getUiHandlers().clearCredential();
-    }
-
-    @Override
-    public void setUserName(String username) {
-        this.username.setText(username);
     }
 
 }

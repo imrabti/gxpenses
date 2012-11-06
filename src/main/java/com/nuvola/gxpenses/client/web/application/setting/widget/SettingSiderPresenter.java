@@ -11,6 +11,7 @@ public class SettingSiderPresenter extends PresenterWidget<SettingSiderPresenter
         implements SettingSiderUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<SettingSiderUiHandlers> {
+        void setDefaultMenu();
     }
 
     @Inject
@@ -20,8 +21,16 @@ public class SettingSiderPresenter extends PresenterWidget<SettingSiderPresenter
         getView().setUiHandlers(this);
     }
 
+    @Override
     public void changeMenu(SettingSiderView.SettingsEnum menu) {
         SettingsMenuChangedEvent.fire(this, menu);
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+
+        getView().setDefaultMenu();
     }
 
 }

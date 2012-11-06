@@ -21,8 +21,7 @@ public class SettingSiderView extends ViewWithUiHandlers<SettingSiderUiHandlers>
     public enum SettingsEnum {
         GENERAL("General"),
         PASSWORD("Password"),
-        TAGS("Tags"),
-        IMPORT("Import / Export");
+        TAGS("Tags");
 
         private String label;
 
@@ -55,8 +54,13 @@ public class SettingSiderView extends ViewWithUiHandlers<SettingSiderUiHandlers>
         initWidget(uiBinder.createAndBindUi(this));
     }
 
+    @Override
+    public void setDefaultMenu() {
+        settingsMenu.setValue(SettingsEnum.GENERAL, false);
+    }
+
     @UiHandler("settingsMenu")
-    public void onMenuChanged(ValueChangeEvent<SettingsEnum> event) {
+    void onMenuChanged(ValueChangeEvent<SettingsEnum> event) {
         getUiHandlers().changeMenu(event.getValue());
     }
 
