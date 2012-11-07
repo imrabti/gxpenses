@@ -13,12 +13,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.AsyncDataProvider;
-import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.ProvidesKey;
-import com.google.gwt.view.client.Range;
-import com.google.gwt.view.client.SelectionModel;
-import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.view.client.*;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.gin.PageSize;
@@ -31,6 +26,7 @@ import com.nuvola.gxpenses.client.web.application.transaction.renderer.Transacti
 import com.nuvola.gxpenses.client.web.application.ui.ShowMorePagerPanel;
 import com.nuvola.gxpenses.shared.domaine.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
@@ -38,8 +34,6 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     public interface Binder extends UiBinder<Widget, TransactionView> {
     }
-
-    private String currency;
 
     CellList<Transaction> transactionList;
 
@@ -68,9 +62,11 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
     private final ProvidesKey<Transaction> keyProvider;
     private final AsyncDataProvider<Transaction> dataProvider;
-    private final SelectionModel<Transaction> selectionModel;
+    private final SingleSelectionModel<Transaction> selectionModel;
     private final MessageBundle messageBundle;
     private final Resources resources;
+
+    private String currency;
 
     @Inject
     public TransactionView(final Binder uiBinder,
@@ -88,24 +84,35 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         keyProvider = setupKeyProvider();
         dataProvider = setupDataProvider();
         selectionModel = new SingleSelectionModel<Transaction>(keyProvider);
-
         pagerPanel = new ShowMorePagerPanel(pageSize);
         transactionList = new CellList<Transaction>(transactionCellFactory.create(setupRemoveAction()), listResources);
+
+        initWidget(uiBinder.createAndBindUi(this));
+        hideTransactionsPanel();
+
+        pagerPanel.setDisplay(transactionList);
+        dataProvider.addDataDisplay(transactionList);
         transactionList.setKeyboardPagingPolicy(KeyboardPagingPolicy.INCREASE_RANGE);
         transactionList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.BOUND_TO_SELECTION);
         transactionList.setPageSize(pageSize);
         transactionList.setSelectionModel(selectionModel);
-        pagerPanel.setDisplay(transactionList);
-        dataProvider.addDataDisplay(transactionList);
 
-        initWidget(uiBinder.createAndBindUi(this));
-        hideTransactionsPanel();
+        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+            @Override
+            public void onSelectionChange(SelectionChangeEvent selectionChangeEvent) {
+            }
+        });
     }
 
     @Override
     public void setData(List<Transaction> data, Integer start, Integer totalCount) {
         dataProvider.updateRowData(start, data);
-        dataProvider.updateRowCount(totalCount, true);
+        dataProvider.updateRowCount(totalCount, false);
+    }
+
+    @Override
+    public void clearSelection() {
+        selectionModel.clear();
     }
 
     @Override

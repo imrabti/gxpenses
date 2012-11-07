@@ -9,6 +9,7 @@ import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
+import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.shared.domaine.User;
 import com.nuvola.gxpenses.shared.dto.ValidatedResponse;
 
@@ -20,26 +21,29 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
     }
 
     private final SettingService settingService;
+    private final SecurityUtils securityUtils;
     private final MessageBundle messageBundle;
 
     private User currentUser;
 
     @Inject
     public GeneralSettingPresenter(EventBus eventBus, MyView view, final SettingService settingService,
-                                   final MessageBundle messageBundle) {
+                                   final MessageBundle messageBundle, final SecurityUtils securityUtils) {
         super(eventBus, view);
 
         this.settingService = settingService;
         this.messageBundle = messageBundle;
+        this.securityUtils = securityUtils;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    public void saveSetting(User editedUser) {
+    public void saveSetting(final User editedUser) {
         settingService.updateUserSettings(editedUser, new MethodCallbackImpl<ValidatedResponse<User>>() {
             @Override
             public void handleSuccess(ValidatedResponse<User> userValidatedResponse) {
+                securityUtils.updateUsername(editedUser.getEmail());
                 GlobalMessageEvent.fire(this, messageBundle.settingsUpdated());
             }
         });
