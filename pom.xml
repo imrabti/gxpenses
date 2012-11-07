@@ -17,7 +17,7 @@
 
         <cloudfoundry.version>0.8.1</cloudfoundry.version>
         <gwt.version>2.5.0</gwt.version>
-        <gwt-maven-plugin.version>2.5.0-rc2</gwt-maven-plugin.version>
+        <gwt-maven-plugin.version>2.5.0</gwt-maven-plugin.version>
         <gwtp.version>0.8-SNAPSHOT</gwtp.version>
         <guice.version>3.0</guice.version>
         <gin.version>2.0.0</gin.version>
