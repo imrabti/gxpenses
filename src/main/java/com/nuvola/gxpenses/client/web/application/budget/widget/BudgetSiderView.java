@@ -76,6 +76,11 @@ public class BudgetSiderView extends ViewWithUiHandlers<BudgetSiderUiHandlers> i
         dataProvider.refresh();
     }
 
+    @Override
+    public void clearSelection() {
+        selectionModel.clear();
+    }
+
     @UiHandler("addNew")
     void onAddAccount(ClickEvent event) {
         getUiHandlers().addNewBudget((Widget) event.getSource());

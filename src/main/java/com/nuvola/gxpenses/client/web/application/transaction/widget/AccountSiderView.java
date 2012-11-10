@@ -115,6 +115,11 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
         }
     }
 
+    @Override
+    public void clearSelection() {
+        selectionModel.clear();
+    }
+
     @UiHandler("addNew")
     void onAddAccount(ClickEvent event) {
         getUiHandlers().addNewAccount((Widget) event.getSource());

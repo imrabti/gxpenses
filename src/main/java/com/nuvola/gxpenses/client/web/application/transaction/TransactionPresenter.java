@@ -48,6 +48,8 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<TransactionUiHandlers> {
         void setData(List<Transaction> data, Integer start, Integer totalCount);
 
+        void clearSelection();
+
         void setAccountName(String accountName);
 
         void setPeriod(String period);
@@ -122,6 +124,8 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     public void onAccountChanged(AccountChangedEvent event) {
+        getView().clearSelection();
+
         if (event.getAccount() == null) {
             selectedAccount = null;
             selectedPeriodeFilter = event.getPeriodeFilter();
@@ -161,6 +165,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
         //Set the current Date
         getView().setPeriod(DateUtils.getDateToDisplay(selectedPeriodeFilter));
+        getView().clearSelection();
 
         //Reload transactions total amount and data
         fireLoadTotalAmountTransactionRequest();

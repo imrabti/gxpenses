@@ -35,6 +35,8 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
         void showTransferButton(Boolean visible);
 
         void switchTransferStyle();
+
+        void clearSelection();
     }
 
     private final AccountService accountService;
@@ -130,6 +132,13 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
 
         addRegisteredHandler(AccountBalanceChangedEvent.getType(), this);
         addRegisteredHandler(PopupClosedEvent.getType(), this);
+    }
+
+    @Override
+    protected void onHide() {
+        super.onHide();
+
+        getView().clearSelection();
     }
 
     private void fireLoadListAccounts() {
