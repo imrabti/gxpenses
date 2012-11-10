@@ -21,6 +21,14 @@ public class SecurityUtils {
         sessionStorage.remove(Credentials.PASSWORD.name());
     }
 
+    public void updatePassword(String password) {
+        sessionStorage.put(Credentials.PASSWORD.name(), password);
+    }
+
+    public void updateUsername(String username) {
+        sessionStorage.put(Credentials.USERNAME.name(), username);
+    }
+
     public String getUsername() {
         return sessionStorage.get(Credentials.USERNAME.name());
     }

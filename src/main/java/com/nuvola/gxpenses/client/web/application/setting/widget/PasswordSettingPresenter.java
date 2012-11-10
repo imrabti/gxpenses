@@ -9,6 +9,7 @@ import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
+import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.shared.dto.Password;
 import com.nuvola.gxpenses.shared.dto.ValidatedResponse;
 
@@ -20,24 +21,27 @@ public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPre
     }
 
     private final SettingService settingService;
+    private final SecurityUtils securityUtils;
     private final MessageBundle messageBundle;
 
     @Inject
     public PasswordSettingPresenter(EventBus eventBus, MyView view, final SettingService settingService,
-                                    final MessageBundle messageBundle) {
+                                    final MessageBundle messageBundle, final SecurityUtils securityUtils) {
         super(eventBus, view);
 
         this.settingService = settingService;
         this.messageBundle = messageBundle;
+        this.securityUtils = securityUtils;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    public void savePassword(Password password) {
+    public void savePassword(final Password password) {
         settingService.updateUserPassword(password, new MethodCallbackImpl<ValidatedResponse<Password>>() {
             @Override
             public void handleSuccess(ValidatedResponse<Password> passwordValidatedResponse) {
+                securityUtils.updatePassword(password.getNewPassword());
                 GlobalMessageEvent.fire(this, messageBundle.passwordUpdated());
             }
         });

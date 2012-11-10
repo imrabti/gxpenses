@@ -23,6 +23,8 @@ public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.M
 
     public interface MyView extends View, HasUiHandlers<BudgetSiderUiHandlers> {
         void setData(List<Budget> budgets);
+
+        void clearSelection();
     }
 
     private final BudgetService budgetService;
@@ -70,6 +72,13 @@ public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.M
         super.onBind();
 
         addRegisteredHandler(BudgetElementsChangedEvent.getType(), this);
+    }
+
+    @Override
+    protected void onHide() {
+        super.onHide();
+
+        getView().clearSelection();
     }
 
     private void fireLoadListBudgets() {

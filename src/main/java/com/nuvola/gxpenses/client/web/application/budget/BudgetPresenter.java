@@ -128,17 +128,26 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @Override
     public void onBudgetChanged(BudgetChangedEvent event) {
-        currentDate = new Date();
-        currentBudget = event.getBudget();
+        if (event.getBudget() == null) {
+            currentDate = new Date();
+            currentBudget = null;
 
-        getView().setBudgetName(currentBudget.getName());
-        getView().setPeriod(DateUtils.getDateToDisplay(currentDate, currentBudget.getPeriodicity()));
+            if (!getView().isEmptyVisible()) {
+                getView().hideElementsPanel();
+            }
+        } else {
+            currentDate = new Date();
+            currentBudget = event.getBudget();
 
-        if (getView().isEmptyVisible()) {
-            getView().showElementsPanel();
+            getView().setBudgetName(currentBudget.getName());
+            getView().setPeriod(DateUtils.getDateToDisplay(currentDate, currentBudget.getPeriodicity()));
+
+            if (getView().isEmptyVisible()) {
+                getView().showElementsPanel();
+            }
+
+            fireLoadBudgetElementByIdAndPeriod();
         }
-
-        fireLoadBudgetElementByIdAndPeriod();
     }
 
     @Override
