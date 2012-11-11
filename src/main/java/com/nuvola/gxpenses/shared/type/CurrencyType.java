@@ -10,8 +10,7 @@ public enum CurrencyType {
     POUND("British Pound Sterling - £ (GBP)", "GBP"),
     MAD("Moroccan Dirham - (MAD)", "MAD"),
     FORINT("Hungarian Forint - Ft (HUF)", "HUF"),
-    EURO("European Euo - € (EURO)", "EURO"),
-    OTHER("Other currency", "OTHER");
+    EURO("European Euo - € (EURO)", "EURO");
 
     private final String label;
     private final String value;

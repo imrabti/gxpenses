@@ -46,10 +46,10 @@ public class SettingEditor extends Composite implements EditorView<User> {
         currency = new ValueListBox<CurrencyType>(new EnumRenderer<CurrencyType>());
         pageSize = new ValueListBox<PaginationType>(new EnumRenderer<PaginationType>());
 
-        currency.setAcceptableValues(Arrays.asList(CurrencyType.values()));
-        pageSize.setAcceptableValues(Arrays.asList(PaginationType.values()));
         currency.setValue(CurrencyType.US_DOLLAR);
         pageSize.setValue(PaginationType.PAGE_40);
+        currency.setAcceptableValues(Arrays.asList(CurrencyType.values()));
+        pageSize.setAcceptableValues(Arrays.asList(PaginationType.values()));
 
         initWidget(uiBinder.createAndBindUi(this));
         driver.initialize(this);
