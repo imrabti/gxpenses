@@ -1,6 +1,5 @@
 package com.nuvola.gxpenses.shared.type;
 
-
 public enum TransactionType {
 
     ALL("All", "ALL"),

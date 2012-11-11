@@ -39,8 +39,8 @@ public class AccountEditor extends Composite implements EditorView<Account> {
 
         //Initialize ValusListBox elements
         type = new ValueListBox<AccountType>(new EnumRenderer<AccountType>());
-        type.setAcceptableValues(Arrays.asList(AccountType.values()));
         type.setValue(AccountType.CASH);
+        type.setAcceptableValues(Arrays.asList(AccountType.values()));
 
         initWidget(uiBinder.createAndBindUi(this));
         driver.initialize(this);
