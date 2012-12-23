@@ -1,5 +1,6 @@
 package com.nuvola.gxpenses.server.security;
 
+import com.nuvola.gxpenses.server.business.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +13,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     @Qualifier("authenticationProvider")
     AuthenticationManager authenticationManager;
+    @Autowired
+    private SecurityContextProvider securityContext;
+
+    @Override
+    public User currentUser() {
+        return securityContext.getCurrentUser();
+    }
 
     @Override
     public Boolean authenticate(String username, String password) {

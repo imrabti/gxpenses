@@ -1,24 +1,23 @@
 package com.nuvola.gxpenses.client.util;
 
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.server.business.Account;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 
 import java.util.List;
 
 public class ValueListFactory {
+    private final GxpensesRequestFactory requestFactory;
 
-    private final AccountService accountService;
-
-    private List<Account> listAccounts;
+    private List<AccountProxy> listAccounts;
 
     @Inject
-    public ValueListFactory(AccountService accountService) {
-        this.accountService = accountService;
+    public ValueListFactory(final GxpensesRequestFactory requestFactory) {
+        this.requestFactory = requestFactory;
     }
 
-    public List<Account> getListAccounts() {
+    public List<AccountProxy> getListAccounts() {
         if (listAccounts == null) {
             updateListAccount();
         }
@@ -27,12 +26,11 @@ public class ValueListFactory {
     }
 
     public void updateListAccount() {
-        accountService.getAccounts(new MethodCallbackImpl<List<Account>>() {
+        requestFactory.accountService().findAllAccountsByUserId().fire(new ReceiverImpl<List<AccountProxy>>() {
             @Override
-            public void handleSuccess(List<Account> accounts) {
+            public void onSuccess(List<AccountProxy> accounts) {
                 listAccounts = accounts;
             }
         });
     }
-
 }
