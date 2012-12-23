@@ -13,7 +13,6 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.security.RegistrationService;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
 import com.nuvola.gxpenses.server.business.User;

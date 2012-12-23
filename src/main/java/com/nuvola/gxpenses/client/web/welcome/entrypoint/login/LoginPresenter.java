@@ -12,7 +12,6 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.security.AuthenticationService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;

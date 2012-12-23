@@ -12,7 +12,6 @@ import com.nuvola.gxpenses.client.web.application.ui.GlobalMessage;
 import com.nuvola.gxpenses.client.web.application.widget.FooterView;
 
 public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, ApplicationView> {
     }
 
@@ -66,5 +65,4 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     public void displayMessage(String message) {
         globalMessage.displayMessage(message);
     }
-
 }

@@ -15,7 +15,6 @@ import org.fusesource.restygwt.client.MethodCallback;
 import java.util.logging.Logger;
 
 public class BootStrapperImpl implements BootStrapper {
-
     private final static Logger logger = Logger.getLogger(BootStrapperImpl.class.getName());
 
     private final PlaceManager placeManager;
@@ -94,5 +93,4 @@ public class BootStrapperImpl implements BootStrapper {
         PlaceRequest place = new PlaceRequest(NameTokens.getLogin());
         placeManager.revealPlace(place);
     }
-
 }

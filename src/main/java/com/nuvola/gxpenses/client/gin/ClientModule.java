@@ -9,13 +9,14 @@ import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
 import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.BootStrapperImpl;
+import com.nuvola.gxpenses.client.event.EventSourceRequestTransport;
 import com.nuvola.gxpenses.client.place.ClientPlaceManager;
 import com.nuvola.gxpenses.client.place.DefaultPlace;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
@@ -30,7 +31,7 @@ public class ClientModule extends AbstractPresenterModule {
 
         bind(Resources.class).in(Singleton.class);
         bind(MessageBundle.class).in(Singleton.class);
-        requestStaticInjection(MethodCallbackImpl.class);
+        requestStaticInjection(ReceiverImpl.class);
 
         bind(GxpensesRequestFactory.class).toProvider(RequestFactoryProvider.class).in(Singleton.class);
         bind(BootStrapper.class).to(BootStrapperImpl.class).in(Singleton.class);
@@ -48,9 +49,9 @@ public class ClientModule extends AbstractPresenterModule {
         private final GxpensesRequestFactory requestFactory;
 
         @Inject
-        public RequestFactoryProvider(EventBus eventBus) {
+        public RequestFactoryProvider(EventBus eventBus, SecurityUtils securityUtils) {
             requestFactory = GWT.create(GxpensesRequestFactory.class);
-            requestFactory.initialize(eventBus);
+            requestFactory.initialize(eventBus, new EventSourceRequestTransport(eventBus, securityUtils));
         }
 
         public GxpensesRequestFactory get() {
