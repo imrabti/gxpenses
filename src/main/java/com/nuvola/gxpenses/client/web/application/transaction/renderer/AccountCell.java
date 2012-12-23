@@ -14,10 +14,9 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.server.business.Account;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 
-public class AccountCell extends AbstractCell<Account> {
-
+public class AccountCell extends AbstractCell<AccountProxy> {
     public interface Template extends SafeHtmlTemplates {
         @Template("<span class=\"removeButton\"></span><div style=\"float:left; padding: 3px; margin: 4px;\">{0}</div>" +
                   "<div style=\"float:right; margin: 4px;\" class=\"elementBalance\">{1}</div>" +
@@ -26,12 +25,12 @@ public class AccountCell extends AbstractCell<Account> {
     }
 
     private final Template template;
-    private final Delegate<Account> delegate;
+    private final Delegate<AccountProxy> delegate;
     private final String currency;
 
     @Inject
     public AccountCell(final Template template, @Currency String currency,
-                       @Assisted Delegate<Account> delegate) {
+                       @Assisted Delegate<AccountProxy> delegate) {
         super("click");
 
         this.template = template;
@@ -40,8 +39,8 @@ public class AccountCell extends AbstractCell<Account> {
     }
 
     @Override
-    public void onBrowserEvent(Context context, Element parent, Account value, NativeEvent event,
-                               ValueUpdater<Account> valueUpdater) {
+    public void onBrowserEvent(Context context, Element parent, AccountProxy value, NativeEvent event,
+                               ValueUpdater<AccountProxy> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
         if ("click".equals(event.getType())) {
             EventTarget eventTarget = event.getEventTarget();
@@ -56,7 +55,7 @@ public class AccountCell extends AbstractCell<Account> {
     }
 
     @Override
-    public void render(Context context, Account value, SafeHtmlBuilder sb) {
+    public void render(Context context, AccountProxy value, SafeHtmlBuilder sb) {
         NumberFormat format = NumberFormat.getFormat("###,##0.00");
         String balance = (null == value.getBalance()) ? format.format(0d) : format.format(value.getBalance());
 
@@ -65,5 +64,4 @@ public class AccountCell extends AbstractCell<Account> {
 
         sb.append(template.accountTemplate(safeName, safeBalance));
     }
-
 }
