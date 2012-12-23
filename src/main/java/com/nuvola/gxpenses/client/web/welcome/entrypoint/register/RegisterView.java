@@ -15,15 +15,14 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.server.business.User;
 
 public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> implements RegisterPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, RegisterView> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<User, RegisterView> {
+    public interface Driver extends SimpleBeanEditorDriver<UserProxy, RegisterView> {
     }
 
     @UiField
@@ -53,15 +52,15 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     }
 
     @Override
-    public void edit(User user) {
+    public void edit(UserProxy user) {
         email.setFocus(true);
         driver.edit(user);
         registrationError.setVisible(false);
     }
 
     @Override
-    public User get() {
-        User user = driver.flush();
+    public UserProxy get() {
+        UserProxy user = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
@@ -82,7 +81,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     }
 
     private void processRegisterAction() {
-        User user = get();
+        UserProxy user = get();
 
         if (!Strings.isNullOrEmpty(user.getEmail()) && !Strings.isNullOrEmpty(user.getUserName()) &&
                 !Strings.isNullOrEmpty(user.getPassword())) {
@@ -93,5 +92,4 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
             registrationError.setText(messageBundle.registerInfoMissing());
         }
     }
-
 }

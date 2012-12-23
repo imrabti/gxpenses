@@ -11,14 +11,15 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
+import com.nuvola.gxpenses.shared.dto.UserCredentials;
 
 public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresenter.MyProxy>
         implements LoginUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<LoginUiHandlers>, EditorView<UserCredentials> {
         void displayLoginError(Boolean visible);
     }
@@ -28,17 +29,17 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
     public interface MyProxy extends ProxyPlace<LoginPresenter> {
     }
 
-    private final AuthenticationService authenticationService;
+    private final GxpensesRequestFactory requestFactory;
     private final BootStrapper bootStrapper;
     private final SecurityUtils securityUtils;
 
     @Inject
     public LoginPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                          final AuthenticationService authenticationService, final SecurityUtils securityUtils,
+                          final GxpensesRequestFactory requestFactory, final SecurityUtils securityUtils,
                           final BootStrapper bootStrapper) {
         super(eventBus, view, proxy);
 
-        this.authenticationService = authenticationService;
+        this.requestFactory = requestFactory;
         this.securityUtils = securityUtils;
         this.bootStrapper = bootStrapper;
 
@@ -47,9 +48,10 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
 
     @Override
     public void login(final UserCredentials credentials) {
-        authenticationService.authenticate(credentials, new MethodCallbackImpl<Boolean>() {
+        requestFactory.authenticationService().authenticate(credentials.getUsername(), credentials.getUsername())
+                .fire(new ReceiverImpl<Boolean>() {
             @Override
-            public void handleSuccess(Boolean authenticated) {
+            public void onSuccess(Boolean authenticated) {
                 if (authenticated) {
                     securityUtils.setCredentials(credentials.getUsername(), credentials.getPassword());
                     bootStrapper.init();
@@ -71,5 +73,4 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
 
         getView().edit(new UserCredentials());
     }
-
 }
