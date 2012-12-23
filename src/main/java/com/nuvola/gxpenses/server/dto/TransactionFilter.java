@@ -5,12 +5,12 @@ import com.nuvola.gxpenses.shared.type.TransactionType;
 
 public class TransactionFilter {
     private Long accountId;
-    private PeriodType periodFilter;
+    private PeriodType period;
     private TransactionType type;
 
-    public TransactionFilter(Long accountId, PeriodType periodFilter, TransactionType type) {
+    public TransactionFilter(Long accountId, PeriodType period, TransactionType type) {
         this.accountId = accountId;
-        this.periodFilter = periodFilter;
+        this.period = period;
         this.type = type;
     }
 
@@ -22,12 +22,12 @@ public class TransactionFilter {
         this.accountId = accountId;
     }
 
-    public PeriodType getPeriodFilter() {
-        return periodFilter;
+    public PeriodType getPeriod() {
+        return period;
     }
 
-    public void setPeriodFilter(PeriodType periodFilter) {
-        this.periodFilter = periodFilter;
+    public void setPeriod(PeriodType period) {
+        this.period = period;
     }
 
     public TransactionType getType() {

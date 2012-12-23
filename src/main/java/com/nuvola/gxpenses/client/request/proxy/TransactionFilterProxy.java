@@ -12,9 +12,9 @@ public interface TransactionFilterProxy extends ValueProxy {
 
     void setAccountId(Long accountId);
 
-    PeriodType getPeriodFilter();
+    PeriodType getPeriod();
 
-    void setPeriodFilter(PeriodType periodFilter);
+    void setPeriod(PeriodType period);
 
     TransactionType getType();
 

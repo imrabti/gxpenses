@@ -15,12 +15,12 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.server.business.Transaction;
+import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class TransactionCell extends AbstractCell<Transaction> {
+public class TransactionCell extends AbstractCell<TransactionProxy> {
 
     public interface Template extends SafeHtmlTemplates {
         @Template("<span class=\"removeButton\"></span><div style=\"float:left;\" class=\"date\">{0}</div>" +
@@ -40,13 +40,13 @@ public class TransactionCell extends AbstractCell<Transaction> {
     }
 
     private final Template template;
-    private final Delegate<Transaction> delegate;
+    private final Delegate<TransactionProxy> delegate;
     private final NumberFormat numberFormat;
     private final DateTimeFormat dateFormat;
 
     @Inject
     public TransactionCell(final Template template, @Currency String currency,
-                           @Assisted Delegate<Transaction> delegate) {
+                           @Assisted Delegate<TransactionProxy> delegate) {
         super("click");
 
         this.template = template;
@@ -57,8 +57,8 @@ public class TransactionCell extends AbstractCell<Transaction> {
     }
 
     @Override
-    public void onBrowserEvent(Context context, Element parent, Transaction value, NativeEvent event,
-                               ValueUpdater<Transaction> valueUpdater) {
+    public void onBrowserEvent(Context context, Element parent, TransactionProxy value, NativeEvent event,
+                               ValueUpdater<TransactionProxy> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
         if ("click".equals(event.getType())) {
             EventTarget eventTarget = event.getEventTarget();
@@ -73,7 +73,7 @@ public class TransactionCell extends AbstractCell<Transaction> {
     }
 
     @Override
-    public void render(Context context, Transaction value, SafeHtmlBuilder sb) {
+    public void render(Context context, TransactionProxy value, SafeHtmlBuilder sb) {
         if (value != null) {
             SafeHtml safeDate = SafeHtmlUtils.fromString(dateFormat.format(value.getDate()));
             SafeHtml safePayee = SafeHtmlUtils.fromString(value.getPayee());
@@ -106,5 +106,4 @@ public class TransactionCell extends AbstractCell<Transaction> {
             sb.append(template.tagTemplate(safeTag));
         }
     }
-
 }

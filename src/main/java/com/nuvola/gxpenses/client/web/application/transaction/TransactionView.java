@@ -13,28 +13,32 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.*;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.ProvidesKey;
+import com.google.gwt.view.client.Range;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.list.TransactionListStyle;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.TransactionCellFactory;
 import com.nuvola.gxpenses.client.web.application.ui.ShowMorePagerPanel;
-import com.nuvola.gxpenses.server.business.Transaction;
 
 import java.util.List;
 
 public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         implements TransactionPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, TransactionView> {
     }
 
-    CellList<Transaction> transactionList;
+    CellList<TransactionProxy> transactionList;
 
     @UiField
     Label message;
@@ -59,9 +63,9 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
     @UiField
     Button addTransactionButton;
 
-    private final ProvidesKey<Transaction> keyProvider;
-    private final AsyncDataProvider<Transaction> dataProvider;
-    private final SingleSelectionModel<Transaction> selectionModel;
+    private final ProvidesKey<TransactionProxy> keyProvider;
+    private final AsyncDataProvider<TransactionProxy> dataProvider;
+    private final SingleSelectionModel<TransactionProxy> selectionModel;
     private final MessageBundle messageBundle;
     private final Resources resources;
 
@@ -82,9 +86,9 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
 
         keyProvider = setupKeyProvider();
         dataProvider = setupDataProvider();
-        selectionModel = new SingleSelectionModel<Transaction>(keyProvider);
+        selectionModel = new SingleSelectionModel<TransactionProxy>(keyProvider);
         pagerPanel = new ShowMorePagerPanel(pageSize);
-        transactionList = new CellList<Transaction>(transactionCellFactory.create(setupRemoveAction()), listResources);
+        transactionList = new CellList<TransactionProxy>(transactionCellFactory.create(setupRemoveAction()), listResources);
 
         initWidget(uiBinder.createAndBindUi(this));
         hideTransactionsPanel();
@@ -104,7 +108,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
     }
 
     @Override
-    public void setData(List<Transaction> data, Integer start, Integer totalCount) {
+    public void setData(List<TransactionProxy> data, Integer start, Integer totalCount) {
         dataProvider.updateRowData(start, data);
         dataProvider.updateRowCount(totalCount, false);
     }
@@ -198,39 +202,38 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         addTransactionButton.addStyleName(resources.buttonStyleCss().addButtonAltText());
     }
 
-    private ProvidesKey<Transaction> setupKeyProvider() {
-        return new ProvidesKey<Transaction>() {
+    private ProvidesKey<TransactionProxy> setupKeyProvider() {
+        return new ProvidesKey<TransactionProxy>() {
             @Override
-            public Object getKey(Transaction transaction) {
+            public Object getKey(TransactionProxy transaction) {
                 return transaction == null ? null : transaction.getId();
             }
         };
     }
 
-    private AsyncDataProvider<Transaction> setupDataProvider() {
-        return new AsyncDataProvider<Transaction>(keyProvider) {
+    private AsyncDataProvider<TransactionProxy> setupDataProvider() {
+        return new AsyncDataProvider<TransactionProxy>(keyProvider) {
             @Override
-            protected void onRangeChanged(HasData<Transaction> display) {
+            protected void onRangeChanged(HasData<TransactionProxy> display) {
                 fetchData(display);
             }
         };
     }
 
-    private ActionCell.Delegate<Transaction> setupRemoveAction() {
-        return new ActionCell.Delegate<Transaction>() {
+    private ActionCell.Delegate<TransactionProxy> setupRemoveAction() {
+        return new ActionCell.Delegate<TransactionProxy>() {
             @Override
-            public void execute(Transaction transaction) {
+            public void execute(TransactionProxy transaction) {
                 getUiHandlers().removeTransaction(transaction);
             }
         };
     }
 
-    private void fetchData(HasData<Transaction> display) {
+    private void fetchData(HasData<TransactionProxy> display) {
         Range range = display.getVisibleRange();
 
         if (getUiHandlers() != null) {
             getUiHandlers().loadTransactions(range.getStart(), range.getLength());
         }
     }
-
 }
