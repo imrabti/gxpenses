@@ -27,8 +27,8 @@ import com.nuvola.gxpenses.client.web.application.budget.event.BudgetChangedEven
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetElementPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.widget.BudgetSiderPresenter;
-import com.nuvola.gxpenses.shared.domaine.Budget;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.Budget;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
 import org.fusesource.restygwt.client.Method;
 

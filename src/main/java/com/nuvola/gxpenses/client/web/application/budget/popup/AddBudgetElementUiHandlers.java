@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.budget.popup;
 
 import com.gwtplatform.mvp.client.UiHandlers;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 
 public interface AddBudgetElementUiHandlers extends UiHandlers {
     void addNewBudgetElement(BudgetElement budgetElement);

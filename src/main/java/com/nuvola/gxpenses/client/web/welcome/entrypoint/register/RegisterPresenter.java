@@ -16,7 +16,7 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.security.RegistrationService;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.server.business.User;
 
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy>
         implements RegisterUiHandlers {

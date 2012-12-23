@@ -13,7 +13,7 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetPresenter;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.server.business.Budget;
 
 import java.util.Date;
 import java.util.List;

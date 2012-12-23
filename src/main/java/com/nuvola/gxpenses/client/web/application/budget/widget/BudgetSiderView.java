@@ -18,7 +18,7 @@ import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetCell;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.server.business.Budget;
 
 import java.util.List;
 

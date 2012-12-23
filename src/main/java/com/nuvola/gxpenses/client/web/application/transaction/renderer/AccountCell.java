@@ -14,7 +14,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 
 public class AccountCell extends AbstractCell<Account> {
 

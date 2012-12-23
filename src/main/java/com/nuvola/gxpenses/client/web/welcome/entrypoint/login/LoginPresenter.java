@@ -16,7 +16,6 @@ import com.nuvola.gxpenses.client.security.AuthenticationService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
-import com.nuvola.gxpenses.shared.dto.UserCredentials;
 
 public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresenter.MyProxy>
         implements LoginUiHandlers {

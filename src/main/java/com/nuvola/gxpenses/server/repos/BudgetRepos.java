@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.server.repos;
 
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.server.business.Budget;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -10,8 +10,7 @@ import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
-import com.nuvola.gxpenses.shared.domaine.User;
-import com.nuvola.gxpenses.shared.dto.ValidatedResponse;
+import com.nuvola.gxpenses.server.business.User;
 
 public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPresenter.MyView>
         implements GeneralSettingUiHandlers {

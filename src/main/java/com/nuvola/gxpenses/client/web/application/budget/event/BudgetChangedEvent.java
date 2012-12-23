@@ -3,7 +3,7 @@ package com.nuvola.gxpenses.client.web.application.budget.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.server.business.Budget;
 
 public class BudgetChangedEvent extends GwtEvent<BudgetChangedEvent.BudgetChangedHandler> {
 

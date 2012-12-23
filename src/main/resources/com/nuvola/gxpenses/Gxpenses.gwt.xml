@@ -7,7 +7,7 @@
 
     <!-- Other module inherits       -->
     <inherits name="com.gwtplatform.mvp.Mvp"/>
-    <inherits name="org.fusesource.restygwt.RestyGWT"/>
+    <inherits name='com.google.web.bindery.requestfactory.RequestFactory'/>
     <inherits name="com.google.common.base.Base"/>
 
     <!-- Logging Configuration -->

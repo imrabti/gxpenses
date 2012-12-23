@@ -9,7 +9,7 @@ import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.server.business.User;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.logging.Logger;

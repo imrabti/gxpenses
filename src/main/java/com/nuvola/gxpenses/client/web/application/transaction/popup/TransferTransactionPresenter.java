@@ -12,7 +12,7 @@ import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
-import com.nuvola.gxpenses.shared.dto.TransferTransaction;
+import com.nuvola.gxpenses.server.dto.TransferTransaction;
 
 public class TransferTransactionPresenter extends PresenterWidget<TransferTransactionPresenter.MyView>
         implements TransferTransactionUiHandlers {

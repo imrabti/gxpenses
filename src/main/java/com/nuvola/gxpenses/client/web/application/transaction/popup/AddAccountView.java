@@ -11,7 +11,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.AccountEditor;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 
 public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers>
         implements AddAccountPresenter.MyView {

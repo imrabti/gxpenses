@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.client;
 
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.server.business.User;
 
 public interface BootStrapper {
 

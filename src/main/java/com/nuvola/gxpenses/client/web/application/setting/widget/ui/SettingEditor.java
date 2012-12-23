@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.server.business.User;
 import com.nuvola.gxpenses.shared.type.CurrencyType;
 import com.nuvola.gxpenses.shared.type.PaginationType;
 

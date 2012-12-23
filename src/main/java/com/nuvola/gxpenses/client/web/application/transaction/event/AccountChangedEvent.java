@@ -3,7 +3,7 @@ package com.nuvola.gxpenses.client.web.application.transaction.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 

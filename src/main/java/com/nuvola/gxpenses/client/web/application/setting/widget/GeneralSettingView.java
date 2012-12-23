@@ -9,7 +9,7 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.web.application.setting.widget.ui.SettingEditor;
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.server.business.User;
 
 public class GeneralSettingView extends ViewWithUiHandlers<GeneralSettingUiHandlers>
         implements GeneralSettingPresenter.MyView {

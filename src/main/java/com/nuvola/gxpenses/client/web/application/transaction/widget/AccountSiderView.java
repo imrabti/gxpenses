@@ -22,7 +22,7 @@ import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountCellFactory;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 

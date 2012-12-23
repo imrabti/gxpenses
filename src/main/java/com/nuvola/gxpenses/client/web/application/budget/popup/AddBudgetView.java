@@ -11,7 +11,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetEditor;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.server.business.Budget;
 
 public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> implements AddBudgetPresenter.MyView {
 

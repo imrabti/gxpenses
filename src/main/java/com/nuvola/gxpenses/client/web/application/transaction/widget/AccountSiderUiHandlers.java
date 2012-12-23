@@ -2,7 +2,7 @@ package com.nuvola.gxpenses.client.web.application.transaction.widget;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.UiHandlers;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 

@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.server.repos;
 
-import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.server.business.Transaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

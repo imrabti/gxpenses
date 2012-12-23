@@ -17,7 +17,7 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 
 public class BudgetElementEditor extends Composite implements EditorView<BudgetElement> {
 

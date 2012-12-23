@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.server.security;
 
 import com.nuvola.gxpenses.server.repos.UserRepos;
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.server.business.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

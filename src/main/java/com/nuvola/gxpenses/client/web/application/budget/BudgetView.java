@@ -32,7 +32,7 @@ import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetProgress
 import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetProgressFooterCell;
 import com.nuvola.gxpenses.client.web.application.renderer.AmountCell;
 import com.nuvola.gxpenses.client.web.application.renderer.TowSideTextCell;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
 
 import java.util.Arrays;

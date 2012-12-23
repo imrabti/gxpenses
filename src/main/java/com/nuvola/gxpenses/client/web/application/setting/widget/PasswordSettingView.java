@@ -6,7 +6,7 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.web.application.setting.widget.ui.PasswordEditor;
-import com.nuvola.gxpenses.shared.dto.Password;
+import com.nuvola.gxpenses.server.dto.Password;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

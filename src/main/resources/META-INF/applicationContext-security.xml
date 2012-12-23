@@ -11,12 +11,6 @@
     <!-- Spring Security URL Interceptor -->
     <http create-session="stateless" entry-point-ref="digestEntryPoint"
           authentication-manager-ref="authenticationProvider">
-        <intercept-url pattern="/rest/account/**" access="ROLE_USER"/>
-        <intercept-url pattern="/rest/element/**" access="ROLE_USER"/>
-        <intercept-url pattern="/rest/budget/**" access="ROLE_USER"/>
-        <intercept-url pattern="/rest/setting/**" access="ROLE_USER"/>
-        <intercept-url pattern="/rest/user/**" access="ROLE_USER"/>
-
         <custom-filter ref="digestFilter" after="BASIC_AUTH_FILTER" />
     </http>
 

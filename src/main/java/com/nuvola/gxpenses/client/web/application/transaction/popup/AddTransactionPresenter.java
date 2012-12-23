@@ -13,8 +13,8 @@ import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
-import com.nuvola.gxpenses.shared.domaine.Account;
-import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.server.business.Account;
+import com.nuvola.gxpenses.server.business.Transaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 public class AddTransactionPresenter extends PresenterWidget<AddTransactionPresenter.MyView>

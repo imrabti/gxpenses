@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.shared.domaine.Budget;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.Budget;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 
 import java.util.Date;
 import java.util.List;
@@ -13,9 +13,9 @@ public interface BudgetService {
 
     void removeBudgetElement(Long budgetElementId);
 
-    List<Budget> findAllBudgetsByUserId(Long userId, Date period);
+    List<Budget> findAllBudgetsByUserId(Date period);
 
     List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId);
 
-    List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId, Long userId, Date period);
+    List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId, Date period);
 }

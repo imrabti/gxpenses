@@ -28,7 +28,7 @@ import com.nuvola.gxpenses.client.resource.style.table.SmallTableStyle;
 import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetElementEditor;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.RemoveBudgetElementCellFactory;
 import com.nuvola.gxpenses.client.web.application.renderer.ClickableIconCell;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 
 import java.util.List;
 

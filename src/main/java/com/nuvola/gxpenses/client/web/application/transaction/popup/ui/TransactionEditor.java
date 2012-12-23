@@ -18,7 +18,7 @@ import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.ui.MultipleSuggestBox;
-import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.server.business.Transaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 import java.util.Arrays;

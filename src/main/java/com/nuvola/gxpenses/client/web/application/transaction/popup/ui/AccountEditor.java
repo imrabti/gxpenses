@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 import com.nuvola.gxpenses.shared.type.AccountType;
 
 import java.util.Arrays;

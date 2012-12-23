@@ -2,7 +2,7 @@ package com.nuvola.gxpenses.client.web.application.transaction;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.UiHandlers;
-import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.server.business.Transaction;
 
 public interface TransactionUiHandlers extends UiHandlers {
     void loadTransactions(Integer start, Integer length);

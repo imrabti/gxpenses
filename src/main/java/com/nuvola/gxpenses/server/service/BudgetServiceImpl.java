@@ -5,9 +5,10 @@ import com.nuvola.gxpenses.server.repos.AccountRepos;
 import com.nuvola.gxpenses.server.repos.BudgetElementRepos;
 import com.nuvola.gxpenses.server.repos.BudgetRepos;
 import com.nuvola.gxpenses.server.repos.TransactionRepos;
+import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.server.util.DateUtils;
-import com.nuvola.gxpenses.shared.domaine.Budget;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.Budget;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,6 @@ import java.util.List;
 @Service
 @Transactional
 public class BudgetServiceImpl implements BudgetService {
-
     @Autowired
     private BudgetRepos budgetRepos;
     @Autowired
@@ -27,6 +27,8 @@ public class BudgetServiceImpl implements BudgetService {
     private TransactionRepos transactionRepos;
     @Autowired
     private AccountRepos accountRepos;
+    @Autowired
+    private SecurityContextProvider securityContext;
 
     @Override
     public void createBudget(Budget budget) {
@@ -51,14 +53,14 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Budget> findAllBudgetsByUserId(Long userId, Date period) {
-        List<Budget> budgets = budgetRepos.findByUserId(userId);
+    public List<Budget> findAllBudgetsByUserId(Date period) {
+        List<Budget> budgets = budgetRepos.findByUserId(securityContext.getCurrentUser().getId());
 
         for (Budget budget : budgets) {
             Double totalConsumed = 0d;
             Double totalAllowed = 0d;
 
-            List<BudgetElement> budgetElements = findAllBudgetElementsByBudget(budget.getId(), userId, period);
+            List<BudgetElement> budgetElements = findAllBudgetElementsByBudget(budget.getId(), period);
             for (BudgetElement budgetElement : budgetElements) {
                 totalConsumed += Objects.firstNonNull(budgetElement.getConsumedAmount(), 0d);
                 totalAllowed += Objects.firstNonNull(budgetElement.getAmount(), 0d);
@@ -80,10 +82,10 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId, Long userId, Date period) {
+    public List<BudgetElement> findAllBudgetElementsByBudget(Long budgetId, Date period) {
         Budget budget = budgetRepos.findOne(budgetId);
         List<BudgetElement> budgetElements = budgetElementRepos.findByBudgetId(budget.getId());
-        List<Long> accounts = accountRepos.findAccountIdByUserId(userId);
+        List<Long> accounts = accountRepos.findAccountIdByUserId(securityContext.getCurrentUser().getId());
         Date startDate = DateUtils.getStartDateFrequency(budget.getPeriodicity(), period);
         Date endDate = DateUtils.getLastDateFrequency(budget.getPeriodicity(), period);
 
@@ -98,5 +100,4 @@ public class BudgetServiceImpl implements BudgetService {
 
         return budgetElements;
     }
-
 }

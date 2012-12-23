@@ -19,7 +19,6 @@ import com.nuvola.gxpenses.client.web.welcome.entrypoint.register.RegisterPresen
 
 @GinModules(value = {ClientModule.class})
 public interface ClientGinjector extends Ginjector {
-
     EventBus getEventBus();
 
     PlaceManager getPlaceManager();
@@ -45,5 +44,4 @@ public interface ClientGinjector extends Ginjector {
     Provider<BudgetPresenter> getBudgetPresenter();
 
     Provider<SettingPresenter> getSettingPresenter();
-
 }

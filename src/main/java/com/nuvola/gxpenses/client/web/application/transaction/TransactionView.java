@@ -24,9 +24,8 @@ import com.nuvola.gxpenses.client.resource.style.list.TransactionListStyle;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.TransactionCellFactory;
 import com.nuvola.gxpenses.client.web.application.ui.ShowMorePagerPanel;
-import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.server.business.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>

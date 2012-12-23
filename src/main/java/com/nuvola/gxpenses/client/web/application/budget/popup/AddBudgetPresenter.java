@@ -12,7 +12,7 @@ import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.BudgetService;
 import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.server.business.Budget;
 import com.nuvola.gxpenses.shared.type.FrequencyType;
 
 public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyView> implements AddBudgetUiHandler {

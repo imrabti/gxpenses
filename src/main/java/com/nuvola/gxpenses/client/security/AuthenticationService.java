@@ -1,6 +1,5 @@
 package com.nuvola.gxpenses.client.security;
 
-import com.nuvola.gxpenses.shared.dto.UserCredentials;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 

@@ -12,7 +12,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.resource.Resources;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 
 public class BudgetProgressCell extends AbstractCell<BudgetElement> {
 

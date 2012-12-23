@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.util.EditorView;
-import com.nuvola.gxpenses.shared.dto.Password;
+import com.nuvola.gxpenses.server.dto.Password;
 
 public class PasswordEditor extends Composite implements EditorView<Password> {
 

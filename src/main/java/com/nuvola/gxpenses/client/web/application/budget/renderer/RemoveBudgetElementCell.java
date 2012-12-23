@@ -5,7 +5,7 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.web.application.renderer.ClickableIconCell;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
+import com.nuvola.gxpenses.server.business.BudgetElement;
 
 public class RemoveBudgetElementCell extends ClickableIconCell<BudgetElement> {
 

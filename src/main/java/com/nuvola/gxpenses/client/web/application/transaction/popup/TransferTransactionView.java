@@ -12,7 +12,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.TransferTransactionEditor;
-import com.nuvola.gxpenses.shared.dto.TransferTransaction;
+import com.nuvola.gxpenses.server.dto.TransferTransaction;
 
 public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTransactionUiHandlers>
         implements TransferTransactionPresenter.MyView {

@@ -11,8 +11,8 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountRenderer;
-import com.nuvola.gxpenses.shared.domaine.Account;
-import com.nuvola.gxpenses.shared.dto.TransferTransaction;
+import com.nuvola.gxpenses.server.business.Account;
+import com.nuvola.gxpenses.server.dto.TransferTransaction;
 
 public class TransferTransactionEditor extends Composite implements EditorView<TransferTransaction> {
 

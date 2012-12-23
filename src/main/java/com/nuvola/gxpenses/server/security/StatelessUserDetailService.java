@@ -21,7 +21,7 @@ public class StatelessUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        com.nuvola.gxpenses.shared.domaine.User user =  userRepos.findByEmail(email);
+        com.nuvola.gxpenses.server.business.User user =  userRepos.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("Bad credentials");
         } else {

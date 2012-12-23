@@ -19,7 +19,7 @@ import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChang
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddAccountPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.TransferTransactionPresenter;
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 

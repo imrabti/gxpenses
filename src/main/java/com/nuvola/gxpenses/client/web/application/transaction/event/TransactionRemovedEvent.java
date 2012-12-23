@@ -2,7 +2,7 @@ package com.nuvola.gxpenses.client.web.application.transaction.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
-import com.nuvola.gxpenses.shared.domaine.Transaction;
+import com.nuvola.gxpenses.server.business.Transaction;
 
 public class TransactionRemovedEvent extends GwtEvent<TransactionRemovedEvent.TransactionRemovedHandler> {
 
