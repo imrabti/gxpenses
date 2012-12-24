@@ -22,8 +22,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Service
-@Transactional
 @Secured({ "ROLE_USER" })
+@Transactional(readOnly = false)
 public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private AccountRepos accountRepos;
@@ -56,19 +56,18 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         transaction = transactionRepos.save(transaction);
-        accountRepos.updateAccountBalance(transaction.getAccount().getId(), transaction.getAmount());
+        updateAccountBalance(transaction.getAccount().getId(), transaction.getAmount());
     }
 
     @Override
     public void removeTransaction(Long transactionId) {
         Transaction transaction = transactionRepos.findOne(transactionId);
         if (transaction.getDestTransaction() != null) {
-            accountRepos.updateAccountBalanceInv(transaction.getDestTransaction().getAccount().getId(),
-                    transaction.getAmount());
+            updateAccountBalanceInv(transaction.getDestTransaction().getAccount().getId(), transaction.getAmount());
             transactionRepos.delete(transaction.getDestTransaction());
         }
 
-        accountRepos.updateAccountBalanceInv(transaction.getAccount().getId(), transaction.getAmount());
+        updateAccountBalanceInv(transaction.getAccount().getId(), transaction.getAmount());
         transactionRepos.delete(transaction);
     }
 
@@ -99,8 +98,8 @@ public class TransactionServiceImpl implements TransactionService {
                 sourceTrans.setDestTransaction(destTrans);
                 destTrans.setDestTransaction(sourceTrans);
 
-                accountRepos.updateAccountBalance(transfer.getSourceAccount().getId(), sourceTrans.getAmount());
-                accountRepos.updateAccountBalance(transfer.getTargetAccount().getId(), destTrans.getAmount());
+                updateAccountBalance(transfer.getSourceAccount().getId(), sourceTrans.getAmount());
+                updateAccountBalance(transfer.getTargetAccount().getId(), destTrans.getAmount());
             }
         }
     }
@@ -137,5 +136,15 @@ public class TransactionServiceImpl implements TransactionService {
             return transactionRepos.totalByAccountAndTypeAndDate(filter.getAccountId(), filter.getType(),
                     startDate, endDate);
         }
+    }
+
+    private void updateAccountBalance(Long accountId, Double amount) {
+        Account account = accountRepos.findOne(accountId);
+        account.setBalance(account.getBalance() + amount);
+    }
+
+    private void updateAccountBalanceInv(Long accountId, Double amount) {
+        Account account = accountRepos.findOne(accountId);
+        account.setBalance(account.getBalance() - amount);
     }
 }

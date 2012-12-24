@@ -81,7 +81,7 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
         currentContext = requestFactory.transactionService();
         TransactionProxy newTransaction = currentContext.create(TransactionProxy.class);
         newTransaction.setType(TransactionType.EXPENSE);
-        newTransaction.setAccount(selectedAccount);
+        newTransaction.setAccount(currentContext.edit(selectedAccount));
         getView().edit(newTransaction);
         getView().showRelativeTo(relativeTo);
     }

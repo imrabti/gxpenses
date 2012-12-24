@@ -6,7 +6,6 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
-import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.request.BudgetRequest;
 import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
@@ -24,7 +23,6 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
     }
 
     private final GxpensesRequestFactory requestFactory;
-    private final BootStrapper bootStrapper;
     private final MessageBundle messageBundle;
 
     private Widget relativeTo;
@@ -33,12 +31,10 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
     @Inject
     public AddBudgetPresenter(final EventBus eventBus, final MyView view,
                               final GxpensesRequestFactory requestFactory,
-                              final BootStrapper bootStrapper,
                               final MessageBundle messageBundle) {
         super(eventBus, view);
 
         this.requestFactory = requestFactory;
-        this.bootStrapper = bootStrapper;
         this.messageBundle = messageBundle;
 
         getView().setUiHandlers(this);
@@ -66,7 +62,6 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
         currentContext = requestFactory.budgetService();
         BudgetProxy newBudget = currentContext.create(BudgetProxy.class);
         newBudget.setPeriodicity(FrequencyType.MONTH);
-        newBudget.setUser(bootStrapper.getCurrentUser());
         getView().edit(newBudget);
         getView().showRelativeTo(relativeTo);
     }

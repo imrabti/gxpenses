@@ -34,6 +34,7 @@ public class BudgetServiceImpl implements BudgetService {
 
     @Override
     public void createBudget(Budget budget) {
+        budget.setUser(securityContext.getCurrentUser());
         budgetRepos.save(budget);
     }
 
