@@ -11,15 +11,9 @@
             margin-right: auto;
             margin-left: auto;
         }
-
-        .errorWidth {
-            width: 520px;
-        }
     </ui:style>
 
     <g:HTMLPanel styleName="{style.centered}">
-        <g:HTML ui:field="errors" styleName="{resource.generalStyleCss.errorBox} {style.errorWidth}"/>
-
         <g:SimplePanel ui:field="contentPanel"/>
     </g:HTMLPanel>
 </ui:UiBinder> 

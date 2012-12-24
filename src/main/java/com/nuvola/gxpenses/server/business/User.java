@@ -1,5 +1,8 @@
 package com.nuvola.gxpenses.server.business;
 
+import com.nuvola.gxpenses.server.business.validator.EmailFormat;
+import com.nuvola.gxpenses.server.business.validator.EmailUnique;
+import com.nuvola.gxpenses.server.business.validator.UsernameUnique;
 import com.nuvola.gxpenses.shared.type.CurrencyType;
 import com.nuvola.gxpenses.shared.type.PaginationType;
 
@@ -8,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,8 +20,14 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @UsernameUnique(message = "Username: already exist")
+    @NotNull(message = "Username: can't be blank")
     private String userName;
+    @EmailUnique(message = "Email: address already exist")
+    @EmailFormat(message = "Email: format error")
+    @NotNull(message = "Email: can't be blank")
     private String email;
+    @NotNull(message = "Password: can't be blank")
     private String password;
     @Enumerated
     private CurrencyType currency;

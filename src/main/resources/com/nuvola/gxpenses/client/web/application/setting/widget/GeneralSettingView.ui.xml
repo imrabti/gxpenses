@@ -5,7 +5,15 @@
 
     <ui:with field='resource' type='com.nuvola.gxpenses.client.resource.Resources'/>
 
+    <ui:style>
+        .errorWidth {
+            width: 520px;
+        }
+    </ui:style>
+
     <g:HTMLPanel>
+        <g:HTML ui:field="errors" styleName="{resource.generalStyleCss.errorBox} {style.errorWidth}"/>
+
         <d:SettingEditor ui:field="settingEditor"/>
 
         <g:HTMLPanel styleName="{resource.generalStyleCss.formButtons}">
