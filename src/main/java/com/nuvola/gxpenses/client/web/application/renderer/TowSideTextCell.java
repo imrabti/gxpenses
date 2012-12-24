@@ -13,8 +13,8 @@ public class TowSideTextCell extends AbstractCell<List<String>> {
 
     public interface Template extends SafeHtmlTemplates {
         @Template("<div><div style=\"float:left;\">{0}</div>" +
-                "<div style=\"float:right;\">{1}</div>" +
-                "<div style=\"clear:both;\"></div></div>")
+                  "<div style=\"float:right;\">{1}</div>" +
+                  "<div style=\"clear:both;\"></div></div>")
         SafeHtml towSideTemplate(SafeHtml sideLeft, SafeHtml sideRight);
     }
 

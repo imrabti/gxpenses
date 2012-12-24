@@ -7,7 +7,6 @@ import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 public class TransactionFiltreChangedEvent extends GwtEvent<TransactionFiltreChangedEvent.TransactionFilterChangedHandler> {
-
     public static Type<TransactionFilterChangedHandler> TYPE = new Type<TransactionFilterChangedHandler>();
 
     public interface TransactionFilterChangedHandler extends EventHandler {
@@ -47,5 +46,4 @@ public class TransactionFiltreChangedEvent extends GwtEvent<TransactionFiltreCha
     protected void dispatch(TransactionFilterChangedHandler handler) {
         handler.onFilterChanged(this);
     }
-
 }

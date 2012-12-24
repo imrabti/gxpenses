@@ -19,7 +19,6 @@ import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.shared.dto.UserCredentials;
 
 public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements LoginPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, LoginView> {
     }
 
@@ -96,5 +95,4 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements Lo
             loginError.setText(messageBundle.loginPasswordRequired());
         }
     }
-
 }

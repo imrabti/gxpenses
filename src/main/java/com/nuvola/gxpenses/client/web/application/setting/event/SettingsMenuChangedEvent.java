@@ -6,7 +6,6 @@ import com.google.gwt.event.shared.HasHandlers;
 import com.nuvola.gxpenses.client.web.application.setting.widget.SettingSiderView.SettingsEnum;
 
 public class SettingsMenuChangedEvent extends GwtEvent<SettingsMenuChangedEvent.SettingsChangedEventHandler> {
-
     public static Type<SettingsChangedEventHandler> TYPE = new Type<SettingsChangedEventHandler>();
 
     public interface SettingsChangedEventHandler extends EventHandler {
@@ -40,5 +39,4 @@ public class SettingsMenuChangedEvent extends GwtEvent<SettingsMenuChangedEvent.
     protected void dispatch(SettingsChangedEventHandler handler) {
         handler.onSettingsChanged(this);
     }
-
 }

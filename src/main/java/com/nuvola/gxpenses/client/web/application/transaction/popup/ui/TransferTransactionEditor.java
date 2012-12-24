@@ -8,24 +8,24 @@ import com.google.gwt.user.client.ui.DoubleBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.util.ValueListFactory;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
+import com.nuvola.gxpenses.client.request.proxy.TransferTransactionProxy;
 import com.nuvola.gxpenses.client.util.EditorView;
+import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountRenderer;
-import com.nuvola.gxpenses.shared.domaine.Account;
-import com.nuvola.gxpenses.shared.dto.TransferTransaction;
 
-public class TransferTransactionEditor extends Composite implements EditorView<TransferTransaction> {
+public class TransferTransactionEditor extends Composite implements EditorView<TransferTransactionProxy> {
 
     public interface Binder extends UiBinder<HTMLPanel, TransferTransactionEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<TransferTransaction, TransferTransactionEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<TransferTransactionProxy, TransferTransactionEditor> {
     }
 
     @UiField(provided = true)
-    ValueListBox<Account> sourceAccount;
+    ValueListBox<AccountProxy> sourceAccount;
     @UiField(provided = true)
-    ValueListBox<Account> targetAccount;
+    ValueListBox<AccountProxy> targetAccount;
     @UiField
     DoubleBox amount;
 
@@ -38,15 +38,15 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
         this.driver = driver;
         this.valueListFactory = valueListFactory;
 
-        sourceAccount = new ValueListBox<Account>(new AccountRenderer());
-        targetAccount = new ValueListBox<Account>(new AccountRenderer());
+        sourceAccount = new ValueListBox<AccountProxy>(new AccountRenderer());
+        targetAccount = new ValueListBox<AccountProxy>(new AccountRenderer());
 
         initWidget(uiBinder.createAndBindUi(this));
         driver.initialize(this);
     }
 
     @Override
-    public void edit(TransferTransaction transfertTransaction) {
+    public void edit(TransferTransactionProxy transfertTransaction) {
         sourceAccount.setAcceptableValues(valueListFactory.getListAccounts());
         targetAccount.setAcceptableValues(valueListFactory.getListAccounts());
 
@@ -55,13 +55,12 @@ public class TransferTransactionEditor extends Composite implements EditorView<T
     }
 
     @Override
-    public TransferTransaction get() {
-        TransferTransaction transfertTransaction = driver.flush();
+    public TransferTransactionProxy get() {
+        TransferTransactionProxy transfertTransaction = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
             return transfertTransaction;
         }
     }
-
 }

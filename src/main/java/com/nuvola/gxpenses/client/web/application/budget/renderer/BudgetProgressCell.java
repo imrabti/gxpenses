@@ -11,15 +11,14 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
+import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
 
-public class BudgetProgressCell extends AbstractCell<BudgetElement> {
-
+public class BudgetProgressCell extends AbstractCell<BudgetElementProxy> {
     public interface Template extends SafeHtmlTemplates {
         @Template("<div class=\"{2}\"><span style=\"{1}\">" +
-                "<div style=\"margin-right: 6px;\">{0}</div></span></div>")
-        SafeHtml progressTemplate(SafeHtml consumed, SafeStyles purcentage, String cssClass);
+                  "<div style=\"margin-right: 6px;\">{0}</div></span></div>")
+        SafeHtml progressTemplate(SafeHtml consumed, SafeStyles percentage, String cssClass);
 
         @Template("<div class=\"{1}\"><div>{0}</div></div>")
         SafeHtml progressTemplateBlank(SafeHtml consumed, String cssClass);
@@ -38,7 +37,7 @@ public class BudgetProgressCell extends AbstractCell<BudgetElement> {
     }
 
     @Override
-    public void render(Context context, BudgetElement value, SafeHtmlBuilder sb) {
+    public void render(Context context, BudgetElementProxy value, SafeHtmlBuilder sb) {
         NumberFormat format = NumberFormat.getFormat("###,##0.00");
         Integer percentage = (int)((Objects.firstNonNull(value.getConsumedAmount(), 0d) * 100) / value.getAmount());
 
@@ -56,12 +55,11 @@ public class BudgetProgressCell extends AbstractCell<BudgetElement> {
             }
 
             percentage = percentage > 100 ? 100 : percentage;
-            SafeStyles safePurcentage = SafeStylesUtils.fromTrustedString("width: " + percentage +"%;");
-            sb.append(template.progressTemplate(safeConsumed, safePurcentage, style));
+            SafeStyles safePercentage = SafeStylesUtils.fromTrustedString("width: " + percentage +"%;");
+            sb.append(template.progressTemplate(safeConsumed, safePercentage, style));
         } else {
             safeConsumed = SafeHtmlUtils.fromString(currency + format.format(0d));
             sb.append(template.progressTemplateBlank(safeConsumed, style));
         }
     }
-
 }

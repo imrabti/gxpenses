@@ -8,42 +8,43 @@ import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.TransactionRequest;
+import com.nuvola.gxpenses.client.request.proxy.TransferTransactionProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
-import com.nuvola.gxpenses.shared.dto.TransferTransaction;
 
 public class TransferTransactionPresenter extends PresenterWidget<TransferTransactionPresenter.MyView>
         implements TransferTransactionUiHandlers {
-
     public interface MyView extends PopupView, HasUiHandlers<TransferTransactionUiHandlers> {
         void showRelativeTo(Widget widget);
 
-        void edit(TransferTransaction transferTransaction);
+        void edit(TransferTransactionProxy transferTransaction);
     }
 
-    private final TransactionService transactionService;
+    private final GxpensesRequestFactory requestFactory;
     private final MessageBundle messageBundle;
 
     private Widget relativeTo;
+    private TransactionRequest currentContext;
 
     @Inject
     public TransferTransactionPresenter(final EventBus eventBus, final MyView view,
-                                        final TransactionService transactionService,
+                                        final GxpensesRequestFactory requestFactory,
                                         final MessageBundle messageBundle) {
         super(eventBus, view);
-        this.transactionService = transactionService;
+        this.requestFactory = requestFactory;
         this.messageBundle = messageBundle;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    public void saveTransfer(TransferTransaction transferTransaction) {
-        transactionService.createTransfer(transferTransaction, new MethodCallbackImpl() {
+    public void saveTransfer(TransferTransactionProxy transferTransaction) {
+        currentContext.createNewTransferTransaction(transferTransaction).fire(new ReceiverImpl<Void>() {
             @Override
-            public void handleSuccess(Object o) {
+            public void onSuccess(Void aVoid) {
                 GlobalMessageEvent.fire(this, messageBundle.transfertAdded());
                 AccountBalanceChangedEvent.fire(this);
             }
@@ -63,9 +64,9 @@ public class TransferTransactionPresenter extends PresenterWidget<TransferTransa
     protected void onReveal() {
         super.onReveal();
 
-        TransferTransaction newTransfer = new TransferTransaction();
+        currentContext = requestFactory.transactionService();
+        TransferTransactionProxy newTransfer = currentContext.create(TransferTransactionProxy.class);
         getView().edit(newTransfer);
         getView().showRelativeTo(relativeTo);
     }
-
 }

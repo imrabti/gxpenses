@@ -11,16 +11,13 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
-import com.nuvola.gxpenses.client.event.HideLoadingEvent;
-import com.nuvola.gxpenses.client.event.ShowLoadingEvent;
+import com.nuvola.gxpenses.client.event.RequestEvent;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.SiderHolderPresenter;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
-        implements GlobalMessageEvent.GlobalMessageHandler, ShowLoadingEvent.ShowLoadingHandler,
-        HideLoadingEvent.HideLoadingHandler {
-
+        implements GlobalMessageEvent.GlobalMessageHandler, RequestEvent.RequestEventHandler {
     public interface MyView extends View {
         public void showAjaxLoader(int timeout);
 
@@ -59,13 +56,12 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     }
 
     @Override
-    public void onHideLoading(HideLoadingEvent event) {
-        getView().hideAjaxLoader();
-    }
-
-    @Override
-    public void onShowLoading(ShowLoadingEvent event) {
-        getView().showAjaxLoader(LOADING_TIMEOUT);
+    public void onRequestEvent(RequestEvent requestEvent) {
+        if (requestEvent.getState() == RequestEvent.State.SENT) {
+            getView().showAjaxLoader(LOADING_TIMEOUT);
+        } else {
+            getView().hideAjaxLoader();
+        }
     }
 
     @Override
@@ -78,8 +74,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
         super.onBind();
 
         addRegisteredHandler(GlobalMessageEvent.getType(), this);
-        addRegisteredHandler(ShowLoadingEvent.getType(), this);
-        addRegisteredHandler(HideLoadingEvent.getType(), this);
+        addRegisteredHandler(RequestEvent.getType(), this);
     }
 
     @Override
@@ -89,5 +84,4 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
         setInSlot(TYPE_SetHeaderContent, headerPresenter);
         setInSlot(TYPE_SetSiderContent, siderHolderPresenter);
     }
-
 }

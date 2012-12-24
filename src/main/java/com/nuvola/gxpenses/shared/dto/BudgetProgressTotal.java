@@ -1,7 +1,8 @@
 package com.nuvola.gxpenses.shared.dto;
 
-public class BudgetProgressTotal implements Dto {
+import java.io.Serializable;
 
+public class BudgetProgressTotal implements Serializable {
     private Double totalAllowed;
     private Double totalConsumed;
 
@@ -34,5 +35,4 @@ public class BudgetProgressTotal implements Dto {
     public Double getTotalLeft() {
         return (totalAllowed - totalConsumed);
     }
-
 }

@@ -10,12 +10,11 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.AccountEditor;
-import com.nuvola.gxpenses.shared.domaine.Account;
 
 public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers>
         implements AddAccountPresenter.MyView {
-
     public interface Binder extends UiBinder<PopupPanel, AddAccountView> {
     }
 
@@ -42,13 +41,13 @@ public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers
     }
 
     @Override
-    public void edit(Account account) {
+    public void edit(AccountProxy account) {
         accountEditor.edit(account);
     }
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        Account account = accountEditor.get();
+        AccountProxy account = accountEditor.get();
         if (account != null) {
             getUiHandlers().saveAccount(account);
             hide();
@@ -59,5 +58,4 @@ public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers
     void onCancel(ClickEvent event) {
         hide();
     }
-
 }

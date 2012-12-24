@@ -12,7 +12,6 @@ import javax.validation.ConstraintViolation;
 import java.util.Set;
 
 public class SettingView extends ViewImpl implements SettingPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, SettingView> {
     }
 
@@ -56,5 +55,4 @@ public class SettingView extends ViewImpl implements SettingPresenter.MyView {
         errors.setHTML("");
         errors.setVisible(false);
     }
-
 }

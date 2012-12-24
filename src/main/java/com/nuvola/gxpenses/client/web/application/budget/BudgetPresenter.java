@@ -1,6 +1,5 @@
 package com.nuvola.gxpenses.client.web.application.budget;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -16,9 +15,11 @@ import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.BudgetElementService;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.util.DateUtils;
 import com.nuvola.gxpenses.client.util.EmptyDisplay;
@@ -27,10 +28,7 @@ import com.nuvola.gxpenses.client.web.application.budget.event.BudgetChangedEven
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetElementPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.widget.BudgetSiderPresenter;
-import com.nuvola.gxpenses.shared.domaine.Budget;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
 import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
-import org.fusesource.restygwt.client.Method;
 
 import java.util.Date;
 import java.util.List;
@@ -39,9 +37,8 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
         implements BudgetUiHandlers, NoElementFoundEvent.NoElementFoundHandler,
         BudgetChangedEvent.BudgetChangedHandler, PopupClosedEvent.PopupClosedHandler,
         BudgetElementsChangedEvent.BudgetElementsChangedHandler {
-
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<BudgetUiHandlers> {
-        void setData(List<BudgetElement> data, BudgetProgressTotal total);
+        void setData(List<BudgetElementProxy> data, BudgetProgressTotal total);
 
         void setBudgetName(String name);
 
@@ -66,27 +63,25 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
     public interface MyProxy extends ProxyPlace<BudgetPresenter> {
     }
 
-    private final BudgetElementService budgetElementService;
+    private final GxpensesRequestFactory requestFactory;
     private final MessageBundle messageBundle;
-    private final DateTimeFormat dateFormat;
     private final BudgetSiderPresenter budgetSiderPresenter;
     private final AddBudgetElementPresenter addBudgetElementPresenter;
 
-    private Budget currentBudget;
+    private BudgetProxy currentBudget;
     private Date currentDate;
 
     @Inject
     public BudgetPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                           final BudgetElementService budgetElementService, final MessageBundle messageBundle,
+                           final GxpensesRequestFactory requestFactory, final MessageBundle messageBundle,
                            final BudgetSiderPresenter budgetSiderPresenter,
                            final AddBudgetElementPresenter addBudgetElementPresenter) {
         super(eventBus, view, proxy);
 
-        this.budgetElementService = budgetElementService;
+        this.requestFactory = requestFactory;
         this.messageBundle = messageBundle;
         this.budgetSiderPresenter = budgetSiderPresenter;
         this.addBudgetElementPresenter = addBudgetElementPresenter;
-        this.dateFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
 
         getView().setUiHandlers(this);
     }
@@ -185,10 +180,10 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
     }
 
     private void fireLoadBudgetElementByIdAndPeriod() {
-        budgetElementService.getBudgetElements(currentBudget.getId().toString(), dateFormat.format(currentDate),
-                new MethodCallbackImpl<List<BudgetElement>>() {
+        requestFactory.budgetService().findAllBudgetElementsByBudget(currentBudget.getId(), currentDate)
+                .fire(new ReceiverImpl<List<BudgetElementProxy>>() {
             @Override
-            public void handleSuccess(List<BudgetElement> budgetElements) {
+            public void onSuccess(List<BudgetElementProxy> budgetElements) {
                 getView().setData(budgetElements, new BudgetProgressTotal(currentBudget.getTotalAllowed(),
                         currentBudget.getTotalConsumed()));
 
@@ -200,5 +195,4 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
             }
         });
     }
-
 }

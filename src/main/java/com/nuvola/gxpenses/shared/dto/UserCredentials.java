@@ -1,10 +1,6 @@
 package com.nuvola.gxpenses.shared.dto;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-public class UserCredentials implements Dto {
-
+public class UserCredentials {
     private String username;
     private String password;
 
@@ -31,5 +27,4 @@ public class UserCredentials implements Dto {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

@@ -14,11 +14,10 @@ import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
 
 public class BudgetProgressFooterCell extends AbstractCell<BudgetProgressTotal> {
-
     public interface Template extends SafeHtmlTemplates {
         @Template("<div class=\"{2}\"><span style=\"{1}\">" +
                 "<div style=\"margin-right: 6px;\">{0}</div></span></div>")
-        SafeHtml progressTemplate(SafeHtml consumed, SafeStyles purcentage, String cssClass);
+        SafeHtml progressTemplate(SafeHtml consumed, SafeStyles percentage, String cssClass);
 
         @Template("<div class=\"{1}\"><div>{0}</div></div>")
         SafeHtml progressTemplateBlank(SafeHtml consumed, String cssClass);
@@ -47,12 +46,11 @@ public class BudgetProgressFooterCell extends AbstractCell<BudgetProgressTotal> 
 
         if(purcentage > 0) {
             purcentage = purcentage > 100 ? 100 : purcentage;
-            SafeStyles safePurcentage = SafeStylesUtils.fromTrustedString("width: " + purcentage +"%;");
-            sb.append(template.progressTemplate(safeConsumed, safePurcentage, style));
+            SafeStyles safePercentage = SafeStylesUtils.fromTrustedString("width: " + purcentage +"%;");
+            sb.append(template.progressTemplate(safeConsumed, safePercentage, style));
         } else {
             safeConsumed = SafeHtmlUtils.fromString(currency + format.format(0d));
             sb.append(template.progressTemplateBlank(safeConsumed, style));
         }
     }
-
 }

@@ -10,10 +10,9 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 
-public class BudgetCell extends AbstractCell<Budget> {
-
+public class BudgetCell extends AbstractCell<BudgetProxy> {
     public interface Template extends SafeHtmlTemplates {
         @Template("<div style=\"float: left;\"><div><div style=\"float:left; padding: 3px; margin: 4px;\">{0}</div>" +
                   "<div style=\"float:right; margin: 4px;\" class=\"elementBalance\">{1}</div>" +
@@ -36,7 +35,7 @@ public class BudgetCell extends AbstractCell<Budget> {
     }
 
     @Override
-    public void render(Context context, Budget value, SafeHtmlBuilder sb) {
+    public void render(Context context, BudgetProxy value, SafeHtmlBuilder sb) {
         NumberFormat format = NumberFormat.getFormat("###,##0.00");
 
         String purcentage = value.getPercentageConsumed() > 100 ? "100" : value.getPercentageConsumed().toString();
@@ -46,5 +45,4 @@ public class BudgetCell extends AbstractCell<Budget> {
 
         sb.append(template.budgetTemplate(safeName, safeAllowed, safePurcentage));
     }
-
 }

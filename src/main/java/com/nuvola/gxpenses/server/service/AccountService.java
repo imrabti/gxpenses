@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.shared.domaine.Account;
+import com.nuvola.gxpenses.server.business.Account;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ public interface AccountService {
 
     void removeAccount(Long accountId);
 
-    List<Account> findAllAccountsByUserId(Long userId);
+    List<Account> findAllAccountsByUserId();
 }

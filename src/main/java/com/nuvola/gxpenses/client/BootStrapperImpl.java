@@ -1,47 +1,44 @@
 package com.nuvola.gxpenses.client;
 
 import com.google.inject.Inject;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
-import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
-import com.nuvola.gxpenses.shared.domaine.User;
-import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.logging.Logger;
 
 public class BootStrapperImpl implements BootStrapper {
-
     private final static Logger logger = Logger.getLogger(BootStrapperImpl.class.getName());
 
     private final PlaceManager placeManager;
-    private final UserService userService;
+    private final GxpensesRequestFactory requestFactory;
     private final ValueListFactory valueListFactory;
     private final SuggestionListFactory suggestionListFactory;
     private final SecurityUtils securityUtils;
 
-    private final MethodCallback<User> getCurrentUserCallback;
+    private final Receiver<UserProxy> getCurrentUserCallback;
 
-    private User currentUser;
+    private UserProxy currentUser;
 
     @Inject
-    public BootStrapperImpl(final UserService userService, final PlaceManager placeManager,
-                            final SecurityUtils securityUtils,
-                            final ValueListFactory valueListFactory,
+    public BootStrapperImpl(final GxpensesRequestFactory requestFactory, final PlaceManager placeManager,
+                            final SecurityUtils securityUtils, final ValueListFactory valueListFactory,
                             final SuggestionListFactory suggestionListFactory) {
         this.securityUtils = securityUtils;
-        this.userService = userService;
+        this.requestFactory = requestFactory;
         this.placeManager = placeManager;
         this.valueListFactory = valueListFactory;
         this.suggestionListFactory = suggestionListFactory;
 
-        getCurrentUserCallback = new MethodCallbackImpl<User>() {
+        getCurrentUserCallback = new Receiver<UserProxy>() {
             @Override
-            public void handleSuccess(User user) {
+            public void onSuccess(UserProxy user) {
                 currentUser = user;
                 onGetCurrentUser();
             }
@@ -51,7 +48,7 @@ public class BootStrapperImpl implements BootStrapper {
     @Override
     public void init() {
         if (securityUtils.isLoggedIn()) {
-            userService.getLoggedInUser(getCurrentUserCallback);
+            requestFactory.authenticationService().currentUser().fire(getCurrentUserCallback);
         } else {
             bounceToLogin();
         }
@@ -64,7 +61,7 @@ public class BootStrapperImpl implements BootStrapper {
     }
 
     @Override
-    public User getCurrentUser() {
+    public UserProxy getCurrentUser() {
         return currentUser;
     }
 
@@ -94,5 +91,4 @@ public class BootStrapperImpl implements BootStrapper {
         PlaceRequest place = new PlaceRequest(NameTokens.getLogin());
         placeManager.revealPlace(place);
     }
-
 }

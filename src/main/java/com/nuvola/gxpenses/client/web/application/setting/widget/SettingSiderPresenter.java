@@ -9,7 +9,6 @@ import com.nuvola.gxpenses.client.web.application.setting.event.SettingsMenuChan
 
 public class SettingSiderPresenter extends PresenterWidget<SettingSiderPresenter.MyView>
         implements SettingSiderUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<SettingSiderUiHandlers> {
         void setDefaultMenu();
     }
@@ -32,5 +31,4 @@ public class SettingSiderPresenter extends PresenterWidget<SettingSiderPresenter
 
         getView().setDefaultMenu();
     }
-
 }

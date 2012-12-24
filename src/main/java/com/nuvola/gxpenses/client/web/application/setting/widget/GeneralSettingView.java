@@ -8,12 +8,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.web.application.setting.widget.ui.SettingEditor;
-import com.nuvola.gxpenses.shared.domaine.User;
 
 public class GeneralSettingView extends ViewWithUiHandlers<GeneralSettingUiHandlers>
         implements GeneralSettingPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, GeneralSettingView> {
     }
 
@@ -32,15 +31,14 @@ public class GeneralSettingView extends ViewWithUiHandlers<GeneralSettingUiHandl
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        User user = settingEditor.get();
+        UserProxy user = settingEditor.get();
         if (user != null) {
             getUiHandlers().saveSetting(user);
         }
     }
 
     @Override
-    public void edit(User user) {
+    public void edit(UserProxy user) {
         settingEditor.edit(user);
     }
-
 }

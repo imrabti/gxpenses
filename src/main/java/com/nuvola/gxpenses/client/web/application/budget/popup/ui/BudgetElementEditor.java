@@ -14,21 +14,20 @@ import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
 
-public class BudgetElementEditor extends Composite implements EditorView<BudgetElement> {
-
+public class BudgetElementEditor extends Composite implements EditorView<BudgetElementProxy> {
     public interface Binder extends UiBinder<HTMLPanel, BudgetElementEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<BudgetElement, BudgetElementEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<BudgetElementProxy, BudgetElementEditor> {
     }
 
     public interface Handler {
-        void onBudgetElementAdded(BudgetElement budgetElement);
+        void onBudgetElementAdded(BudgetElementProxy budgetElement);
     }
 
     @UiField(provided=true)
@@ -56,15 +55,15 @@ public class BudgetElementEditor extends Composite implements EditorView<BudgetE
     }
 
     @Override
-    public void edit(BudgetElement budgetElement) {
+    public void edit(BudgetElementProxy budgetElement) {
         initSuggestionList();
         tag.setFocus(true);
         driver.edit(budgetElement);
     }
 
     @Override
-    public BudgetElement get() {
-        BudgetElement budgetElement = driver.flush();
+    public BudgetElementProxy get() {
+        BudgetElementProxy budgetElement = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
@@ -78,7 +77,7 @@ public class BudgetElementEditor extends Composite implements EditorView<BudgetE
 
     @UiHandler("addElement")
     void onAddElementClicked(ClickEvent event) {
-        BudgetElement budgetElement = get();
+        BudgetElementProxy budgetElement = get();
         if (budgetElement != null) {
             handler.onBudgetElementAdded(budgetElement);
         }
@@ -87,7 +86,7 @@ public class BudgetElementEditor extends Composite implements EditorView<BudgetE
     @UiHandler("amount")
     void onAmountKeyUp(KeyUpEvent event) {
         if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-            BudgetElement budgetElement = get();
+            BudgetElementProxy budgetElement = get();
             if (budgetElement != null) {
                 handler.onBudgetElementAdded(budgetElement);
             }
@@ -101,5 +100,4 @@ public class BudgetElementEditor extends Composite implements EditorView<BudgetE
             ((MultiWordSuggestOracle) tag.getSuggestOracle()).addAll(suggestionListFactory.getListTags());
         }
     }
-
 }

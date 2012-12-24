@@ -3,26 +3,25 @@ package com.nuvola.gxpenses.client.web.application.budget.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.nuvola.gxpenses.shared.domaine.Budget;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 
 public class BudgetChangedEvent extends GwtEvent<BudgetChangedEvent.BudgetChangedHandler> {
-
     public static Type<BudgetChangedHandler> TYPE = new Type<BudgetChangedHandler>();
 
     public interface BudgetChangedHandler extends EventHandler {
         void onBudgetChanged(BudgetChangedEvent event);
     }
 
-    private Budget budget;
+    private BudgetProxy budget;
 
     public BudgetChangedEvent() {
     }
 
-    public BudgetChangedEvent(Budget budget) {
+    public BudgetChangedEvent(BudgetProxy budget) {
         this.budget = budget;
     }
 
-    public Budget getBudget() {
+    public BudgetProxy getBudget() {
         return budget;
     }
 
@@ -39,7 +38,7 @@ public class BudgetChangedEvent extends GwtEvent<BudgetChangedEvent.BudgetChange
         source.fireEvent(new BudgetChangedEvent());
     }
 
-    public static void fire(HasHandlers source, Budget budget) {
+    public static void fire(HasHandlers source, BudgetProxy budget) {
         source.fireEvent(new BudgetChangedEvent(budget));
     }
 
@@ -47,5 +46,4 @@ public class BudgetChangedEvent extends GwtEvent<BudgetChangedEvent.BudgetChange
     protected void dispatch(BudgetChangedHandler handler) {
         handler.onBudgetChanged(this);
     }
-
 }

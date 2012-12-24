@@ -10,16 +10,16 @@ import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.AccountService;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddAccountPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.TransferTransactionPresenter;
-import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
@@ -28,9 +28,8 @@ import java.util.List;
 public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter.MyView>
         implements AccountSiderUiHandlers, AccountBalanceChangedEvent.AccountBalanceChangedHandler,
         PopupClosedEvent.PopupClosedHandler {
-
     public interface MyView extends View, HasUiHandlers<AccountSiderUiHandlers> {
-        void setData(List<Account> accounts);
+        void setData(List<AccountProxy> accounts);
 
         void showTransferButton(Boolean visible);
 
@@ -39,7 +38,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
         void clearSelection();
     }
 
-    private final AccountService accountService;
+    private final GxpensesRequestFactory requestFactory;
     private final AddAccountPresenter addAccountPresenter;
     private final TransferTransactionPresenter transferTransactionPresenter;
     private final MessageBundle messageBundle;
@@ -51,14 +50,14 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     @Inject
     public AccountSiderPresenter(EventBus eventBus, MyView view,
                                  final MessageBundle messageBundle,
-                                 final AccountService accountService,
+                                 final GxpensesRequestFactory requestFactory,
                                  final AddAccountPresenter addAccountPresenter,
                                  final TransferTransactionPresenter transferTransactionPresenter,
                                  final ValueListFactory valueListFactory) {
         super(eventBus, view);
 
         this.messageBundle = messageBundle;
-        this.accountService = accountService;
+        this.requestFactory = requestFactory;
         this.addAccountPresenter = addAccountPresenter;
         this.transferTransactionPresenter = transferTransactionPresenter;
         this.valueListFactory = valueListFactory;
@@ -92,12 +91,12 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     }
 
     @Override
-    public void removeAccount(Account account) {
+    public void removeAccount(AccountProxy account) {
         Boolean decision = Window.confirm(messageBundle.accountConf());
         if (decision) {
-            accountService.removeAccount(account.getId().toString(), new MethodCallbackImpl<Void>() {
+            requestFactory.accountService().removeAccount(account.getId()).fire(new ReceiverImpl<Void>() {
                 @Override
-                public void handleSuccess(Void aVoid) {
+                public void onSuccess(Void aVoid) {
                     valueListFactory.updateListAccount();
                     AccountChangedEvent.fire(this);
                     GlobalMessageEvent.fire(this, messageBundle.accountRemoved());
@@ -108,7 +107,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     }
 
     @Override
-    public void accountSelected(Account account) {
+    public void accountSelected(AccountProxy account) {
         AccountChangedEvent.fire(this, account, currentPeriodType, currentTransactionType);
     }
 
@@ -142,9 +141,9 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     }
 
     private void fireLoadListAccounts() {
-        accountService.getAccounts(new MethodCallbackImpl<List<Account>>() {
+        requestFactory.accountService().findAllAccountsByUserId().fire(new ReceiverImpl<List<AccountProxy>>() {
             @Override
-            public void handleSuccess(List<Account> accounts) {
+            public void onSuccess(List<AccountProxy> accounts) {
                 getView().showTransferButton(accounts.size() >= 2);
                 getView().setData(accounts);
 
@@ -152,5 +151,4 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
             }
         });
     }
-
 }
