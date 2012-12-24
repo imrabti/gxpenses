@@ -13,6 +13,7 @@
     <http create-session="stateless" entry-point-ref="digestEntryPoint"
           authentication-manager-ref="authenticationProvider">
         <custom-filter ref="digestFilter" after="BASIC_AUTH_FILTER" />
+        <http-basic/>
     </http>
 
     <beans:bean id="digestFilter" class="org.springframework.security.web.authentication.www.DigestAuthenticationFilter">

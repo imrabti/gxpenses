@@ -23,7 +23,7 @@ public class SecureRequestTransport extends DefaultRequestTransport {
         builder.setHeader(STRONG_NAME_HEADER, GWT.getPermutationStrongName());
 
         if (securityUtils.isLoggedIn()) {
-            String encodedCredentials = Base64.encode(securityUtils.getUsername() +
+            String encodedCredentials = Base64.encode(securityUtils.getUsername()  +
                     ":" + securityUtils.getPassword());
             builder.setHeader("Authorization", "Basic " + encodedCredentials);
         }
