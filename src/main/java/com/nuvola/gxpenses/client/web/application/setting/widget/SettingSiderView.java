@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 public class SettingSiderView extends ViewWithUiHandlers<SettingSiderUiHandlers>
         implements SettingSiderPresenter.MyView {
-
     public enum SettingsEnum {
         GENERAL("General"),
         PASSWORD("Password"),
@@ -63,6 +62,5 @@ public class SettingSiderView extends ViewWithUiHandlers<SettingSiderUiHandlers>
     void onMenuChanged(ValueChangeEvent<SettingsEnum> event) {
         getUiHandlers().changeMenu(event.getValue());
     }
-
 }
 

@@ -1,13 +1,11 @@
 package com.nuvola.gxpenses.client;
 
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 
 public interface BootStrapper {
-
     void init();
 
     void logout();
 
-    User getCurrentUser();
-
+    UserProxy getCurrentUser();
 }

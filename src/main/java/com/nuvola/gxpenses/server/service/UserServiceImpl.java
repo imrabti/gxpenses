@@ -1,14 +1,16 @@
 package com.nuvola.gxpenses.server.service;
 
+import com.nuvola.gxpenses.server.business.Tag;
+import com.nuvola.gxpenses.server.business.User;
+import com.nuvola.gxpenses.server.dto.Password;
 import com.nuvola.gxpenses.server.repos.TagRepos;
 import com.nuvola.gxpenses.server.repos.TransactionRepos;
 import com.nuvola.gxpenses.server.repos.UserRepos;
-import com.nuvola.gxpenses.server.util.SecurityUtils;
-import com.nuvola.gxpenses.shared.domaine.Tag;
-import com.nuvola.gxpenses.shared.domaine.User;
+import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.shared.type.CurrencyType;
 import com.nuvola.gxpenses.shared.type.PaginationType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +19,16 @@ import java.util.List;
 
 @Service
 @Transactional
+@Secured({ "ROLE_USER" })
 public class UserServiceImpl implements UserService {
-
     @Autowired
     private UserRepos userRepos;
     @Autowired
     private TransactionRepos transactionRepos;
     @Autowired
     private TagRepos tagRepos;
+    @Autowired
+    private SecurityContextProvider securityContext;
 
     @Override
     @Transactional(readOnly = true)
@@ -42,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        User currentUser = userRepos.findOne(user.getId());
+        User currentUser = userRepos.findOne(securityContext.getCurrentUser().getId());
         currentUser.setEmail(user.getEmail());
         currentUser.setUserName(user.getUserName());
         currentUser.setFirstName(user.getFirstName());
@@ -52,26 +56,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(Long userId, String newPassword) {
-        User user = userRepos.findOne(userId);
-        user.setPassword(newPassword);
+    public void updatePassword(Password password) {
+        User user = userRepos.findOne(securityContext.getCurrentUser().getId());
+        user.setPassword(password.getNewPassword());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<String> findAllPayeeForUser(Long userId) {
-        return transactionRepos.findAllPayeeByUserId(userId);
+    public List<String> findAllPayeeForUser() {
+        return transactionRepos.findAllPayeeByUserId(securityContext.getCurrentUser().getId());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<String> findAllTagsForUser(Long userId) {
-        return tagRepos.findAllByUserId(userId);
+    public List<String> findAllTagsForUser() {
+        return tagRepos.findAllByUserId(securityContext.getCurrentUser().getId());
     }
 
     @Override
-    public void createTags(Long userId, List<String> tags) {
-        User user = userRepos.findOne(userId);
+    public void createTags(List<String> tags) {
+        User user = userRepos.findOne(securityContext.getCurrentUser().getId());
         for (String tag : tags) {
             Tag newTag = new Tag();
             newTag.setValue(tag);
@@ -81,8 +85,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateTags(Long userId, List<String> tags) {
-        List<Tag> currentTags = tagRepos.findByUserId(userId);
+    public void updateTags(List<String> tags) {
+        List<Tag> currentTags = tagRepos.findByUserId(securityContext.getCurrentUser().getId());
         for (Tag item : currentTags) {
             if (!tags.contains(item.getValue())) {
                 tagRepos.delete(item);
@@ -92,7 +96,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (tags.size() > 0) {
-            User user = userRepos.findOne(userId);
+            User user = userRepos.findOne(securityContext.getCurrentUser().getId());
             for (String tag : tags) {
                 Tag newTag = new Tag();
                 newTag.setValue(tag);
@@ -101,5 +105,4 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-
 }

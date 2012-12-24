@@ -9,50 +9,50 @@ import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
+import com.nuvola.gxpenses.client.request.BudgetRequest;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.BudgetElementService;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
-import com.nuvola.gxpenses.shared.domaine.Budget;
-import com.nuvola.gxpenses.shared.domaine.BudgetElement;
 
 import java.util.List;
 
 public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementPresenter.MyView>
         implements AddBudgetElementUiHandlers {
-
     public interface MyView extends PopupView, HasUiHandlers<AddBudgetElementUiHandlers> {
         void showRelativeTo(Widget widget);
 
-        void edit(BudgetElement budgetElement);
+        void edit(BudgetElementProxy budgetElement);
 
-        void setData(List<BudgetElement> budgetElements);
+        void setData(List<BudgetElementProxy> budgetElements);
     }
 
-    private final BudgetElementService budgetElementService;
+    private final GxpensesRequestFactory requestFactory;
     private final MessageBundle messageBundle;
 
-    private Budget selectedBudget;
+    private BudgetProxy selectedBudget;
     private Widget relativeTo;
+    private BudgetRequest currentContext;
 
     @Inject
     public AddBudgetElementPresenter(final EventBus eventBus, final MyView view,
-                                     final BudgetElementService budgetElementService,
+                                     final GxpensesRequestFactory requestFactory,
                                      final MessageBundle messageBundle) {
         super(eventBus, view);
 
-        this.budgetElementService = budgetElementService;
+        this.requestFactory = requestFactory;
         this.messageBundle = messageBundle;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    public void addNewBudgetElement(BudgetElement budgetElement) {
-        budgetElementService.createBudgetElement(selectedBudget.getId().toString(), budgetElement,
-                new MethodCallbackImpl<Void>() {
+    public void addNewBudgetElement(BudgetElementProxy budgetElement) {
+        currentContext.createBudgetElement(selectedBudget.getId(), budgetElement).fire(new ReceiverImpl<Void>() {
             @Override
-            public void handleSuccess(Void aVoid) {
+            public void onSuccess(Void aVoid) {
                 BudgetElementsChangedEvent.fire(this);
                 GlobalMessageEvent.fire(this, messageBundle.budgetElementAdded());
                 prepareNewBudgetElement();
@@ -62,12 +62,12 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
     }
 
     @Override
-    public void removeBudgetElement(BudgetElement budgetElement) {
+    public void removeBudgetElement(BudgetElementProxy budgetElement) {
         Boolean decision = Window.confirm(messageBundle.budgetElementConf());
         if (decision) {
-            budgetElementService.removeBudgetElement(budgetElement.getId().toString(), new MethodCallbackImpl<Void>() {
+            requestFactory.budgetService().removeBudgetElement(budgetElement.getId()).fire(new ReceiverImpl<Void>() {
                 @Override
-                public void handleSuccess(Void result) {
+                public void onSuccess(Void aVoid) {
                     BudgetElementsChangedEvent.fire(this);
                     GlobalMessageEvent.fire(this, messageBundle.budgetElementRemoved());
                     fireLoadBudgetElementById();
@@ -81,7 +81,7 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
         PopupClosedEvent.fire(this);
     }
 
-    public void setSelectedBudget(Budget selectedBudget) {
+    public void setSelectedBudget(BudgetProxy selectedBudget) {
         this.selectedBudget = selectedBudget;
     }
 
@@ -99,19 +99,19 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
     }
 
     private void prepareNewBudgetElement() {
-        BudgetElement newBudgetElement = new BudgetElement();
+        currentContext = requestFactory.budgetService();
+        BudgetElementProxy newBudgetElement = currentContext.create(BudgetElementProxy.class);
         newBudgetElement.setBudget(selectedBudget);
         getView().edit(newBudgetElement);
     }
 
     private void fireLoadBudgetElementById() {
-        budgetElementService.getBudgetElements(selectedBudget.getId().toString(),
-                new MethodCallbackImpl<List<BudgetElement>>() {
+        requestFactory.budgetService().findAllBudgetElementsByBudget(selectedBudget.getId())
+                .fire(new ReceiverImpl<List<BudgetElementProxy>>() {
             @Override
-            public void handleSuccess(List<BudgetElement> budgetElements) {
+            public void onSuccess(List<BudgetElementProxy> budgetElements) {
                 getView().setData(budgetElements);
             }
         });
     }
-
 }

@@ -24,7 +24,6 @@ import java.util.Set;
 
 public class SettingPresenter extends Presenter<SettingPresenter.MyView, SettingPresenter.MyProxy>
         implements SettingsMenuChangedEvent.SettingsChangedEventHandler {
-
     public interface MyView extends View {
         void showErrors(Set<ConstraintViolation<?>> violations);
 
@@ -95,5 +94,4 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
         SetVisibleSiderEvent.fire(this, settingSiderPresenter);
         setInSlot(TYPE_SetMainContent, generalSettingPresenter);
     }
-
 }

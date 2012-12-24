@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.Gatekeeper;
 
 public class LoggedInGatekeeper implements Gatekeeper {
-
     private final SecurityUtils securityUtils;
 
     @Inject
@@ -16,5 +15,4 @@ public class LoggedInGatekeeper implements Gatekeeper {
     public boolean canReveal() {
         return securityUtils.isLoggedIn();
     }
-
 }

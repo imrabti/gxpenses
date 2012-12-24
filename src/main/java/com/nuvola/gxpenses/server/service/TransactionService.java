@@ -1,10 +1,10 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.shared.domaine.Transaction;
-import com.nuvola.gxpenses.shared.dto.PagedData;
-import com.nuvola.gxpenses.shared.dto.TransferTransaction;
-import com.nuvola.gxpenses.shared.type.PeriodType;
-import com.nuvola.gxpenses.shared.type.TransactionType;
+import com.nuvola.gxpenses.server.business.Transaction;
+import com.nuvola.gxpenses.server.dto.DataPage;
+import com.nuvola.gxpenses.server.dto.PagedTransactions;
+import com.nuvola.gxpenses.server.dto.TransactionFilter;
+import com.nuvola.gxpenses.server.dto.TransferTransaction;
 
 public interface TransactionService {
     void createNewTransaction(Transaction transaction);
@@ -13,8 +13,7 @@ public interface TransactionService {
 
     void createNewTransferTransaction(TransferTransaction transfer);
 
-    PagedData<Transaction> findByAccountAndDateAndType(Long accountId, PeriodType periodFilter,
-                                                       TransactionType type, Integer pageNumber, Integer length);
+    PagedTransactions findByAccountAndDateAndType(TransactionFilter filter, DataPage dataPage);
 
-    Double totalAmountByAccountAndPeriodAndType(Long accountId, PeriodType periodFilter, TransactionType type);
+    Double totalAmountByAccountAndPeriodAndType(TransactionFilter filter);
 }

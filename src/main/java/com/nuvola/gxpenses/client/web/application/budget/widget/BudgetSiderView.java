@@ -15,26 +15,25 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetCell;
-import com.nuvola.gxpenses.shared.domaine.Budget;
 
 import java.util.List;
 
 public class BudgetSiderView extends ViewWithUiHandlers<BudgetSiderUiHandlers> implements BudgetSiderPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, BudgetSiderView> {
     }
 
     @UiField(provided=true)
-    CellList<Budget> budgetList;
+    CellList<BudgetProxy> budgetList;
     @UiField
     Button addNew;
 
-    private final ProvidesKey<Budget> keyProvider;
-    private final ListDataProvider<Budget> dataProvider;
-    private final SingleSelectionModel<Budget> selectionModel;
+    private final ProvidesKey<BudgetProxy> keyProvider;
+    private final ListDataProvider<BudgetProxy> dataProvider;
+    private final SingleSelectionModel<BudgetProxy> selectionModel;
 
     @Inject
     public BudgetSiderView(final Binder uiBinder,
@@ -44,10 +43,10 @@ public class BudgetSiderView extends ViewWithUiHandlers<BudgetSiderUiHandlers> i
         super(uiHandlers);
 
         this.keyProvider = setupKeyProvider();
-        this.dataProvider = new ListDataProvider<Budget>(keyProvider);
+        this.dataProvider = new ListDataProvider<BudgetProxy>(keyProvider);
 
-        budgetList = new CellList<Budget>(budgetCell, siderListResources);
-        selectionModel = new SingleSelectionModel<Budget>(keyProvider);
+        budgetList = new CellList<BudgetProxy>(budgetCell, siderListResources);
+        selectionModel = new SingleSelectionModel<BudgetProxy>(keyProvider);
 
         //Init The UI Binder
         initWidget(uiBinder.createAndBindUi(this));
@@ -70,7 +69,7 @@ public class BudgetSiderView extends ViewWithUiHandlers<BudgetSiderUiHandlers> i
     }
 
     @Override
-    public void setData(List<Budget> budgets) {
+    public void setData(List<BudgetProxy> budgets) {
         dataProvider.getList().clear();
         dataProvider.getList().addAll(budgets);
         dataProvider.refresh();
@@ -86,13 +85,12 @@ public class BudgetSiderView extends ViewWithUiHandlers<BudgetSiderUiHandlers> i
         getUiHandlers().addNewBudget((Widget) event.getSource());
     }
 
-    private ProvidesKey<Budget> setupKeyProvider() {
-        return new ProvidesKey<Budget>() {
+    private ProvidesKey<BudgetProxy> setupKeyProvider() {
+        return new ProvidesKey<BudgetProxy>() {
             @Override
-            public Object getKey(Budget budget) {
+            public Object getKey(BudgetProxy budget) {
                 return budget == null ? null : budget.getId();
             }
         };
     }
-
 }

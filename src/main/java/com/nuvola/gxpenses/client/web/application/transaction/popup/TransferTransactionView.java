@@ -11,12 +11,11 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.TransferTransactionProxy;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.TransferTransactionEditor;
-import com.nuvola.gxpenses.shared.dto.TransferTransaction;
 
 public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTransactionUiHandlers>
         implements TransferTransactionPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, TransferTransactionView> {
     }
 
@@ -42,7 +41,7 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        TransferTransaction transfer = transferTransactionEditor.get();
+        TransferTransactionProxy transfer = transferTransactionEditor.get();
         if (transfer != null) {
             getUiHandlers().saveTransfer(transfer);
             getUiHandlers().close();
@@ -64,8 +63,7 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
     }
 
     @Override
-    public void edit(TransferTransaction transfer) {
+    public void edit(TransferTransactionProxy transfer) {
         transferTransactionEditor.edit(transfer);
     }
-
 }

@@ -12,16 +12,17 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.security.RegistrationService;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.UserRequest;
+import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
-import com.nuvola.gxpenses.shared.domaine.User;
 
 public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, RegisterPresenter.MyProxy>
         implements RegisterUiHandlers {
 
-    public interface MyView extends View, HasUiHandlers<RegisterUiHandlers>, EditorView<User> {
+    public interface MyView extends View, HasUiHandlers<RegisterUiHandlers>, EditorView<UserProxy> {
     }
 
     @ProxyStandard
@@ -29,25 +30,27 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     public interface MyProxy extends ProxyPlace<RegisterPresenter> {
     }
 
-    private final RegistrationService registrationService;
+    private final GxpensesRequestFactory requestFactory;
     private final PlaceManager placeManager;
+
+    private UserRequest currentContext;
 
     @Inject
     public RegisterPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                             final RegistrationService registrationService, final PlaceManager placeManager) {
+                             final GxpensesRequestFactory requestFactory, final PlaceManager placeManager) {
         super(eventBus, view, proxy);
 
-        this.registrationService = registrationService;
+        this.requestFactory = requestFactory;
         this.placeManager = placeManager;
 
         getView().setUiHandlers(this);
     }
 
     @Override
-    public void register(User user) {
-        registrationService.register(user, new MethodCallbackImpl<Void>() {
+    public void register(UserProxy user) {
+        currentContext.createUser(user).fire(new ReceiverImpl<Void>() {
             @Override
-            public void handleSuccess(Void aVoid) {
+            public void onSuccess(Void aVoid) {
                 PlaceRequest place = new PlaceRequest(NameTokens.getLogin());
                 placeManager.revealPlace(place);
             }
@@ -62,7 +65,7 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     protected void onReveal() {
         super.onReveal();
 
-        getView().edit(new User());
+        currentContext = requestFactory.userService();
+        getView().edit(currentContext.create(UserProxy.class));
     }
-
 }

@@ -2,30 +2,29 @@ package com.nuvola.gxpenses.client.util;
 
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.rest.UserService;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SuggestionListFactory {
-
-    private final UserService userService;
+    private final GxpensesRequestFactory requestFactory;
 
     private List<String> listTags;
     private List<String> listPayee;
 
     @Inject
-    public SuggestionListFactory(final UserService userService) {
-        this.userService = userService;
+    public SuggestionListFactory(final GxpensesRequestFactory requestFactory) {
+        this.requestFactory = requestFactory;
     }
 
     public List<String> getListTags() {
         if (listTags == null) {
-            userService.getTags(new MethodCallbackImpl<List<String>>() {
+            requestFactory.userService().findAllTagsForUser().fire(new ReceiverImpl<List<String>>() {
                 @Override
-                public void handleSuccess(List<String> tags) {
+                public void onSuccess(List<String> tags) {
                     listTags = tags;
                 }
             });
@@ -36,9 +35,9 @@ public class SuggestionListFactory {
 
     public List<String> getListPayee() {
         if (listPayee == null) {
-            userService.getPayees(new MethodCallbackImpl<List<String>>() {
+            requestFactory.userService().findAllPayeeForUser().fire(new ReceiverImpl<List<String>>() {
                 @Override
-                public void handleSuccess(List<String> payees) {
+                public void onSuccess(List<String> payees) {
                     listPayee = payees;
                 }
             });
@@ -65,9 +64,9 @@ public class SuggestionListFactory {
                 }
             }
 
-            userService.createTags(toAdd, new MethodCallbackImpl<Void>() {
+            requestFactory.userService().createTags(toAdd).fire(new ReceiverImpl<Void>() {
                 @Override
-                public void handleSuccess(Void aVoid) {
+                public void onSuccess(Void aVoid) {
                 }
             });
         }
@@ -78,5 +77,4 @@ public class SuggestionListFactory {
         listTags = null;
         getListTags();
     }
-
 }

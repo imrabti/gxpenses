@@ -14,7 +14,6 @@ import com.nuvola.gxpenses.client.web.application.widget.SiderHolderPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.SiderHolderView;
 
 public class ApplicationModule extends AbstractPresenterModule {
-
     @Override
     protected void configure() {
         install(new TransactionModule());
@@ -32,5 +31,4 @@ public class ApplicationModule extends AbstractPresenterModule {
         bindSingletonPresenterWidget(SiderHolderPresenter.class, SiderHolderPresenter.MyView.class,
                 SiderHolderView.class);
     }
-
 }

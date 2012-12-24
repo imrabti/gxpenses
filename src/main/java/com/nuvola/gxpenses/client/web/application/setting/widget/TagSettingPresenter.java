@@ -6,33 +6,28 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.rest.SettingService;
-import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 
 import java.util.List;
 
 public class TagSettingPresenter extends PresenterWidget<TagSettingPresenter.MyView> implements TagSettingUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<TagSettingUiHandlers> {
         void setData(List<String> tags);
     }
 
-    private final SettingService settingService;
-    private final UserService userService;
+    private final GxpensesRequestFactory requestFactory;
     private final SuggestionListFactory suggestionListFactory;
     private final MessageBundle messageBundle;
 
     @Inject
-    public TagSettingPresenter(EventBus eventBus, MyView view, final SettingService settingService,
-                               final UserService userService, final MessageBundle messageBundle,
-                               final SuggestionListFactory suggestionListFactory) {
+    public TagSettingPresenter(EventBus eventBus, MyView view, final GxpensesRequestFactory requestFactory,
+                               final MessageBundle messageBundle, final SuggestionListFactory suggestionListFactory) {
         super(eventBus, view);
 
-        this.settingService = settingService;
-        this.userService = userService;
+        this.requestFactory = requestFactory;
         this.suggestionListFactory = suggestionListFactory;
         this.messageBundle = messageBundle;
 
@@ -41,9 +36,9 @@ public class TagSettingPresenter extends PresenterWidget<TagSettingPresenter.MyV
 
     @Override
     public void saveTags(List<String> tags) {
-        settingService.updateUserTags(tags, new MethodCallbackImpl<Void>() {
+        requestFactory.userService().updateTags(tags).fire(new ReceiverImpl<Void>() {
             @Override
-            public void handleSuccess(Void aVoid) {
+            public void onSuccess(Void aVoid) {
                 suggestionListFactory.reloadTagsList();
                 GlobalMessageEvent.fire(this, messageBundle.tagsUpdated());
             }
@@ -54,12 +49,11 @@ public class TagSettingPresenter extends PresenterWidget<TagSettingPresenter.MyV
     protected void onReveal() {
         super.onReveal();
 
-        userService.getTags(new MethodCallbackImpl<List<String>>() {
+        requestFactory.userService().findAllTagsForUser().fire(new ReceiverImpl<List<String>>() {
             @Override
-            public void handleSuccess(List<String> tags) {
+            public void onSuccess(List<String> tags) {
                 getView().setData(tags);
             }
         });
     }
-
 }

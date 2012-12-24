@@ -13,22 +13,22 @@ import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
-import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
+import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.ui.MultipleSuggestBox;
-import com.nuvola.gxpenses.shared.domaine.Transaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 import java.util.Arrays;
 
-public class TransactionEditor extends Composite implements EditorView<Transaction> {
+public class TransactionEditor extends Composite implements EditorView<TransactionProxy> {
 
     public interface Binder extends UiBinder<HTMLPanel, TransactionEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<Transaction, TransactionEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<TransactionProxy, TransactionEditor> {
     }
 
     @UiField(provided = true)
@@ -73,15 +73,15 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
     }
 
     @Override
-    public void edit(Transaction transaction) {
+    public void edit(TransactionProxy transaction) {
         initSuggestionList();
         payee.setFocus(true);
         driver.edit(transaction);
     }
 
     @Override
-    public Transaction get() {
-        Transaction transaction = driver.flush();
+    public TransactionProxy get() {
+        TransactionProxy transaction = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
@@ -102,5 +102,4 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
             ((MultiWordSuggestOracle) tags.getSuggestOracle()).addAll(suggestionListFactory.getListTags());
         }
     }
-
 }

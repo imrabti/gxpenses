@@ -5,7 +5,6 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class BudgetElementsChangedEvent extends GwtEvent<BudgetElementsChangedEvent.BudgetElementsChangedHandler> {
-
     public static Type<BudgetElementsChangedHandler> TYPE = new Type<BudgetElementsChangedHandler>();
 
     public interface BudgetElementsChangedHandler extends EventHandler {
@@ -33,5 +32,4 @@ public class BudgetElementsChangedEvent extends GwtEvent<BudgetElementsChangedEv
     protected void dispatch(BudgetElementsChangedHandler handler) {
         handler.onBudgetElementsChanged(this);
     }
-
 }

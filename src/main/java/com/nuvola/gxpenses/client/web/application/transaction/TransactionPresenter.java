@@ -18,9 +18,15 @@ import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.place.NameTokens;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.TransactionRequest;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
+import com.nuvola.gxpenses.client.request.proxy.DataPageProxy;
+import com.nuvola.gxpenses.client.request.proxy.PagedTransactionsProxy;
+import com.nuvola.gxpenses.client.request.proxy.TransactionFilterProxy;
+import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.util.DateUtils;
 import com.nuvola.gxpenses.client.util.EmptyDisplay;
@@ -30,10 +36,6 @@ import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChang
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddTransactionPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.widget.AccountSiderPresenter;
-import com.nuvola.gxpenses.shared.domaine.Account;
-import com.nuvola.gxpenses.shared.domaine.Transaction;
-import com.nuvola.gxpenses.shared.dto.PagedData;
-import com.nuvola.gxpenses.shared.dto.TransactionFilter;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
@@ -44,9 +46,8 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         TransactionFiltreChangedEvent.TransactionFilterChangedHandler,
         AccountBalanceChangedEvent.AccountBalanceChangedHandler,
         NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
-
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<TransactionUiHandlers> {
-        void setData(List<Transaction> data, Integer start, Integer totalCount);
+        void setData(List<TransactionProxy> data, Integer start, Integer totalCount);
 
         void clearSelection();
 
@@ -75,28 +76,28 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     public interface MyProxy extends ProxyPlace<TransactionPresenter> {
     }
 
-    private final TransactionService transactionService;
+    private final GxpensesRequestFactory requestFactory;
     private final MessageBundle messageBundle;
     private final Integer defaultPageSize;
 
     private final AccountSiderPresenter accountSiderPresenter;
     private final AddTransactionPresenter addTransactionPresenter;
 
-    private Account selectedAccount;
+    private AccountProxy selectedAccount;
     private PeriodType selectedPeriodeFilter;
     private TransactionType selectedTypeFilter;
     private Integer paginationStart;
 
     @Inject
     public TransactionPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                                final TransactionService transactionService,
+                                final GxpensesRequestFactory requestFactory,
                                 final MessageBundle messageBundle,
                                 final AccountSiderPresenter accountSiderPresenter,
                                 final AddTransactionPresenter addTransactionPresenter,
                                 @PageSize Integer defaultPageSize) {
         super(eventBus, view, proxy);
 
-        this.transactionService = transactionService;
+        this.requestFactory = requestFactory;
         this.messageBundle = messageBundle;
         this.defaultPageSize = defaultPageSize;
         this.accountSiderPresenter = accountSiderPresenter;
@@ -196,12 +197,12 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     @Override
-    public void removeTransaction(Transaction transaction) {
+    public void removeTransaction(TransactionProxy transaction) {
         Boolean decision = Window.confirm(messageBundle.transactionConf());
         if (decision) {
-            transactionService.removeTransaction(transaction.getId().toString(), new MethodCallbackImpl<Void>() {
+            requestFactory.transactionService().removeTransaction(transaction.getId()).fire(new ReceiverImpl<Void>() {
                 @Override
-                public void handleSuccess(Void aVoid) {
+                public void onSuccess(Void aVoid) {
                     Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
                     fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
                     fireLoadTotalAmountTransactionRequest();
@@ -237,19 +238,21 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     private void fireLoadTransactionDataRequest(Integer pageNumber, Integer length) {
-        TransactionFilter filter = new TransactionFilter();
+        TransactionRequest currentContext = requestFactory.transactionService();
+        TransactionFilterProxy filter = currentContext.create(TransactionFilterProxy.class);
+        DataPageProxy page = currentContext.create(DataPageProxy.class);
         filter.setAccountId(selectedAccount.getId());
-        filter.setTypeFilter(selectedTypeFilter);
-        filter.setPeriodFilter(selectedPeriodeFilter);
-        filter.setPageNumber(pageNumber);
-        filter.setLength(length);
+        filter.setType(selectedTypeFilter);
+        filter.setPeriod(selectedPeriodeFilter);
+        page.setPageNumber(pageNumber);
+        page.setLength(length);
 
-        transactionService.getTransactions(filter, new MethodCallbackImpl<PagedData<Transaction>>() {
+        currentContext.findByAccountAndDateAndType(filter, page).fire(new ReceiverImpl<PagedTransactionsProxy>() {
             @Override
-            public void handleSuccess(PagedData<Transaction> result) {
-                getView().setData(result.getData(), paginationStart, result.getTotalElements());
+            public void onSuccess(PagedTransactionsProxy result) {
+                getView().setData(result.getTransactions(), paginationStart, result.getTotalElements());
 
-                if (result.getData().size() > 0) {
+                if (result.getTransactions().size() > 0) {
                     getView().hideNoTransactionsPanel();
                 } else {
                     getView().showNoTransactionsPanel();
@@ -259,17 +262,17 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     private void fireLoadTotalAmountTransactionRequest() {
-        TransactionFilter filter = new TransactionFilter();
+        TransactionRequest currentContext = requestFactory.transactionService();
+        TransactionFilterProxy filter = currentContext.create(TransactionFilterProxy.class);
         filter.setAccountId(selectedAccount.getId());
-        filter.setTypeFilter(selectedTypeFilter);
-        filter.setPeriodFilter(selectedPeriodeFilter);
+        filter.setType(selectedTypeFilter);
+        filter.setPeriod(selectedPeriodeFilter);
 
-        transactionService.totalAmount(filter, new MethodCallbackImpl<Double>() {
+        currentContext.totalAmountByAccountAndPeriodAndType(filter).fire(new ReceiverImpl<Double>() {
             @Override
-            public void handleSuccess(Double totalAmount) {
+            public void onSuccess(Double totalAmount) {
                 getView().setTransactionTotal(totalAmount);
             }
         });
     }
-
 }

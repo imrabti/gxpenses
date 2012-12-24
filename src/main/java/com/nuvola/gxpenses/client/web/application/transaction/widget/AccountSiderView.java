@@ -18,11 +18,11 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
+import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountCellFactory;
-import com.nuvola.gxpenses.shared.domaine.Account;
 import com.nuvola.gxpenses.shared.type.PeriodType;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
@@ -40,15 +40,15 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
     @UiField(provided = true)
     ValueListBox<TransactionType> transactionType;
     @UiField(provided = true)
-    CellList<Account> accountList;
+    CellList<AccountProxy> accountList;
     @UiField
     Button addNew;
     @UiField
     Button transfer;
 
-    private final ProvidesKey<Account> keyProvider;
-    private final ListDataProvider<Account> dataProvider;
-    private final SingleSelectionModel<Account> selectionModel;
+    private final ProvidesKey<AccountProxy> keyProvider;
+    private final ListDataProvider<AccountProxy> dataProvider;
+    private final SingleSelectionModel<AccountProxy> selectionModel;
     private final Resources resources;
 
     @Inject
@@ -61,12 +61,12 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
 
         this.resources = resources;
         this.keyProvider = setupKeyProvider();
-        this.dataProvider = new ListDataProvider<Account>(keyProvider);
+        this.dataProvider = new ListDataProvider<AccountProxy>(keyProvider);
 
         periodType = new ValueListBox<PeriodType>(new EnumRenderer<PeriodType>());
         transactionType = new ValueListBox<TransactionType>(new EnumRenderer<TransactionType>());
-        accountList = new CellList<Account>(accountCellFactory.create(setupRemoveAction()), siderListResources);
-        selectionModel = new SingleSelectionModel<Account>(keyProvider);
+        accountList = new CellList<AccountProxy>(accountCellFactory.create(setupRemoveAction()), siderListResources);
+        selectionModel = new SingleSelectionModel<AccountProxy>(keyProvider);
 
         //Initialize ValueListBox elements
         periodType.setValue(PeriodType.THIS_MONTH);
@@ -95,7 +95,7 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
     }
 
     @Override
-    public void setData(List<Account> accounts) {
+    public void setData(List<AccountProxy> accounts) {
         dataProvider.getList().clear();
         dataProvider.getList().addAll(accounts);
         dataProvider.refresh();
@@ -144,22 +144,21 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
         getUiHandlers().filterChange(periodType.getValue(), event.getValue());
     }
 
-    private ProvidesKey<Account> setupKeyProvider() {
-        return new ProvidesKey<Account>() {
+    private ProvidesKey<AccountProxy> setupKeyProvider() {
+        return new ProvidesKey<AccountProxy>() {
             @Override
-            public Object getKey(Account account) {
+            public Object getKey(AccountProxy account) {
                 return account == null ? null : account.getId();
             }
         };
     }
 
-    private ActionCell.Delegate<Account> setupRemoveAction() {
-        return new ActionCell.Delegate<Account>() {
+    private ActionCell.Delegate<AccountProxy> setupRemoveAction() {
+        return new ActionCell.Delegate<AccountProxy>() {
             @Override
-            public void execute(Account object) {
+            public void execute(AccountProxy object) {
                 getUiHandlers().removeAccount(object);
             }
         };
     }
-
 }
