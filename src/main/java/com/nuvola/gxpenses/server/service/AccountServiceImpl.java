@@ -8,6 +8,7 @@ import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Secured({ "ROLE_USER" })
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepos accountRepos;
@@ -29,6 +31,7 @@ public class AccountServiceImpl implements AccountService {
         if (account.getBalance() == null) {
             account.setBalance(0d);
         }
+        account.setUser(securityContext.getCurrentUser());
         account = accountRepos.save(account);
 
         Transaction initialTransaction = new Transaction();

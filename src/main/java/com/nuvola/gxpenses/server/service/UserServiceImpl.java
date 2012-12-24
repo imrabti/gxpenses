@@ -10,6 +10,7 @@ import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.shared.type.CurrencyType;
 import com.nuvola.gxpenses.shared.type.PaginationType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Secured({ "ROLE_USER" })
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepos userRepos;

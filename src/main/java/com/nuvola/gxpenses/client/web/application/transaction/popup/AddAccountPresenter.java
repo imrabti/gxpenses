@@ -6,7 +6,6 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
-import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.request.AccountRequest;
 import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
@@ -25,7 +24,6 @@ public class AddAccountPresenter extends PresenterWidget<AddAccountPresenter.MyV
     }
 
     private final GxpensesRequestFactory requestFactory;
-    private final BootStrapper bootStrapper;
     private final MessageBundle messageBundle;
     private final ValueListFactory valueListFactory;
 
@@ -35,13 +33,11 @@ public class AddAccountPresenter extends PresenterWidget<AddAccountPresenter.MyV
     @Inject
     public AddAccountPresenter(final EventBus eventBus, final MyView view,
                                final GxpensesRequestFactory requestFactory,
-                               final BootStrapper bootStrapper,
                                final MessageBundle messageBundle,
                                final ValueListFactory valueListFactory) {
         super(eventBus, view);
 
         this.requestFactory = requestFactory;
-        this.bootStrapper = bootStrapper;
         this.messageBundle = messageBundle;
         this.valueListFactory = valueListFactory;
 
@@ -71,7 +67,6 @@ public class AddAccountPresenter extends PresenterWidget<AddAccountPresenter.MyV
         currentContext = requestFactory.accountService();
         AccountProxy newAccount = currentContext.create(AccountProxy.class);
         newAccount.setType(AccountType.CASH);
-        newAccount.setUser(bootStrapper.getCurrentUser());
         getView().edit(newAccount);
         getView().showRelativeTo(relativeTo);
     }

@@ -10,6 +10,7 @@ import com.nuvola.gxpenses.server.repos.TransactionRepos;
 import com.nuvola.gxpenses.server.security.SecurityContextProvider;
 import com.nuvola.gxpenses.server.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@Secured({ "ROLE_USER" })
 public class BudgetServiceImpl implements BudgetService {
     @Autowired
     private BudgetRepos budgetRepos;
