@@ -8,38 +8,39 @@ import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.TransactionRequest;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
+import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
-import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
-import com.nuvola.gxpenses.server.business.Account;
-import com.nuvola.gxpenses.server.business.Transaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 
 public class AddTransactionPresenter extends PresenterWidget<AddTransactionPresenter.MyView>
         implements AddTransactionUiHandler {
-
     public interface MyView extends PopupView, HasUiHandlers<AddTransactionUiHandler> {
         void showRelativeTo(Widget widget);
 
-        void edit(Transaction transfer);
+        void edit(TransactionProxy transfer);
     }
 
-    private final TransactionService transactionService;
+    private final GxpensesRequestFactory requestFactory;
     private final SuggestionListFactory suggestionListFactory;
     private final MessageBundle messageBundle;
 
     private Widget relativeTo;
-    private Account selectedAccount;
+    private TransactionRequest currentContext;
+    private AccountProxy selectedAccount;
 
     @Inject
     public AddTransactionPresenter(final EventBus eventBus, final MyView view,
-                                   final TransactionService transactionService,
+                                   final GxpensesRequestFactory requestFactory,
                                    final SuggestionListFactory suggestionListFactory,
                                    final MessageBundle messageBundle) {
         super(eventBus, view);
-        this.transactionService = transactionService;
+        this.requestFactory = requestFactory;
         this.suggestionListFactory = suggestionListFactory;
         this.messageBundle = messageBundle;
 
@@ -47,10 +48,10 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
     }
 
     @Override
-    public void saveTransaction(final Transaction transaction) {
-        transactionService.createTransaction(transaction, new MethodCallbackImpl<Void>() {
+    public void saveTransaction(final TransactionProxy transaction) {
+        currentContext.createNewTransaction(transaction).fire(new ReceiverImpl<Void>() {
             @Override
-            public void handleSuccess(Void aVoid) {
+            public void onSuccess(Void aVoid) {
                 suggestionListFactory.updatePayeeList(transaction.getPayee());
                 suggestionListFactory.updateTagsList(transaction.getTags());
 
@@ -69,7 +70,7 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
         this.relativeTo = relativeTo;
     }
 
-    public void setSelectedAccount(Account selectedAccount) {
+    public void setSelectedAccount(AccountProxy selectedAccount) {
         this.selectedAccount = selectedAccount;
     }
 
@@ -77,11 +78,11 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
     protected void onReveal() {
         super.onReveal();
 
-        Transaction newTransaction = new Transaction();
+        currentContext = requestFactory.transactionService();
+        TransactionProxy newTransaction = currentContext.create(TransactionProxy.class);
         newTransaction.setType(TransactionType.EXPENSE);
         newTransaction.setAccount(selectedAccount);
         getView().edit(newTransaction);
         getView().showRelativeTo(relativeTo);
     }
-
 }

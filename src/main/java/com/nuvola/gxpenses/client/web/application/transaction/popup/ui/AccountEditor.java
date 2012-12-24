@@ -9,19 +9,18 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
-import com.nuvola.gxpenses.server.business.Account;
 import com.nuvola.gxpenses.shared.type.AccountType;
 
 import java.util.Arrays;
 
-public class AccountEditor extends Composite implements EditorView<Account> {
-
+public class AccountEditor extends Composite implements EditorView<AccountProxy> {
     public interface Binder extends UiBinder<HTMLPanel, AccountEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<Account, AccountEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<AccountProxy, AccountEditor> {
     }
 
     @UiField
@@ -47,19 +46,18 @@ public class AccountEditor extends Composite implements EditorView<Account> {
     }
 
     @Override
-    public void edit(Account account) {
+    public void edit(AccountProxy account) {
         name.setFocus(true);
         driver.edit(account);
     }
 
     @Override
-    public Account get() {
-        Account account = driver.flush();
+    public AccountProxy get() {
+        AccountProxy account = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
             return account;
         }
     }
-
 }

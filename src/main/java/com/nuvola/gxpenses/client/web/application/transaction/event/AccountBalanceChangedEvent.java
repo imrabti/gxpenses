@@ -5,7 +5,6 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class AccountBalanceChangedEvent extends GwtEvent<AccountBalanceChangedEvent.AccountBalanceChangedHandler> {
-
     public static Type<AccountBalanceChangedHandler> TYPE = new Type<AccountBalanceChangedHandler>();
 
     public interface AccountBalanceChangedHandler extends EventHandler {
@@ -33,5 +32,4 @@ public class AccountBalanceChangedEvent extends GwtEvent<AccountBalanceChangedEv
     protected void dispatch(AccountBalanceChangedHandler handler) {
         handler.onAccountBalanceChanged(this);
     }
-
 }

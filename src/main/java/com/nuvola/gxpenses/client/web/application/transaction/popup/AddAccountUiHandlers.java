@@ -1,8 +1,8 @@
 package com.nuvola.gxpenses.client.web.application.transaction.popup;
 
 import com.gwtplatform.mvp.client.UiHandlers;
-import com.nuvola.gxpenses.server.business.Account;
+import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 
 public interface AddAccountUiHandlers extends UiHandlers {
-    void saveAccount(Account account);
+    void saveAccount(AccountProxy account);
 }
