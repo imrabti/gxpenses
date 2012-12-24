@@ -53,12 +53,14 @@ public class UserServiceImpl implements UserService {
         currentUser.setLastName(user.getLastName());
         currentUser.setCurrency(user.getCurrency());
         currentUser.setPageSize(user.getPageSize());
+        userRepos.save(currentUser);
     }
 
     @Override
     public void updatePassword(Password password) {
         User user = userRepos.findOne(securityContext.getCurrentUser().getId());
         user.setPassword(password.getNewPassword());
+        userRepos.save(user);
     }
 
     @Override
