@@ -10,8 +10,8 @@ import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 import com.nuvola.gxpenses.client.request.proxy.TransferTransactionProxy;
-import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.util.EditorView;
+import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.AccountRenderer;
 
 public class TransferTransactionEditor extends Composite implements EditorView<TransferTransactionProxy> {

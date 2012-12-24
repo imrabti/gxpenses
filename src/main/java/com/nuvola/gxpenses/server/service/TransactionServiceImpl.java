@@ -1,14 +1,14 @@
 package com.nuvola.gxpenses.server.service;
 
+import com.nuvola.gxpenses.server.business.Account;
+import com.nuvola.gxpenses.server.business.Transaction;
 import com.nuvola.gxpenses.server.dto.DataPage;
 import com.nuvola.gxpenses.server.dto.PagedTransactions;
 import com.nuvola.gxpenses.server.dto.TransactionFilter;
+import com.nuvola.gxpenses.server.dto.TransferTransaction;
 import com.nuvola.gxpenses.server.repos.AccountRepos;
 import com.nuvola.gxpenses.server.repos.TransactionRepos;
 import com.nuvola.gxpenses.server.util.DateUtils;
-import com.nuvola.gxpenses.server.business.Account;
-import com.nuvola.gxpenses.server.business.Transaction;
-import com.nuvola.gxpenses.server.dto.TransferTransaction;
 import com.nuvola.gxpenses.shared.type.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -106,8 +106,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional(readOnly = true)
     public PagedTransactions findByAccountAndDateAndType(TransactionFilter filter, DataPage dataPageRequest) {
-        Date startDate = DateUtils.getStartDate(filter.getPeriodFilter(), new Date());
-        Date endDate = DateUtils.getEndDate(filter.getPeriodFilter(), new Date());
+        Date startDate = DateUtils.getStartDate(filter.getPeriod(), new Date());
+        Date endDate = DateUtils.getEndDate(filter.getPeriod(), new Date());
         PageRequest page = new PageRequest(dataPageRequest.getPageNumber(), dataPageRequest.getLength(),
                 new Sort(Sort.Direction.DESC, "date"));
 
@@ -126,8 +126,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional(readOnly = true)
     public Double totalAmountByAccountAndPeriodAndType(TransactionFilter filter) {
-        Date startDate = DateUtils.getStartDate(filter.getPeriodFilter(), new Date());
-        Date endDate = DateUtils.getEndDate(filter.getPeriodFilter(), new Date());
+        Date startDate = DateUtils.getStartDate(filter.getPeriod(), new Date());
+        Date endDate = DateUtils.getEndDate(filter.getPeriod(), new Date());
 
         if (filter.getType() == TransactionType.ALL) {
             return transactionRepos.totalByAccountAndDate(filter.getAccountId(), startDate, endDate);

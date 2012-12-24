@@ -8,19 +8,18 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
-import com.nuvola.gxpenses.server.business.Budget;
 import com.nuvola.gxpenses.shared.type.FrequencyType;
 
 import java.util.Arrays;
 
-public class BudgetEditor extends Composite implements EditorView<Budget> {
-
+public class BudgetEditor extends Composite implements EditorView<BudgetProxy> {
     public interface Binder extends UiBinder<HTMLPanel, BudgetEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<Budget, BudgetEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<BudgetProxy, BudgetEditor> {
     }
 
     @UiField
@@ -43,18 +42,17 @@ public class BudgetEditor extends Composite implements EditorView<Budget> {
         driver.initialize(this);
     }
 
-    public void edit(Budget budget) {
+    public void edit(BudgetProxy budget) {
         name.setFocus(true);
         driver.edit(budget);
     }
 
-    public Budget get() {
-        Budget budget = driver.flush();
+    public BudgetProxy get() {
+        BudgetProxy budget = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
             return budget;
         }
     }
-
 }

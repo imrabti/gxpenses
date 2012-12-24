@@ -1,12 +1,12 @@
 package com.nuvola.gxpenses.server.service;
 
+import com.nuvola.gxpenses.server.business.Tag;
+import com.nuvola.gxpenses.server.business.User;
+import com.nuvola.gxpenses.server.dto.Password;
 import com.nuvola.gxpenses.server.repos.TagRepos;
 import com.nuvola.gxpenses.server.repos.TransactionRepos;
 import com.nuvola.gxpenses.server.repos.UserRepos;
-import com.nuvola.gxpenses.server.business.Tag;
-import com.nuvola.gxpenses.server.business.User;
 import com.nuvola.gxpenses.server.security.SecurityContextProvider;
-import com.nuvola.gxpenses.server.dto.Password;
 import com.nuvola.gxpenses.shared.type.CurrencyType;
 import com.nuvola.gxpenses.shared.type.PaginationType;
 import org.springframework.beans.factory.annotation.Autowired;

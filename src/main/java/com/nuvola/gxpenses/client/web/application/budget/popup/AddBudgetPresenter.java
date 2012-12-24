@@ -8,35 +8,36 @@ import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.BootStrapper;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
+import com.nuvola.gxpenses.client.request.BudgetRequest;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.BudgetService;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
-import com.nuvola.gxpenses.server.business.Budget;
 import com.nuvola.gxpenses.shared.type.FrequencyType;
 
 public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyView> implements AddBudgetUiHandler {
-
     public interface MyView extends PopupView, HasUiHandlers<AddBudgetUiHandler> {
         void showRelativeTo(Widget widget);
 
-        void edit(Budget budget);
+        void edit(BudgetProxy budget);
     }
 
-    private final BudgetService budgetService;
+    private final GxpensesRequestFactory requestFactory;
     private final BootStrapper bootStrapper;
     private final MessageBundle messageBundle;
 
     private Widget relativeTo;
+    private BudgetRequest currentContext;
 
     @Inject
     public AddBudgetPresenter(final EventBus eventBus, final MyView view,
-                              final BudgetService budgetService,
+                              final GxpensesRequestFactory requestFactory,
                               final BootStrapper bootStrapper,
                               final MessageBundle messageBundle) {
         super(eventBus, view);
 
-        this.budgetService = budgetService;
+        this.requestFactory = requestFactory;
         this.bootStrapper = bootStrapper;
         this.messageBundle = messageBundle;
 
@@ -44,10 +45,10 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
     }
 
     @Override
-    public void saveBudget(Budget budget) {
-        budgetService.createBudget(budget, new MethodCallbackImpl<Void>() {
+    public void saveBudget(BudgetProxy budget) {
+        currentContext.createBudget(budget).fire(new ReceiverImpl<Void>() {
             @Override
-            public void handleSuccess(Void aVoid) {
+            public void onSuccess(Void aVoid) {
                 BudgetElementsChangedEvent.fire(this);
                 GlobalMessageEvent.fire(this, messageBundle.budgetAdded());
             }
@@ -62,11 +63,11 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
     protected void onReveal() {
         super.onReveal();
 
-        Budget newBudget = new Budget();
+        currentContext = requestFactory.budgetService();
+        BudgetProxy newBudget = currentContext.create(BudgetProxy.class);
         newBudget.setPeriodicity(FrequencyType.MONTH);
         newBudget.setUser(bootStrapper.getCurrentUser());
         getView().edit(newBudget);
         getView().showRelativeTo(relativeTo);
     }
-
 }

@@ -10,11 +10,10 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetEditor;
-import com.nuvola.gxpenses.server.business.Budget;
 
 public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> implements AddBudgetPresenter.MyView {
-
     public interface Binder extends UiBinder<PopupPanel, AddBudgetView> {
     }
 
@@ -42,13 +41,13 @@ public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> i
     }
 
     @Override
-    public void edit(Budget budget) {
+    public void edit(BudgetProxy budget) {
         budgetEditor.edit(budget);
     }
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        Budget budget = budgetEditor.get();
+        BudgetProxy budget = budgetEditor.get();
         if (budget != null) {
             getUiHandlers().saveBudget(budget);
             hide();
@@ -59,5 +58,4 @@ public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> i
     void onCancel(ClickEvent event) {
         hide();
     }
-
 }
