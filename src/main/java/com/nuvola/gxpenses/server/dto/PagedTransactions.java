@@ -8,6 +8,9 @@ public class PagedTransactions {
     private List<Transaction> transactions;
     private Integer totalElements;
 
+    public PagedTransactions() {
+    }
+
     public PagedTransactions(List<Transaction> transactions, Integer totalElements) {
         this.transactions = transactions;
         this.totalElements = totalElements;

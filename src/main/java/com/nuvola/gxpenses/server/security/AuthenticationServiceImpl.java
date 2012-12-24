@@ -3,6 +3,7 @@ package com.nuvola.gxpenses.server.security;
 import com.nuvola.gxpenses.server.business.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private SecurityContextProvider securityContext;
 
     @Override
+    @Secured({ "ROLE_USER" })
     public User currentUser() {
         return securityContext.getCurrentUser();
     }

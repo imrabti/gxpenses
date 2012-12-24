@@ -14,7 +14,7 @@ public class SecurityContextProviderImpl implements SecurityContextProvider {
     private UserRepos userRepos;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public User getCurrentUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         if (securityContext != null) {

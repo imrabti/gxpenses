@@ -6,7 +6,8 @@
                                  http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <!-- Activate Is Secured Annotation to secure REST Services -->
-    <global-method-security pre-post-annotations="enabled"/>
+    <global-method-security pre-post-annotations="enabled" secured-annotations="enabled"
+                            authentication-manager-ref="authenticationProvider" mode="aspectj"/>
 
     <!-- Spring Security URL Interceptor -->
     <http create-session="stateless" entry-point-ref="digestEntryPoint"

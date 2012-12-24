@@ -8,6 +8,9 @@ public class TransactionFilter {
     private PeriodType period;
     private TransactionType type;
 
+    public TransactionFilter() {
+    }
+
     public TransactionFilter(Long accountId, PeriodType period, TransactionType type) {
         this.accountId = accountId;
         this.period = period;
