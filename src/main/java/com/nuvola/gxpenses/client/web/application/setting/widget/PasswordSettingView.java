@@ -8,12 +8,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.nuvola.gxpenses.client.request.proxy.PasswordProxy;
 import com.nuvola.gxpenses.client.web.application.setting.widget.ui.PasswordEditor;
-import com.nuvola.gxpenses.server.dto.Password;
 
 public class PasswordSettingView extends ViewWithUiHandlers<PasswordSettingUiHandlers>
         implements PasswordSettingPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, PasswordSettingView> {
     }
 
@@ -33,15 +32,14 @@ public class PasswordSettingView extends ViewWithUiHandlers<PasswordSettingUiHan
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        Password password = passwordEditor.get();
+        PasswordProxy password = passwordEditor.get();
         if (password != null) {
             getUiHandlers().savePassword(password);
         }
     }
 
     @Override
-    public void edit(Password password) {
+    public void edit(PasswordProxy password) {
         passwordEditor.edit(password);
     }
-
 }

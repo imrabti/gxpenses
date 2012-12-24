@@ -6,31 +6,32 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
+import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
+import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.nuvola.gxpenses.client.request.UserRequest;
+import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
-import com.nuvola.gxpenses.client.rest.MethodCallbackImpl;
-import com.nuvola.gxpenses.client.rest.SettingService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
-import com.nuvola.gxpenses.server.business.User;
 
 public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPresenter.MyView>
         implements GeneralSettingUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<GeneralSettingUiHandlers> {
-        void edit(User user);
+        void edit(UserProxy user);
     }
 
-    private final SettingService settingService;
+    private final GxpensesRequestFactory requestFactory;
     private final SecurityUtils securityUtils;
     private final MessageBundle messageBundle;
 
-    private User currentUser;
+    private UserRequest currentContext;
 
     @Inject
-    public GeneralSettingPresenter(EventBus eventBus, MyView view, final SettingService settingService,
+    public GeneralSettingPresenter(EventBus eventBus, MyView view, final GxpensesRequestFactory requestFactory,
                                    final MessageBundle messageBundle, final SecurityUtils securityUtils) {
         super(eventBus, view);
 
-        this.settingService = settingService;
+        this.requestFactory = requestFactory;
         this.messageBundle = messageBundle;
         this.securityUtils = securityUtils;
 
@@ -38,12 +39,14 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
     }
 
     @Override
-    public void saveSetting(final User editedUser) {
-        settingService.updateUserSettings(editedUser, new MethodCallbackImpl<ValidatedResponse<User>>() {
+    public void saveSetting(final UserProxy editedUser) {
+        currentContext.updateUser(editedUser).fire(new ReceiverImpl<Void>() {
             @Override
-            public void handleSuccess(ValidatedResponse<User> userValidatedResponse) {
+            public void onSuccess(Void aVoid) {
                 securityUtils.updateUsername(editedUser.getEmail());
                 GlobalMessageEvent.fire(this, messageBundle.settingsUpdated());
+
+                initAndEditUser();
             }
         });
     }
@@ -52,13 +55,17 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
     protected void onReveal() {
         super.onReveal();
 
-        settingService.getLoggedInUserSettings(new MethodCallbackImpl<User>() {
+        initAndEditUser();
+    }
+
+    private void initAndEditUser() {
+        requestFactory.authenticationService().currentUser().fire(new ReceiverImpl<UserProxy>() {
             @Override
-            public void handleSuccess(User user) {
-                currentUser = user;
-                getView().edit(currentUser);
+            public void onSuccess(UserProxy userProxy) {
+                currentContext = requestFactory.userService();
+                userProxy = currentContext.edit(userProxy);
+                getView().edit(userProxy);
             }
         });
     }
-
 }

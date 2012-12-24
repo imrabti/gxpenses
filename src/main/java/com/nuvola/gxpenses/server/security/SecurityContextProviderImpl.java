@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class SecurityContextProviderImpl implements SecurityContextProvider {
-
     @Autowired
     private UserRepos userRepos;
 
@@ -25,5 +24,4 @@ public class SecurityContextProviderImpl implements SecurityContextProvider {
 
         return null;
     }
-
 }

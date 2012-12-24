@@ -15,7 +15,6 @@ import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.resource.Resources;
 
 public class TagCell extends AbstractCell<String> {
-
     public interface Template extends SafeHtmlTemplates {
         @Template("<span class=\"removeButton\"></span><div style=\"float:left;\">{0}</div>" +
                   "<div style=\"clear:both;\"></div>")
@@ -54,5 +53,4 @@ public class TagCell extends AbstractCell<String> {
     public void render(Context context, String value, SafeHtmlBuilder sb) {
         sb.append(template.tagTemplate(SafeHtmlUtils.fromString(value)));
     }
-
 }

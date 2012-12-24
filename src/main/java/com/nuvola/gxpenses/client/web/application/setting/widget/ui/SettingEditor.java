@@ -8,20 +8,19 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
-import com.nuvola.gxpenses.server.business.User;
 import com.nuvola.gxpenses.shared.type.CurrencyType;
 import com.nuvola.gxpenses.shared.type.PaginationType;
 
 import java.util.Arrays;
 
-public class SettingEditor extends Composite implements EditorView<User> {
-
+public class SettingEditor extends Composite implements EditorView<UserProxy> {
     public interface Binder extends UiBinder<HTMLPanel, SettingEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<User, SettingEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<UserProxy, SettingEditor> {
     }
 
     @UiField
@@ -56,18 +55,17 @@ public class SettingEditor extends Composite implements EditorView<User> {
     }
 
     @Override
-    public void edit(User setting) {
+    public void edit(UserProxy setting) {
         driver.edit(setting);
     }
 
     @Override
-    public User get() {
-        User user = driver.flush();
+    public UserProxy get() {
+        UserProxy user = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
             return user;
         }
     }
-
 }

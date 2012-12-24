@@ -7,15 +7,14 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.inject.Inject;
+import com.nuvola.gxpenses.client.request.proxy.PasswordProxy;
 import com.nuvola.gxpenses.client.util.EditorView;
-import com.nuvola.gxpenses.server.dto.Password;
 
-public class PasswordEditor extends Composite implements EditorView<Password> {
-
+public class PasswordEditor extends Composite implements EditorView<PasswordProxy> {
     public interface Binder extends UiBinder<HTMLPanel, PasswordEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<Password, PasswordEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<PasswordProxy, PasswordEditor> {
     }
 
     @UiField
@@ -36,18 +35,17 @@ public class PasswordEditor extends Composite implements EditorView<Password> {
     }
 
     @Override
-    public void edit(Password password) {
+    public void edit(PasswordProxy password) {
         driver.edit(password);
     }
 
     @Override
-    public Password get() {
-        Password password = driver.flush();
+    public PasswordProxy get() {
+        PasswordProxy password = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
             return password;
         }
     }
-
 }

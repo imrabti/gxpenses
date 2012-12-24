@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     @Qualifier("authenticationProvider")
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
     @Autowired
     private SecurityContextProvider securityContext;
 
