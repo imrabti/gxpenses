@@ -19,15 +19,9 @@ import com.nuvola.gxpenses.client.web.application.setting.widget.PasswordSetting
 import com.nuvola.gxpenses.client.web.application.setting.widget.SettingSiderPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.widget.TagSettingPresenter;
 
-import javax.validation.ConstraintViolation;
-import java.util.Set;
-
 public class SettingPresenter extends Presenter<SettingPresenter.MyView, SettingPresenter.MyProxy>
         implements SettingsMenuChangedEvent.SettingsChangedEventHandler {
     public interface MyView extends View {
-        void showErrors(Set<ConstraintViolation<?>> violations);
-
-        void clearErrors();
     }
 
     @ProxyStandard

@@ -13,11 +13,18 @@ import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 
+import javax.validation.ConstraintViolation;
+import java.util.Set;
+
 public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPresenter.MyView>
         implements GeneralSettingUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<GeneralSettingUiHandlers> {
         void edit(UserProxy user);
+
+        void showErrors(Set<ConstraintViolation<?>> violations);
+
+        void clearErrors();
     }
 
     private final GxpensesRequestFactory requestFactory;
@@ -47,6 +54,12 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
                 GlobalMessageEvent.fire(this, messageBundle.settingsUpdated());
 
                 initAndEditUser();
+                getView().clearErrors();
+            }
+
+            @Override
+            public void onConstraintViolation(java.util.Set<ConstraintViolation<?>> violations) {
+                getView().showErrors(violations);
             }
         });
     }
@@ -56,6 +69,7 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
         super.onReveal();
 
         initAndEditUser();
+        getView().clearErrors();
     }
 
     private void initAndEditUser() {

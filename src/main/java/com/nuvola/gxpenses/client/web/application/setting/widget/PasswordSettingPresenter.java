@@ -13,10 +13,17 @@ import com.nuvola.gxpenses.client.request.proxy.PasswordProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 
+import javax.validation.ConstraintViolation;
+import java.util.Set;
+
 public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPresenter.MyView>
         implements PasswordSettingUiHandlers {
     public interface MyView extends View, HasUiHandlers<PasswordSettingUiHandlers> {
         void edit(PasswordProxy password);
+
+        void showErrors(Set<ConstraintViolation<?>> violations);
+
+        void clearErrors();
     }
 
     private final GxpensesRequestFactory requestFactory;
@@ -46,6 +53,12 @@ public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPre
                 GlobalMessageEvent.fire(this, messageBundle.passwordUpdated());
 
                 initAndEditPassword();
+                getView().clearErrors();
+            }
+
+            @Override
+            public void onConstraintViolation(java.util.Set<ConstraintViolation<?>> violations) {
+                getView().showErrors(violations);
             }
         });
     }
@@ -55,6 +68,7 @@ public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPre
         super.onReveal();
 
         initAndEditPassword();
+        getView().clearErrors();
     }
 
     private void initAndEditPassword() {
