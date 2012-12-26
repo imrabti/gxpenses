@@ -1,10 +1,12 @@
 package com.nuvola.gxpenses.client.web.application;
 
+import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
 import com.google.inject.TypeLiteral;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.nuvola.gxpenses.client.mvp.uihandler.SetterUiHandlersStrategy;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.web.application.budget.BudgetModule;
+import com.nuvola.gxpenses.client.web.application.renderer.TokenCellFactory;
 import com.nuvola.gxpenses.client.web.application.setting.SettingModule;
 import com.nuvola.gxpenses.client.web.application.transaction.TransactionModule;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
@@ -30,5 +32,7 @@ public class ApplicationModule extends AbstractPresenterModule {
                 HeaderView.class);
         bindSingletonPresenterWidget(SiderHolderPresenter.class, SiderHolderPresenter.MyView.class,
                 SiderHolderView.class);
+
+        install(new GinFactoryModuleBuilder().build(TokenCellFactory.class));
     }
 }
