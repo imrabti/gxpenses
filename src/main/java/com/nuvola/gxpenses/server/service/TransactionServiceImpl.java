@@ -141,10 +141,12 @@ public class TransactionServiceImpl implements TransactionService {
     private void updateAccountBalance(Long accountId, Double amount) {
         Account account = accountRepos.findOne(accountId);
         account.setBalance(account.getBalance() + amount);
+        accountRepos.save(account);
     }
 
     private void updateAccountBalanceInv(Long accountId, Double amount) {
         Account account = accountRepos.findOne(accountId);
         account.setBalance(account.getBalance() - amount);
+        accountRepos.save(account);
     }
 }
