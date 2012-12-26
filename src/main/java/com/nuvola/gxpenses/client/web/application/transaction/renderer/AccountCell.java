@@ -3,6 +3,7 @@ package com.nuvola.gxpenses.client.web.application.transaction.renderer;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
@@ -31,7 +32,7 @@ public class AccountCell extends AbstractCell<AccountProxy> {
     @Inject
     public AccountCell(final Template template, @Currency String currency,
                        @Assisted Delegate<AccountProxy> delegate) {
-        super("click");
+        super(BrowserEvents.CLICK);
 
         this.template = template;
         this.currency = currency;
@@ -42,7 +43,7 @@ public class AccountCell extends AbstractCell<AccountProxy> {
     public void onBrowserEvent(Context context, Element parent, AccountProxy value, NativeEvent event,
                                ValueUpdater<AccountProxy> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
-        if ("click".equals(event.getType())) {
+        if (BrowserEvents.CLICK.equals(event.getType())) {
             EventTarget eventTarget = event.getEventTarget();
             if (!Element.is(eventTarget)) {
                 return;

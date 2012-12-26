@@ -32,6 +32,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void createNewTransaction(Transaction transaction) {
+        // TODO : Need to rethink this
         String tag = transaction.getTags().trim();
         if (tag.lastIndexOf(",") == 0 || tag.equals("")) {
             transaction.setTags(null);
