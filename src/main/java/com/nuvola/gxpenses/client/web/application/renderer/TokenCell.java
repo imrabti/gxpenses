@@ -43,7 +43,7 @@ public class TokenCell extends AbstractCell<String> {
                 return;
             }
 
-            if (Element.as(eventTarget).getClassName().equals("removeButton")) {
+            if (Element.as(eventTarget).getClassName().equals("removeToken")) {
                 delegate.execute(value);
             }
         }
