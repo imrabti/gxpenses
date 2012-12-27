@@ -9,6 +9,7 @@
     <inherits name="com.gwtplatform.mvp.Mvp"/>
     <inherits name='com.google.web.bindery.requestfactory.RequestFactory'/>
     <inherits name="com.google.common.base.Base"/>
+    <inherits name='com.google.gwt.query.Query'/>
 
     <!-- Logging Configuration -->
     <set-property name="gwt.logging.enabled" value="TRUE"/>
