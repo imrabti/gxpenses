@@ -13,6 +13,8 @@ public interface TransactionService {
 
     void createNewTransferTransaction(TransferTransaction transfer);
 
+    PagedTransactions findByAccount(Long accountId, DataPage dataPage);
+
     PagedTransactions findByAccountAndDateAndType(TransactionFilter filter, DataPage dataPage);
 
     Double totalAmountByAccountAndPeriodAndType(TransactionFilter filter);

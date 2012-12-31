@@ -16,6 +16,8 @@ public interface TransactionRepos extends JpaRepository<Transaction, Long> {
 
     Page<Transaction> findByAccountIdAndDateBetween(Long accountId, Date from, Date to, Pageable pageable);
 
+    Page<Transaction> findByAccountId(Long accountId, Pageable pageable);
+
     List<Transaction> findByAccountId(Long accountId);
 
     @Query("select t.payee from Transaction t where t.account.user.id = ?1")

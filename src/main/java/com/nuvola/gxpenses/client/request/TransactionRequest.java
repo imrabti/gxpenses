@@ -21,5 +21,7 @@ public interface TransactionRequest extends RequestContext {
 
     Request<PagedTransactionsProxy> findByAccountAndDateAndType(TransactionFilterProxy filter, DataPageProxy dataPage);
 
+    Request<PagedTransactionsProxy> findByAccount(Long accountId, DataPageProxy dataPage);
+
     Request<Double> totalAmountByAccountAndPeriodAndType(TransactionFilterProxy filter);
 }

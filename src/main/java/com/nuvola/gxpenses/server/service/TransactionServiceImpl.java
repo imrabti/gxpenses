@@ -107,6 +107,16 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional(readOnly = true)
+    public PagedTransactions findByAccount(Long accountId, DataPage dataPageRequest) {
+        PageRequest page = new PageRequest(dataPageRequest.getPageNumber(), dataPageRequest.getLength(),
+                new Sort(Sort.Direction.DESC, "date"));
+        Page<Transaction> transactions = transactionRepos.findByAccountId(accountId, page);
+
+        return new PagedTransactions(transactions.getContent(), (int) transactions.getTotalElements());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public PagedTransactions findByAccountAndDateAndType(TransactionFilter filter, DataPage dataPageRequest) {
         Date startDate = DateUtils.getStartDate(filter.getPeriod(), new Date());
         Date endDate = DateUtils.getEndDate(filter.getPeriod(), new Date());
