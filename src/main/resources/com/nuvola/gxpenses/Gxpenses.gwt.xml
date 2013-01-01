@@ -10,6 +10,7 @@
     <inherits name='com.google.web.bindery.requestfactory.RequestFactory'/>
     <inherits name="com.google.common.base.Base"/>
     <inherits name='com.google.gwt.query.Query'/>
+    <inherits name='com.google.gwt.visualization.Visualization'/>
 
     <!-- Logging Configuration -->
     <set-property name="gwt.logging.enabled" value="TRUE"/>

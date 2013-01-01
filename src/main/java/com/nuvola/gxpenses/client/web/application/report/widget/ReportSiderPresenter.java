@@ -27,8 +27,6 @@ public class ReportSiderPresenter extends PresenterWidget<ReportSiderPresenter.M
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         getView().setDefaultMenu();
     }
 }

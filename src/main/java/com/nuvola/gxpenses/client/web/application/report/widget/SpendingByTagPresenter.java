@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.View;
 public class SpendingByTagPresenter extends PresenterWidget<SpendingByTagPresenter.MyView>
         implements SpendingByTagUiHandlers  {
     public interface MyView extends View, HasUiHandlers<SpendingByTagUiHandlers> {
+        void drawChart();
     }
 
     @Inject
@@ -16,5 +17,9 @@ public class SpendingByTagPresenter extends PresenterWidget<SpendingByTagPresent
         super(eventBus, view);
 
         getView().setUiHandlers(this);
+    }
+
+    protected void onReveal() {
+        getView().drawChart();
     }
 }

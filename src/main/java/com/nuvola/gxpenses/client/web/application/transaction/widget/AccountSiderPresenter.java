@@ -120,23 +120,17 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         fireLoadListAccounts();
     }
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(AccountBalanceChangedEvent.getType(), this);
         addRegisteredHandler(PopupClosedEvent.getType(), this);
     }
 
     @Override
     protected void onHide() {
-        super.onHide();
-
         getView().clearSelection();
     }
 

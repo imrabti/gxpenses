@@ -160,8 +160,6 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(NoElementFoundEvent.getType(), this);
         addRegisteredHandler(BudgetChangedEvent.getType(), this);
         addRegisteredHandler(PopupClosedEvent.getType(), this);
@@ -170,8 +168,6 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         SetVisibleSiderEvent.fire(this, budgetSiderPresenter);
     }
 

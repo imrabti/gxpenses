@@ -69,16 +69,12 @@ public class ReportPresenter extends Presenter<ReportPresenter.MyView, ReportPre
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(ReportsMenuChangedEvent.getType(), this);
         setInSlot(TYPE_SetMainContent, spendingByTagPresenter);
     }
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         SetVisibleSiderEvent.fire(this, reportSiderPresenter);
     }
 }

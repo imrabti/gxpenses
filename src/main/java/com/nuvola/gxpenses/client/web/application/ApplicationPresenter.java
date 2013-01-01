@@ -71,16 +71,12 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(GlobalMessageEvent.getType(), this);
         addRegisteredHandler(RequestEvent.getType(), this);
     }
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         setInSlot(TYPE_SetHeaderContent, headerPresenter);
         setInSlot(TYPE_SetSiderContent, siderHolderPresenter);
     }

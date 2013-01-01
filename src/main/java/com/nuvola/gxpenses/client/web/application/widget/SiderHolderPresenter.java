@@ -27,8 +27,6 @@ public class SiderHolderPresenter extends PresenterWidget<SiderHolderPresenter.M
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(SetVisibleSiderEvent.getType(), this);
     }
 
