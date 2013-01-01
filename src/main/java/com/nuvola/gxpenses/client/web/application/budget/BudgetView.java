@@ -45,8 +45,6 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     @UiField(provided=true)
     DataGrid<BudgetElementProxy> elementsTable;
     @UiField
-    Label budgetName;
-    @UiField
     Label period;
     @UiField
     Button settingButton;
@@ -54,8 +52,6 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     Label message;
     @UiField
     HTMLPanel titlePanel;
-    @UiField
-    HTMLPanel headerPanel;
     @UiField
     HTMLPanel emptyPanel;
     @UiField
@@ -114,11 +110,6 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     }
 
     @Override
-    public void setBudgetName(String name) {
-        budgetName.setText(name);
-    }
-
-    @Override
     public void setPeriod(String periodName) {
         period.setText(periodName);
     }
@@ -134,7 +125,6 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         noElementsPanel.setVisible(false);
         titlePanel.setVisible(true);
         elementsTable.setVisible(true);
-        headerPanel.setVisible(true);
     }
 
     @Override
@@ -143,7 +133,6 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         noElementsPanel.setVisible(false);
         titlePanel.setVisible(false);
         elementsTable.setVisible(false);
-        headerPanel.setVisible(false);
     }
 
     @Override
@@ -151,7 +140,6 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         noElementsPanel.setVisible(true);
         titlePanel.setVisible(true);
         elementsTable.setVisible(false);
-        headerPanel.setVisible(false);
     }
 
     @Override
@@ -159,7 +147,6 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         noElementsPanel.setVisible(false);
         titlePanel.setVisible(true);
         elementsTable.setVisible(true);
-        headerPanel.setVisible(true);
     }
 
     @Override
