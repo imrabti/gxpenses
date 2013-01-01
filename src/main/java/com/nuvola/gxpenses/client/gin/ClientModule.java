@@ -23,6 +23,8 @@ import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.GxpensesModule;
 
+import java.util.List;
+
 public class ClientModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
@@ -42,6 +44,7 @@ public class ClientModule extends AbstractPresenterModule {
 
         bind(String.class).annotatedWith(Currency.class).toProvider(CurrencyProvider.class);
         bind(Integer.class).annotatedWith(PageSize.class).toProvider(PageSizeProvider.class);
+        bind(List.class).annotatedWith(ChartColor.class).toProvider(ChartColorProvider.class);
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.login);
     }
 

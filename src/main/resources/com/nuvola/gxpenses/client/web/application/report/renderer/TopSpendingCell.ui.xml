@@ -1,0 +1,43 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+    <ui:with field='tag' type='java.lang.String'/>
+    <ui:with field='color' type='java.lang.String'/>
+    <ui:with field='amount' type='java.lang.String'/>
+
+    <ui:style>
+        .chartColor {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            float: left;
+        }
+
+        .tag {
+            padding-top: 3px;
+            float: left;
+        }
+
+        .amount {
+            padding-top: 3px;
+            float: right;
+            text-align: right;
+        }
+
+        .clear {
+            clear: both;
+        }
+    </ui:style>
+
+    <div>
+        <div class="{style.chartColor}" style="{color}"/>
+
+        <div class="{style.tag}">
+            <ui:text from="{tag}"/>
+        </div>
+
+        <div class="{style.amount}">
+            <ui:text from="{amount}"/>
+        </div>
+
+        <div class="{style.clear}"/>
+    </div>
+</ui:UiBinder>

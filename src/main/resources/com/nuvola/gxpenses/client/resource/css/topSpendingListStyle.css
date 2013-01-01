@@ -1,0 +1,15 @@
+@external removeToken;
+
+.cellListWidget {
+}
+
+.cellListEvenItem, .cellListOddItem, .cellListSelectedItem {
+    font-size: 14px;
+    padding: 5px 0px;
+    background-color: #ffffff;
+    color: #545454;
+    border-bottom: 1px dashed #bebebe;
+}
+
+
+
