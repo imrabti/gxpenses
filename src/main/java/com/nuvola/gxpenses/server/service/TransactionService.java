@@ -13,6 +13,10 @@ public interface TransactionService {
 
     void createNewTransferTransaction(TransferTransaction transfer);
 
+    void updateTransaction(Transaction transaction);
+
+    Transaction findByTransactionId(Long transactionId);
+
     PagedTransactions findByAccount(Long accountId, DataPage dataPage);
 
     PagedTransactions findByAccountAndDateAndType(TransactionFilter filter, DataPage dataPage);
