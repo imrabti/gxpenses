@@ -23,6 +23,7 @@ import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.GxpensesModule;
+import com.nuvola.gxpenses.client.web.application.setting.importfile.ImportRes;
 import org.fusesource.restygwt.client.Resource;
 import org.fusesource.restygwt.client.RestServiceProxy;
 
@@ -33,6 +34,7 @@ public class ClientModule extends AbstractPresenterModule {
         install(new DefaultModule(ClientPlaceManager.class));
         install(new GxpensesModule());
 
+        bind(ImportRes.class).in(Singleton.class);
         bind(GxpensesRes.class).in(Singleton.class);
         bind(MessageBundle.class).in(Singleton.class);
         requestStaticInjection(MethodCallbackImpl.class);

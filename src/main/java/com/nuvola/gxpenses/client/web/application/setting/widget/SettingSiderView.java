@@ -22,7 +22,8 @@ public class SettingSiderView extends ViewWithUiHandlers<SettingSiderUiHandlers>
         GENERAL("General"),
         PASSWORD("Password"),
         TAGS("Tags"),
-        IMPORT("Import / Export");
+        IMPORT("Import"),
+        EXPORT("Export");
 
         private String label;
 

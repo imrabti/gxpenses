@@ -1,0 +1,26 @@
+!Account
+NCash Account
+TCash
+^
+!Type:Cash (Header line)
+D6/12/95 (Date of 1st transaction)
+T-1,000.00 (Amount of 1st transaction)
+N***** (Check number)
+PFranks Plumbing (Payee)
+AFranks Plumbing (Address 1st line)
+A2567 Fresno Street (Address 2nd line)
+ASanta Barbara, CA 90111 Address (3rd line)
+LHome Maint (Category/Transfer/Class)
+^ (End of 1st transaction)
+D6/15/95 (Date 2nd transaction)
+T-75.46 (Amount 2nd transaction)
+CX (Status in Cleared column)
+N256 (Number)
+PWalts Drugs (Payee)
+LSupplies (Category/class)
+SSupplies (First category in split)
+EOffice supplies (First memo in split)
+$-36.00 (First amount in split)
+SGarden (Second memo in split)
+$-39.46 (Second amount in split)
+^ (Ends 2nd transaction)

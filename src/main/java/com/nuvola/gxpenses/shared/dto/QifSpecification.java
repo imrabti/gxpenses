@@ -2,7 +2,7 @@ package com.nuvola.gxpenses.shared.dto;
 
 public class QifSpecification {
 
-    enum Identifier {
+    public enum Identifier {
         ACCT_SECTION("[^\\!A(\\S+)]"),
         TRX_END("[^\\^]");
 
@@ -13,7 +13,7 @@ public class QifSpecification {
         }
     }
 
-    enum Account {
+    public enum Account {
         ACCT_NUMBER("[^N(.+)]"),
         ACCT_TYPE("[^T(.+)]");
 
@@ -24,7 +24,7 @@ public class QifSpecification {
         }
     }
 
-    enum Transaction {
+    public enum Transaction {
         TRX_NUMBER("[^N(.+)]"),
         TRX_AMOUNT("[^T(.+)]"),
         TRX_DATE("[^D(.+)]"),

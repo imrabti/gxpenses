@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.shared.dto;
 
-public class QifAccount {
+public class QifAccount implements Dto {
 
     private String number;
     private String type;

@@ -1,5 +1,8 @@
 package com.nuvola.gxpenses.client.web.application.setting;
 
+import com.google.gwt.resources.client.ResourceCallback;
+import com.google.gwt.resources.client.ResourceException;
+import com.google.gwt.resources.client.TextResource;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
@@ -12,6 +15,7 @@ import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.event.SettingsMenuChangedEvent;
+import com.nuvola.gxpenses.client.web.application.setting.importfile.ImportRes;
 import com.nuvola.gxpenses.client.web.application.setting.widget.GeneralSettingPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.widget.PasswordSettingPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.widget.SettingSiderPresenter;
@@ -38,17 +42,20 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
     private final SettingSiderPresenter settingSiderPresenter;
     private final GeneralSettingPresenter generalSettingPresenter;
     private final PasswordSettingPresenter passwordSettingPresenter;
+    private final ImportRes importRes;
 
     @Inject
     public SettingPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
                             final SettingSiderPresenter settingSiderPresenter,
                             final GeneralSettingPresenter generalSettingPresenter,
-                            final PasswordSettingPresenter passwordSettingPresenter) {
+                            final PasswordSettingPresenter passwordSettingPresenter,
+                            final ImportRes importRes) {
         super(eventBus, view, proxy);
 
         this.settingSiderPresenter = settingSiderPresenter;
         this.generalSettingPresenter = generalSettingPresenter;
         this.passwordSettingPresenter = passwordSettingPresenter;
+        this.importRes = importRes;
     }
 
     @Override
@@ -84,6 +91,15 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
 
         SetVisibleSiderEvent.fire(this, settingSiderPresenter);
         setInSlot(TYPE_SetMainContent, generalSettingPresenter);
+    }
+
+    private void parseFile() throws ResourceException {
+       importRes.qifSample().getText(new ResourceCallback<TextResource>() {
+           public void onError(ResourceException e) {}
+
+           public void onSuccess(TextResource r) {
+           }
+       });
     }
 
 }

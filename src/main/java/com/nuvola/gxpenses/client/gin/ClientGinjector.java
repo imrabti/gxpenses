@@ -11,6 +11,7 @@ import com.nuvola.gxpenses.client.resource.GxpensesRes;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.SettingPresenter;
+import com.nuvola.gxpenses.client.web.application.setting.importfile.ImportRes;
 import com.nuvola.gxpenses.client.web.application.transaction.TransactionPresenter;
 
 @GinModules(value = {ClientModule.class})
@@ -21,6 +22,8 @@ public interface ClientGinjector extends Ginjector {
     PlaceManager getPlaceManager();
 
     GxpensesRes getResources();
+
+    ImportRes getImportRes();
 
     BootStrapper getBootStrapper();
 
