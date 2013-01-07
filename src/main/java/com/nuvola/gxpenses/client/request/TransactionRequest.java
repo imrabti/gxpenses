@@ -19,7 +19,13 @@ public interface TransactionRequest extends RequestContext {
 
     Request<Void> createNewTransferTransaction(TransferTransactionProxy transfer);
 
+    Request<Void> updateTransaction(TransactionProxy transaction);
+
+    Request<TransactionProxy> findByTransactionId(Long transactionId);
+
     Request<PagedTransactionsProxy> findByAccountAndDateAndType(TransactionFilterProxy filter, DataPageProxy dataPage);
+
+    Request<PagedTransactionsProxy> findByAccount(Long accountId, DataPageProxy dataPage);
 
     Request<Double> totalAmountByAccountAndPeriodAndType(TransactionFilterProxy filter);
 }

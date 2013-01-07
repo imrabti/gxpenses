@@ -76,8 +76,6 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         currentContext = requestFactory.transactionService();
         TransactionProxy newTransaction = currentContext.create(TransactionProxy.class);
         newTransaction.setType(TransactionType.EXPENSE);

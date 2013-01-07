@@ -62,8 +62,6 @@ public class AddAccountPresenter extends PresenterWidget<AddAccountPresenter.MyV
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         currentContext = requestFactory.accountService();
         AccountProxy newAccount = currentContext.create(AccountProxy.class);
         newAccount.setType(AccountType.CASH);

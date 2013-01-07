@@ -106,6 +106,40 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public void updateTransaction(Transaction transaction) {
+        Transaction currentTransaction = transactionRepos.findOne(transaction.getId());
+        updateAccountBalanceInv(currentTransaction.getAccount().getId(), currentTransaction.getAmount());
+
+        transactionRepos.save(transaction);
+        updateAccountBalance(transaction.getAccount().getId(), transaction.getAmount());
+
+        if (transaction.getDestTransaction() != null) {
+            Transaction targetTransaction = transactionRepos.findOne(transaction.getDestTransaction().getId());
+            updateAccountBalanceInv(targetTransaction.getAccount().getId(), targetTransaction.getAmount());
+
+            targetTransaction.setAmount(-1 * transaction.getAmount());
+            transactionRepos.save(targetTransaction);
+            updateAccountBalance(targetTransaction.getAccount().getId(), targetTransaction.getAmount());
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Transaction findByTransactionId(Long transactionId) {
+        return transactionRepos.findOne(transactionId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PagedTransactions findByAccount(Long accountId, DataPage dataPageRequest) {
+        PageRequest page = new PageRequest(dataPageRequest.getPageNumber(), dataPageRequest.getLength(),
+                new Sort(Sort.Direction.DESC, "date"));
+        Page<Transaction> transactions = transactionRepos.findByAccountId(accountId, page);
+
+        return new PagedTransactions(transactions.getContent(), (int) transactions.getTotalElements());
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public PagedTransactions findByAccountAndDateAndType(TransactionFilter filter, DataPage dataPageRequest) {
         Date startDate = DateUtils.getStartDate(filter.getPeriod(), new Date());

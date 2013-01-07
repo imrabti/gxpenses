@@ -8,7 +8,7 @@
         <g:layer top="0px" height="50px" right="20px" left="20px">
             <g:HTMLPanel ui:field="titlePanel" styleName="{resource.generalStyleCss.bigTitle}">
                 <div style="float: left; padding-top: 12px;">
-                    <g:Label text="Budget Name" ui:field="budgetName"/>
+                    <g:Label text="Budget Period" ui:field="period"/>
                 </div>
 
                 <div style="float: right; padding-bottom: 4px;">
@@ -27,13 +27,7 @@
             </g:HTMLPanel>
         </g:layer>
 
-        <g:layer left="20px" top="60px" right="20px" height="40px">
-            <g:HTMLPanel ui:field="headerPanel" styleName="{resource.generalStyleCss.subTitle}">
-                <g:Label text="Periode" ui:field="period"/>
-            </g:HTMLPanel>
-        </g:layer>
-
-        <g:layer left="20px" top="100px" right="20px" bottom="20px">
+        <g:layer left="20px" top="60px" right="20px" bottom="20px">
             <p1:DataGrid ui:field="elementsTable" width="100%" height="100%"/>
         </g:layer>
 

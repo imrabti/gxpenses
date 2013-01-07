@@ -7,6 +7,7 @@ import com.nuvola.gxpenses.client.mvp.uihandler.SetterUiHandlersStrategy;
 import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.web.application.budget.BudgetModule;
 import com.nuvola.gxpenses.client.web.application.renderer.TokenCellFactory;
+import com.nuvola.gxpenses.client.web.application.report.ReportModule;
 import com.nuvola.gxpenses.client.web.application.setting.SettingModule;
 import com.nuvola.gxpenses.client.web.application.transaction.TransactionModule;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
@@ -21,6 +22,7 @@ public class ApplicationModule extends AbstractPresenterModule {
         install(new TransactionModule());
         install(new BudgetModule());
         install(new SettingModule());
+        install(new ReportModule());
 
         bind(new TypeLiteral<UiHandlersStrategy<HeaderUiHandlers>>() {})
             .to(new TypeLiteral<SetterUiHandlersStrategy<HeaderUiHandlers>>() {});

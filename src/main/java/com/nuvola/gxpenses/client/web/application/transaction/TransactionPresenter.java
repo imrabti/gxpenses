@@ -221,8 +221,6 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(PopupClosedEvent.getType(), this);
         addRegisteredHandler(NoElementFoundEvent.getType(), this);
         addRegisteredHandler(AccountChangedEvent.getType(), this);
@@ -232,8 +230,6 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         SetVisibleSiderEvent.fire(this, accountSiderPresenter);
     }
 
