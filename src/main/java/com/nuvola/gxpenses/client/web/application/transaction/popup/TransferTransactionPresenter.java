@@ -62,8 +62,6 @@ public class TransferTransactionPresenter extends PresenterWidget<TransferTransa
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         currentContext = requestFactory.transactionService();
         TransferTransactionProxy newTransfer = currentContext.create(TransferTransactionProxy.class);
         getView().edit(newTransfer);

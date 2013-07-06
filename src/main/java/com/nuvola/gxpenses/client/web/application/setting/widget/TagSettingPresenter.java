@@ -47,8 +47,6 @@ public class TagSettingPresenter extends PresenterWidget<TagSettingPresenter.MyV
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         requestFactory.userService().findAllTagsForUser().fire(new ReceiverImpl<List<String>>() {
             @Override
             public void onSuccess(List<String> tags) {

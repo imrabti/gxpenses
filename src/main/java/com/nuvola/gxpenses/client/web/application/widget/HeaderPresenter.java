@@ -45,8 +45,6 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         getView().setSelectedMenu(PlaceType.getPlaceByName(placeManager.getCurrentPlaceRequest().getNameToken()));
         getView().setUserName(bootStrapper.getCurrentUser().getUserName());
     }

@@ -91,8 +91,6 @@ public class AddBudgetElementPresenter extends PresenterWidget<AddBudgetElementP
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         prepareNewBudgetElement();
         fireLoadBudgetElementById();
         getView().showRelativeTo(relativeTo);

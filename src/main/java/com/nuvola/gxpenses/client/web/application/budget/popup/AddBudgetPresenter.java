@@ -57,8 +57,6 @@ public class AddBudgetPresenter extends PresenterWidget<AddBudgetPresenter.MyVie
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         currentContext = requestFactory.budgetService();
         BudgetProxy newBudget = currentContext.create(BudgetProxy.class);
         newBudget.setPeriodicity(FrequencyType.MONTH);

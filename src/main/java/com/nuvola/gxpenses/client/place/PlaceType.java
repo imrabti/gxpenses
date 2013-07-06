@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum PlaceType {
-
     TRANSACTIONS("Transactions"),
     BUDGETS("Budgets"),
     REPORTS("Reports"),
@@ -25,6 +24,7 @@ public enum PlaceType {
         List<PlaceType> menu = new ArrayList<PlaceType>();
         menu.add(TRANSACTIONS);
         menu.add(BUDGETS);
+        menu.add(REPORTS);
 
         return menu;
     }
@@ -47,5 +47,4 @@ public enum PlaceType {
     public String toString() {
         return label;
     }
-
 }

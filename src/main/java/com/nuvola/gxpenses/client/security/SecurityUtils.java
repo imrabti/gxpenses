@@ -4,7 +4,6 @@ import com.google.gwt.storage.client.Storage;
 import com.google.gwt.storage.client.StorageMap;
 
 public class SecurityUtils {
-
     private final StorageMap sessionStorage;
 
     public SecurityUtils() {
@@ -41,5 +40,4 @@ public class SecurityUtils {
         return sessionStorage.containsKey(Credentials.USERNAME.name()) &&
                 sessionStorage.containsKey(Credentials.PASSWORD.name());
     }
-
 }
