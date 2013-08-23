@@ -20,9 +20,8 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.table.SmallTableStyle;
@@ -53,11 +52,10 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
 
     @Inject
     public AddBudgetElementView(final EventBus eventBus, final Binder uiBinder,
-                                final UiHandlersStrategy<AddBudgetElementUiHandlers> uiHandlersStrategy,
                                 final SmallTableStyle smallTableStyle, final BudgetElementEditor budgetElementEditor,
                                 final RemoveBudgetElementCellFactory removeBudgetElementCellFactory,
                                 final Resources resources, @Currency String currency) {
-        super(eventBus, uiHandlersStrategy);
+        super(eventBus);
 
         this.currency = currency;
         this.resources = resources;

@@ -13,8 +13,7 @@ import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
@@ -37,11 +36,8 @@ public class BudgetSiderView extends ViewWithUiHandlers<BudgetSiderUiHandlers> i
 
     @Inject
     public BudgetSiderView(final Binder uiBinder,
-                           final UiHandlersStrategy<BudgetSiderUiHandlers> uiHandlers,
                            final BudgetCell budgetCell, final Resources resources,
                            final SiderListStyle siderListResources) {
-        super(uiHandlers);
-
         this.keyProvider = setupKeyProvider();
         this.dataProvider = new ListDataProvider<BudgetProxy>(keyProvider);
 

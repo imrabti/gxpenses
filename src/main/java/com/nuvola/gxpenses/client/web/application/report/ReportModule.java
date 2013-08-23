@@ -26,6 +26,8 @@ public class ReportModule extends AbstractPresenterModule {
         bind(new TypeLiteral<UiHandlersStrategy<SpendingOverTimeUiHandlers>>() {})
                 .to(new TypeLiteral<SetterUiHandlersStrategy<SpendingOverTimeUiHandlers>>() {});
 
+        bind(ReportSiderUiHandlers.class).to(ReportSiderPresenter.class);
+
         bindPresenter(ReportPresenter.class, ReportPresenter.MyView.class,
                 ReportView.class, ReportPresenter.MyProxy.class);
 

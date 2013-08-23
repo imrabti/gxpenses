@@ -13,9 +13,8 @@ import com.google.gwt.visualization.client.VisualizationUtils;
 import com.google.gwt.visualization.client.visualizations.PieChart;
 import com.google.gwt.visualization.client.visualizations.PieChart.Options;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.gin.ChartColor;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.resource.style.list.TopSpendingListStyle;
 import com.nuvola.gxpenses.client.web.application.report.renderer.TopSpendingCell;
 import com.nuvola.gxpenses.shared.dto.SpendingByTag;
@@ -39,11 +38,9 @@ public class SpendingByTagView extends ViewWithUiHandlers<SpendingByTagUiHandler
     private final ListDataProvider<SpendingByTag> dataProvider;
 
     @Inject
-    public SpendingByTagView(final Binder uiBinder, final UiHandlersStrategy<SpendingByTagUiHandlers> uiHandlers,
+    public SpendingByTagView(final Binder uiBinder,
                              final TopSpendingListStyle listStyle, final TopSpendingCell topSpendingCell,
                              @ChartColor List chartColors) {
-        super(uiHandlers);
-
         this.chartColors = chartColors;
         this.topSpendingList = new CellList<SpendingByTag>(topSpendingCell, listStyle);
         this.dataProvider = new ListDataProvider<SpendingByTag>();

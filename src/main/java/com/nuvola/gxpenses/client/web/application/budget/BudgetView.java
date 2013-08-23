@@ -22,9 +22,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
 import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
@@ -72,14 +71,11 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
 
     @Inject
     public BudgetView(final Binder uiBinder,
-                      final UiHandlersStrategy<BudgetUiHandlers> uiHandlers,
                       final BigTableStyle bigTableStyle, final Resources resources,
                       final MessageBundle messageBundle, final BudgetProgressCell budgetProgressCell,
                       final BudgetProgressFooterCell budgetProgressFooterCell,
                       final TowSideTextCell towSideTextCell, final AmountCell amountCell,
                       @Currency String currency) {
-        super(uiHandlers);
-
         this.resources = resources;
         this.messageBundle = messageBundle;
         this.currency = currency;

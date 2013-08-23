@@ -8,8 +8,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetEditor;
 
@@ -24,9 +23,8 @@ public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> i
 
     @Inject
     public AddBudgetView(final EventBus eventBus, final Binder uiBinder,
-                         final UiHandlersStrategy<AddBudgetUiHandler> uiHandlersStrategy,
                          final BudgetEditor budgetEditor) {
-        super(eventBus, uiHandlersStrategy);
+        super(eventBus);
 
         this.budgetEditor = budgetEditor;
 

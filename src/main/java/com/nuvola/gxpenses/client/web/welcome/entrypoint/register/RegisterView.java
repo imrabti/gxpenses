@@ -13,8 +13,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 
@@ -40,10 +39,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
 
     @Inject
     public RegisterView(final Binder uiBinder, final MessageBundle messageBundle,
-                        final UiHandlersStrategy<RegisterUiHandlers> uiHandlers,
                         final Driver driver) {
-        super(uiHandlers);
-
         this.messageBundle = messageBundle;
         this.driver = driver;
 

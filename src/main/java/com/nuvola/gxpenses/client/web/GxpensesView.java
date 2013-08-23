@@ -4,10 +4,11 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewImpl;
+import com.gwtplatform.mvp.client.ViewImpl;
 
 public class GxpensesView extends ViewImpl implements GxpensesPresenter.MyView {
 
@@ -23,7 +24,7 @@ public class GxpensesView extends ViewImpl implements GxpensesPresenter.MyView {
     }
 
     @Override
-    public void setInSlot(Object slot, Widget content) {
+    public void setInSlot(Object slot, IsWidget content) {
         if (content != null) {
             if (slot == GxpensesPresenter.TYPE_SetMainContent) {
                 main.setWidget(content);

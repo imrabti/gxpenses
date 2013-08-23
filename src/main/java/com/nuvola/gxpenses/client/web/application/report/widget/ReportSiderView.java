@@ -8,8 +8,7 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.ValuePicker;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.resource.style.list.SiderMenuStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumCell;
 
@@ -40,10 +39,7 @@ public class ReportSiderView extends ViewWithUiHandlers<ReportSiderUiHandlers> i
 
     @Inject
     public ReportSiderView(final Binder uiBinder,
-                           final UiHandlersStrategy<ReportSiderUiHandlers> uiHandlers,
                            final SiderMenuStyle listResources) {
-        super(uiHandlers);
-
         reportsMenu = new ValuePicker<ReportEnum>(new CellList<ReportEnum>(new EnumCell<ReportEnum>(), listResources));
         reportsMenu.setAcceptableValues(Arrays.asList(ReportEnum.values()));
         reportsMenu.setValue(ReportEnum.SPENDING_BY_TAG);
