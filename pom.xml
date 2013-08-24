@@ -15,10 +15,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <cloudfoundry.version>0.8.1</cloudfoundry.version>
-        <gwt.version>2.5.0</gwt.version>
+        <gwt.version>2.5.1</gwt.version>
+        <gwt-apt.version>2.5.0</gwt-apt.version>
         <gwt-maven-plugin.version>2.5.0</gwt-maven-plugin.version>
-        <gwtp.version>0.7</gwtp.version>
+        <gwtp.version>1.0</gwtp.version>
         <guice.version>3.0</guice.version>
         <gin.version>2.0.0</gin.version>
         <gwt-visualization.version>1.0.2</gwt-visualization.version>
@@ -164,7 +164,7 @@
                     <dependency>
                         <groupId>com.google.web.bindery</groupId>
                         <artifactId>requestfactory-apt</artifactId>
-                        <version>${gwt.version}</version>
+                        <version>${gwt-apt.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -195,13 +195,6 @@
     </build>
 
     <dependencies>
-        <!-- Cloudfoundry runtime -->
-        <dependency>
-            <groupId>org.cloudfoundry</groupId>
-            <artifactId>cloudfoundry-runtime</artifactId>
-            <version>${cloudfoundry.version}</version>
-        </dependency>
-
         <!-- Google Web Toolkit dependencies -->
         <dependency>
             <groupId>com.google.gwt</groupId>
