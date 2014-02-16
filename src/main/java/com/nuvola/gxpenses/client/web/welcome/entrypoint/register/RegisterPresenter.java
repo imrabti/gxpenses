@@ -63,8 +63,6 @@ public class RegisterPresenter extends Presenter<RegisterPresenter.MyView, Regis
     }
 
     protected void onReveal() {
-        super.onReveal();
-
         currentContext = requestFactory.userService();
         getView().edit(currentContext.create(UserProxy.class));
     }

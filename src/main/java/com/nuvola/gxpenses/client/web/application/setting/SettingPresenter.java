@@ -76,15 +76,11 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(SettingsMenuChangedEvent.getType(), this);
     }
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         SetVisibleSiderEvent.fire(this, settingSiderPresenter);
         setInSlot(TYPE_SetMainContent, generalSettingPresenter);
     }

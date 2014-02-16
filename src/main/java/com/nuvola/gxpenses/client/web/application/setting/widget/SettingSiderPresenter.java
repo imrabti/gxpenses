@@ -27,8 +27,6 @@ public class SettingSiderPresenter extends PresenterWidget<SettingSiderPresenter
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         getView().setDefaultMenu();
     }
 }

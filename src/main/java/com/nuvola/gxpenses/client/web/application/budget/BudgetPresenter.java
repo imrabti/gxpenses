@@ -40,8 +40,6 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<BudgetUiHandlers> {
         void setData(List<BudgetElementProxy> data, BudgetProgressTotal total);
 
-        void setBudgetName(String name);
-
         void setPeriod(String periodName);
 
         void showElementsPanel();
@@ -134,9 +132,7 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
             currentDate = new Date();
             currentBudget = event.getBudget();
 
-            getView().setBudgetName(currentBudget.getName());
             getView().setPeriod(DateUtils.getDateToDisplay(currentDate, currentBudget.getPeriodicity()));
-
             if (getView().isEmptyVisible()) {
                 getView().showElementsPanel();
             }
@@ -164,8 +160,6 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(NoElementFoundEvent.getType(), this);
         addRegisteredHandler(BudgetChangedEvent.getType(), this);
         addRegisteredHandler(PopupClosedEvent.getType(), this);
@@ -174,8 +168,6 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         SetVisibleSiderEvent.fire(this, budgetSiderPresenter);
     }
 

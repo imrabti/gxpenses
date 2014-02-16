@@ -65,8 +65,6 @@ public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPre
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         initAndEditPassword();
         getView().clearErrors();
     }

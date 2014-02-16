@@ -11,6 +11,7 @@ import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.BudgetPresenter;
+import com.nuvola.gxpenses.client.web.application.report.ReportPresenter;
 import com.nuvola.gxpenses.client.web.application.setting.SettingPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.TransactionPresenter;
 import com.nuvola.gxpenses.client.web.welcome.entrypoint.EntryPointPresenter;
@@ -44,4 +45,6 @@ public interface ClientGinjector extends Ginjector {
     Provider<BudgetPresenter> getBudgetPresenter();
 
     Provider<SettingPresenter> getSettingPresenter();
+
+    Provider<ReportPresenter> getReportPresenter();
 }

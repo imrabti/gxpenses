@@ -66,8 +66,6 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         initAndEditUser();
         getView().clearErrors();
     }

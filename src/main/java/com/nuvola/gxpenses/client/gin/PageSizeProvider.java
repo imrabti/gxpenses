@@ -5,7 +5,6 @@ import com.google.inject.Provider;
 import com.nuvola.gxpenses.client.BootStrapper;
 
 public class PageSizeProvider implements Provider<Integer> {
-
     private final BootStrapper bootStrapper;
 
     @Inject
@@ -17,5 +16,4 @@ public class PageSizeProvider implements Provider<Integer> {
     public Integer get() {
         return bootStrapper.getCurrentUser().getPageSize().getValue();
     }
-
 }

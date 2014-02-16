@@ -69,8 +69,6 @@ public class LoginPresenter extends Presenter<LoginPresenter.MyView, LoginPresen
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         getView().edit(new UserCredentials());
     }
 }

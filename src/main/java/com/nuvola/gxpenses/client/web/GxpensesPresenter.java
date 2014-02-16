@@ -37,7 +37,6 @@ public class GxpensesPresenter extends Presenter<GxpensesPresenter.MyView, Gxpen
 
     @Override
     protected void onReveal() {
-        super.onReveal();
         getView().hideLoading();
     }
 

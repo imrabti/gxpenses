@@ -58,22 +58,16 @@ public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.M
 
     @Override
     protected void onReveal() {
-        super.onReveal();
-
         fireLoadListBudgets();
     }
 
     @Override
     protected void onBind() {
-        super.onBind();
-
         addRegisteredHandler(BudgetElementsChangedEvent.getType(), this);
     }
 
     @Override
     protected void onHide() {
-        super.onHide();
-
         getView().clearSelection();
     }
 
