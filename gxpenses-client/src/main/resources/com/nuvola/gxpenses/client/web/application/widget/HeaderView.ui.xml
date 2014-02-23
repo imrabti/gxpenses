@@ -1,0 +1,130 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:image field='gxpensesLogo' src="../../../resource/images/gxpenses_logo.png"/>
+
+    <ui:style>
+        .header {
+            border-bottom: 1px solid #DADADA;
+            margin-bottom: 8px;
+        }
+
+        @sprite .logo {
+            gwt-image: "gxpensesLogo";
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin-left: 20px;
+        }
+
+        #innerHeader h1 {
+            margin-top: 5px;
+            float: left;
+            margin-left: 10px;
+            margin-right: 60px;
+            color: #545454;
+            font-size: 20px;
+            font-weight: bold;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        #innerHeader ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+            margin-left: 15px;
+        }
+
+        #innerHeader ul li {
+            margin: 0px;
+            padding: 0px;
+            display: inline;
+            min-width: 25px;
+            border-left: dotted 1px #fff;
+            padding-left: 5px;
+            padding-right: 3px;
+        }
+
+        #innerHeader ul li a {
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        #innerHeader ul li a:hover {
+            color: #6fa944;
+        }
+
+        .mainMenu {
+            float: left;
+            margin-left: 20px;
+            margin-top: 14px;
+        }
+
+        .usernameStyle {
+            display: inline;
+            font-weight: bold;
+        }
+
+        .settingsStyle {
+            display: inline;
+            font-weight: normal;
+            cursor: pointer;
+            cursor: hand;
+        }
+
+        .settingsStyle:hover {
+            color: #6fa944;
+        }
+
+        .userInfos {
+            float: right;
+            background-color: #545454;
+            color: white;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-right: 12px;
+            -moz-border-radius-bottomright: 8px;
+            -moz-border-radius-bottomleft: 8px;
+            -webkit-border-bottom-right-radius: 8px;
+            -webkit-border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            margin-right: 20px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.header}">
+        <div id="innerHeader">
+            <div class="{style.logo}"/>
+
+            <h1>gXpenses</h1>
+
+            <g:ValuePicker ui:field="placesBox" styleName="{style.mainMenu}"/>
+
+            <g:HTMLPanel styleName="{style.userInfos}">
+                <div style="float: left;">
+                    Hello,
+                    <g:Label ui:field="username" text="username" styleName="{style.usernameStyle}"/>
+                </div>
+
+                <div style="float: right;">
+                    <ul>
+                        <li>
+                            <g:Label text="Settings" ui:field="settings" styleName="{style.settingsStyle}"/>
+                        </li>
+                        <li>
+                            <g:Label text="Logout" ui:field="logout" styleName="{style.settingsStyle}"/>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="clear: both;"></div>
+            </g:HTMLPanel>
+
+            <div style="clear: both;"></div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder> 

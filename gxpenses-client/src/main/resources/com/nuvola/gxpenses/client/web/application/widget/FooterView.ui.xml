@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:image field='footerBack' src="../../../resource/images/footer_back.png"/>
+    <ui:image field='cloudfoundry' src="../../../resource/images/cloudfoundry_logo.png"/>
+
+    <ui:style>
+        @sprite .copyFooter {
+            width: 100%;
+            height: 100%;
+            gwt-image: "footerBack";
+            background-repeat: repeat-x;
+            text-align: center;
+            color: #424242;
+            padding-top: 24px;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+            position: relative;
+        }
+
+        @sprite .cloudfoundry {
+            height: 28px;
+            width: 184px;
+            position: absolute;
+            left: 20px;
+            top: 16px;
+            gwt-image: "cloudfoundry";
+            background-repeat: no-repeat;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.copyFooter}">
+        Copyright Nuvola 2012 &copy;
+
+        <g:HTMLPanel styleName="{style.cloudfoundry}"/>
+    </g:HTMLPanel>
+</ui:UiBinder> 
