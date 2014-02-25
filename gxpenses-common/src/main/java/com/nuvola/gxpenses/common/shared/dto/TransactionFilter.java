@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.common.shared.dto;
 
-import com.nuvola.gxpenses.shared.type.PeriodType;
-import com.nuvola.gxpenses.shared.type.TransactionType;
+import com.nuvola.gxpenses.common.shared.type.PeriodType;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 public class TransactionFilter {
     private Long accountId;

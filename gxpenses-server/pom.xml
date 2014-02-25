@@ -11,5 +11,11 @@
 
     <artifactId>gxpenses-server</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.nuvola</groupId>
+            <artifactId>gxpenses-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

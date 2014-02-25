@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.common.shared.dto;
 
-import com.nuvola.gxpenses.server.business.Transaction;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
 
 import java.util.List;
 

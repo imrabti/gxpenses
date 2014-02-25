@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.common.shared.business;
 
-import com.nuvola.gxpenses.shared.type.TransactionType;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;

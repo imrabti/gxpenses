@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.server.business.Budget;
-import com.nuvola.gxpenses.server.business.BudgetElement;
+import com.nuvola.gxpenses.common.shared.business.Budget;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 
 import java.util.Date;
 import java.util.List;

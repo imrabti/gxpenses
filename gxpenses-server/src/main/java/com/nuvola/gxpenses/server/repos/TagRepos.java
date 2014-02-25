@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.server.repos;
 
-import com.nuvola.gxpenses.server.business.Tag;
+import com.nuvola.gxpenses.common.shared.business.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,8 +1,8 @@
 package com.nuvola.gxpenses.server.service;
 
 import com.google.common.base.Objects;
-import com.nuvola.gxpenses.server.business.Budget;
-import com.nuvola.gxpenses.server.business.BudgetElement;
+import com.nuvola.gxpenses.common.shared.business.Budget;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 import com.nuvola.gxpenses.server.repos.AccountRepos;
 import com.nuvola.gxpenses.server.repos.BudgetElementRepos;
 import com.nuvola.gxpenses.server.repos.BudgetRepos;

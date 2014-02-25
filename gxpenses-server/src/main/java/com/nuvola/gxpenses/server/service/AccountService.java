@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.server.business.Account;
+import com.nuvola.gxpenses.common.shared.business.Account;
 
 import java.util.List;
 

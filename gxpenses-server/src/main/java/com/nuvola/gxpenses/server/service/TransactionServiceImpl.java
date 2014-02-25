@@ -1,15 +1,15 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.server.business.Account;
-import com.nuvola.gxpenses.server.business.Transaction;
-import com.nuvola.gxpenses.server.dto.DataPage;
-import com.nuvola.gxpenses.server.dto.PagedTransactions;
-import com.nuvola.gxpenses.server.dto.TransactionFilter;
-import com.nuvola.gxpenses.server.dto.TransferTransaction;
+import com.nuvola.gxpenses.common.shared.business.Account;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
+import com.nuvola.gxpenses.common.shared.dto.DataPage;
+import com.nuvola.gxpenses.common.shared.dto.PagedTransactions;
+import com.nuvola.gxpenses.common.shared.dto.TransactionFilter;
+import com.nuvola.gxpenses.common.shared.dto.TransferTransaction;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 import com.nuvola.gxpenses.server.repos.AccountRepos;
 import com.nuvola.gxpenses.server.repos.TransactionRepos;
 import com.nuvola.gxpenses.server.util.DateUtils;
-import com.nuvola.gxpenses.shared.type.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

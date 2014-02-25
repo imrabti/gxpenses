@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.common.shared.business;
 
-import com.nuvola.gxpenses.shared.type.FrequencyType;
+import com.nuvola.gxpenses.common.shared.type.FrequencyType;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;

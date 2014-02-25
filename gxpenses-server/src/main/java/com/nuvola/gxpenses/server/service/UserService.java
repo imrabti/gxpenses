@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.server.business.User;
-import com.nuvola.gxpenses.server.dto.Password;
+import com.nuvola.gxpenses.common.shared.business.User;
+import com.nuvola.gxpenses.common.shared.dto.Password;
 
 import java.util.List;
 

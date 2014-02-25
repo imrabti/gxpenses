@@ -1,6 +1,6 @@
 package com.nuvola.gxpenses.server.security;
 
-import com.nuvola.gxpenses.server.business.User;
+import com.nuvola.gxpenses.common.shared.business.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
