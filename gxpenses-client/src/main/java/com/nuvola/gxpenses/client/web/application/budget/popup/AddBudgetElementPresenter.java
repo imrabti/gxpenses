@@ -9,8 +9,6 @@ import com.gwtplatform.mvp.client.PopupView;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
-import com.nuvola.gxpenses.client.request.BudgetRequest;
-import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
 import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;

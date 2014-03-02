@@ -1,7 +1,6 @@
 package com.nuvola.gxpenses.client.util;
 
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
 import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 

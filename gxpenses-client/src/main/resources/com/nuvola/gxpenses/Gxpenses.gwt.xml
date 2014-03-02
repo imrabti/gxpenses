@@ -6,22 +6,11 @@
     <inherits name='com.google.gwt.user.theme.standard.Standard'/>
 
     <!-- Other module inherits       -->
+    <inherits name="com.gwtplatform.dispatch.rest.DispatchRest"/>
     <inherits name="com.gwtplatform.mvp.Mvp"/>
-    <inherits name='com.google.web.bindery.requestfactory.RequestFactory'/>
     <inherits name="com.google.common.base.Base"/>
     <inherits name='com.google.gwt.query.Query'/>
     <inherits name='com.google.gwt.visualization.Visualization'/>
-
-    <!-- Logging Configuration -->
-    <set-property name="gwt.logging.enabled" value="TRUE"/>
-    <set-property name="gwt.logging.logLevel" value="SEVERE"/>
-    <set-property name="gwt.logging.consoleHandler" value="ENABLED"/>
-    <set-property name="gwt.logging.developmentModeHandler" value="ENABLED"/>
-    <set-property name="gwt.logging.firebugHandler" value="ENABLED"/>
-    <set-property name="gwt.logging.hasWidgetsHandler" value="DISABLED"/>
-    <set-property name="gwt.logging.popupHandler" value="DISABLED"/>
-    <set-property name="gwt.logging.systemHandler" value="ENABLED"/>
-    <set-property name="gwt.logging.simpleRemoteHandler" value="DISABLED"/>
 
     <!-- Specify the app entry point class.                         -->
     <entry-point class='com.nuvola.gxpenses.client.Gxpenses'/>
@@ -32,8 +21,4 @@
 
     <define-configuration-property name='gin.ginjector' is-multi-valued='false'/>
     <set-configuration-property name='gin.ginjector' value='com.nuvola.gxpenses.client.gin.ClientGinjector'/>
-
-    <!-- Enable SuperDevMode -->
-    <add-linker name="xsiframe"/>
-    <set-configuration-property name="devModeRedirectEnabled" value="true"/>
 </module>

@@ -13,7 +13,6 @@ import com.nuvola.gxpenses.client.event.EventSourceRequestTransport;
 import com.nuvola.gxpenses.client.place.ClientPlaceManager;
 import com.nuvola.gxpenses.client.place.DefaultPlace;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
 import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;

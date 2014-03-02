@@ -2,7 +2,6 @@ package com.nuvola.gxpenses.client.util;
 
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
 import com.nuvola.gxpenses.client.request.ReceiverImpl;
 
 import java.util.ArrayList;

@@ -18,7 +18,6 @@ import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.request.GxpensesRequestFactory;
 import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.request.TransactionRequest;
 import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
