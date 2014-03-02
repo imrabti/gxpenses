@@ -16,4 +16,13 @@ public interface UserService extends RestService {
 
     @PUT
     RestAction<Void> updateUser(User user);
+
+    @Path(ResourcesPath.PASSWORD)
+    PasswordService password();
+
+    @Path(ResourcesPath.TAG)
+    TagService tag();
+
+    @Path(ResourcesPath.PAYEE)
+    PayeeService payee();
 }
