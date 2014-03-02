@@ -12,10 +12,6 @@ import java.util.List;
 
 @Service(value = UserServiceImpl.class, locator = SpringServiceLocator.class)
 public interface UserRequest extends RequestContext {
-    Request<Void> createUser(UserProxy user);
-
-    Request<Void> updateUser(UserProxy user);
-
     Request<Void> updatePassword(PasswordProxy password);
 
     Request<List<String>> findAllPayeeForUser();

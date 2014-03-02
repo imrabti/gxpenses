@@ -6,4 +6,5 @@ public class ResourcesPath {
     public static final String TRANSACTION = "/transaction";
     public static final String USER = "/user";
     public static final String BUDGET = "/budget";
+    public static final String FILTER = "/filter";
 }

@@ -7,6 +7,7 @@ import java.util.List;
 public class PagedTransactions {
     private List<Transaction> transactions;
     private Integer totalElements;
+    private Double totalAmount;
 
     public PagedTransactions() {
     }
@@ -30,5 +31,13 @@ public class PagedTransactions {
 
     public void setTotalElements(Integer totalElements) {
         this.totalElements = totalElements;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }
