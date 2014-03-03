@@ -1,4 +1,4 @@
-package com.nuvola.gxpenses.client.util;
+package com.nuvola.gxpenses.common.client.util;
 
 public interface EmptyDisplay {
 

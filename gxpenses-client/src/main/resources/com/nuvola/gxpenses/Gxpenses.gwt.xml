@@ -1,24 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module rename-to='gxpenses'>
-    <!-- Inherit the core Web Toolkit stuff.                        -->
-    <inherits name='com.google.gwt.user.User'/>
-    <inherits name='com.google.gwt.inject.Inject'/>
     <inherits name='com.google.gwt.user.theme.standard.Standard'/>
-
-    <!-- Other module inherits       -->
-    <inherits name="com.gwtplatform.dispatch.rest.DispatchRest"/>
-    <inherits name="com.gwtplatform.mvp.Mvp"/>
-    <inherits name="com.google.common.base.Base"/>
     <inherits name='com.google.gwt.query.Query'/>
     <inherits name='com.google.gwt.visualization.Visualization'/>
-
-    <!-- Specify the app entry point class.                         -->
-    <entry-point class='com.nuvola.gxpenses.client.Gxpenses'/>
+    <inherits name="com.gwtplatform.dispatch.rest.DispatchRest"/>
+    <inherits name="com.gwtplatform.mvp.MvpWithEntryPoint"/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>
-    <source path='shared'/>
 
-    <define-configuration-property name='gin.ginjector' is-multi-valued='false'/>
-    <set-configuration-property name='gin.ginjector' value='com.nuvola.gxpenses.client.gin.ClientGinjector'/>
+    <extend-configuration-property name="gin.ginjector.modules"
+                                   value="com.nuvola.gxpenses.client.gin.ClientModule"/>
+    <set-configuration-property name="gwtp.bootstrapper"
+                                value="com.nuvola.gxpenses.client.gin.BootstrapperImpl"/>
 </module>

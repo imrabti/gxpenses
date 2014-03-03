@@ -1,4 +1,4 @@
-package com.nuvola.gxpenses.client.util;
+package com.nuvola.gxpenses.common.client.util;
 
 public class Base64 {
     private static final String etab =
