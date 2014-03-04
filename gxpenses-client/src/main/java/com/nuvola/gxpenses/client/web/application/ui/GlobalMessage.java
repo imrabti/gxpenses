@@ -8,11 +8,10 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.resource.Resources;
 
 public class GlobalMessage extends Widget implements HasText {
-
     private static final int MESSAGE_TIMEOUT = 10000;
 
     @Inject
-    public GlobalMessage(final Resources resources) {
+    GlobalMessage(Resources resources) {
         setElement(DOM.createElement("div"));
         getElement().setInnerText("Hello World");
         setStyleName(getElement(), resources.generalStyleCss().globalMsgInfo());
@@ -42,5 +41,4 @@ public class GlobalMessage extends Widget implements HasText {
     public void setText(String text) {
         getElement().setInnerText(text);
     }
-
 }

@@ -6,12 +6,11 @@ import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.gwtplatform.mvp.client.proxy.PlaceRequest;
-import com.nuvola.gxpenses.client.BootStrapper;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
+import com.nuvola.gxpenses.client.gin.CurrentUser;
 import com.nuvola.gxpenses.client.place.PlaceType;
 
 public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> implements HeaderUiHandlers {
-
     public interface MyView extends View, HasUiHandlers<HeaderUiHandlers> {
         void setUserName(String username);
 
@@ -19,34 +18,35 @@ public class HeaderPresenter extends PresenterWidget<HeaderPresenter.MyView> imp
     }
 
     private final PlaceManager placeManager;
-    private final BootStrapper bootStrapper;
+    private final CurrentUser currentUser;
 
     @Inject
-    public HeaderPresenter(EventBus eventBus, MyView view, final PlaceManager placeManager,
-                           final BootStrapper bootStrapper) {
+    HeaderPresenter(EventBus eventBus,
+                    MyView view,
+                    PlaceManager placeManager,
+                    CurrentUser currentUser) {
         super(eventBus, view);
 
         this.placeManager = placeManager;
-        this.bootStrapper = bootStrapper;
+        this.currentUser = currentUser;
 
         getView().setUiHandlers(this);
     }
 
     @Override
     public void changePlace(PlaceType newPlace) {
-        PlaceRequest place = new PlaceRequest(newPlace.toString());
+        PlaceRequest place = new PlaceRequest.Builder().nameToken(newPlace.toString()).build();
         placeManager.revealPlace(place);
     }
 
     @Override
     public void clearCredential() {
-        bootStrapper.logout();
+        // TODO : Logout code in here...
     }
 
     @Override
     protected void onReveal() {
         getView().setSelectedMenu(PlaceType.getPlaceByName(placeManager.getCurrentPlaceRequest().getNameToken()));
-        getView().setUserName(bootStrapper.getCurrentUser().getUserName());
+        getView().setUserName(currentUser.getUser().getUserName());
     }
-
 }
