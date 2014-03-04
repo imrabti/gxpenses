@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module rename-to='gxpenses'>
+    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+    <inherits name='com.google.gwt.query.Query'/>
+    <inherits name='com.google.gwt.visualization.Visualization'/>
+    <inherits name='com.nuvola.gxpenses.common.Common'/>
+    <inherits name="com.gwtplatform.dispatch.rest.DispatchRest"/>
+    <inherits name="com.gwtplatform.mvp.MvpWithEntryPoint"/>
+
+    <!-- Specify the paths for translatable code                    -->
+    <source path='client'/>
+
+    <extend-configuration-property name="gin.ginjector.modules"
+                                   value="com.nuvola.gxpenses.client.gin.ClientModule"/>
+    <set-configuration-property name="gwtp.bootstrapper"
+                                value="com.nuvola.gxpenses.client.gin.BootstrapperImpl"/>
+</module>
