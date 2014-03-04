@@ -22,10 +22,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.resource.style.table.BigTableStyle;
@@ -33,7 +31,8 @@ import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetProgress
 import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetProgressFooterCell;
 import com.nuvola.gxpenses.client.web.application.renderer.AmountCell;
 import com.nuvola.gxpenses.client.web.application.renderer.TowSideTextCell;
-import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
+import com.nuvola.gxpenses.common.shared.dto.BudgetProgressTotal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +42,7 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     }
 
     @UiField(provided=true)
-    DataGrid<BudgetElementProxy> elementsTable;
+    DataGrid<BudgetElement> elementsTable;
     @UiField
     Label period;
     @UiField
@@ -57,8 +56,8 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     @UiField
     HTMLPanel noElementsPanel;
 
-    private final ProvidesKey<BudgetElementProxy> keyProvider;
-    private final ListDataProvider<BudgetElementProxy> dataProvider;
+    private final ProvidesKey<BudgetElement> keyProvider;
+    private final ListDataProvider<BudgetElement> dataProvider;
     private final Resources resources;
     private final MessageBundle messageBundle;
 
@@ -71,27 +70,27 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     private String currency;
 
     @Inject
-    public BudgetView(final Binder uiBinder,
-                      final UiHandlersStrategy<BudgetUiHandlers> uiHandlers,
-                      final BigTableStyle bigTableStyle, final Resources resources,
-                      final MessageBundle messageBundle, final BudgetProgressCell budgetProgressCell,
-                      final BudgetProgressFooterCell budgetProgressFooterCell,
-                      final TowSideTextCell towSideTextCell, final AmountCell amountCell,
-                      @Currency String currency) {
-        super(uiHandlers);
-
+    BudgetView(Binder uiBinder,
+               BigTableStyle bigTableStyle,
+               Resources resources,
+               MessageBundle messageBundle,
+               BudgetProgressCell budgetProgressCell,
+               BudgetProgressFooterCell budgetProgressFooterCell,
+               TowSideTextCell towSideTextCell,
+               AmountCell amountCell,
+               @Currency String currency) {
         this.resources = resources;
         this.messageBundle = messageBundle;
         this.currency = currency;
         this.keyProvider = setupKeyProvider();
-        this.dataProvider = new ListDataProvider<BudgetElementProxy>(keyProvider);
+        this.dataProvider = new ListDataProvider<>(keyProvider);
         this.budgetTotal = new BudgetProgressTotal();
         this.budgetProgressCell = budgetProgressCell;
         this.budgetProgressFooterCell = budgetProgressFooterCell;
         this.towSideTextCell = towSideTextCell;
         this.amountCell = amountCell;
 
-        elementsTable = new DataGrid<BudgetElementProxy>(20, bigTableStyle);
+        elementsTable = new DataGrid<>(20, bigTableStyle);
         elementsTable.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.DISABLED);
         dataProvider.addDataDisplay(elementsTable);
 
@@ -102,7 +101,7 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     }
 
     @Override
-    public void setData(List<BudgetElementProxy> budgetElements, BudgetProgressTotal total) {
+    public void setData(List<BudgetElement> budgetElements, BudgetProgressTotal total) {
         budgetTotal = total;
         dataProvider.getList().clear();
         dataProvider.getList().addAll(budgetElements);
@@ -182,10 +181,10 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
         getUiHandlers().previousPeriod();
     }
 
-    private ProvidesKey<BudgetElementProxy> setupKeyProvider() {
-        return new ProvidesKey<BudgetElementProxy>() {
+    private ProvidesKey<BudgetElement> setupKeyProvider() {
+        return new ProvidesKey<BudgetElement>() {
             @Override
-            public Object getKey(BudgetElementProxy budgetElement) {
+            public Object getKey(BudgetElement budgetElement) {
                 return budgetElement == null ? null : budgetElement.getId();
             }
         };
@@ -199,9 +198,9 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     }
 
     private void setupTagColumn() {
-        TextColumn<BudgetElementProxy> tagColumn = new TextColumn<BudgetElementProxy>() {
+        TextColumn<BudgetElement> tagColumn = new TextColumn<BudgetElement>() {
             @Override
-            public String getValue(BudgetElementProxy object) {
+            public String getValue(BudgetElement object) {
                 return object.getTag();
             }
         };
@@ -212,10 +211,10 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     }
 
     private void setupProgressColumn() {
-        Column<BudgetElementProxy, BudgetElementProxy> progressColumn = new
-                Column<BudgetElementProxy, BudgetElementProxy>(budgetProgressCell) {
+        Column<BudgetElement, BudgetElement> progressColumn = new
+                Column<BudgetElement, BudgetElement>(budgetProgressCell) {
             @Override
-            public BudgetElementProxy getValue(BudgetElementProxy object) {
+            public BudgetElement getValue(BudgetElement object) {
                 return object;
             }
         };
@@ -238,9 +237,9 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
 
     private void setupBudgetAmountColumn() {
         NumberCell numberCell = new NumberCell(NumberFormat.getCurrencyFormat(currency));
-        Column<BudgetElementProxy, Number> amountColumn = new Column<BudgetElementProxy, Number>(numberCell) {
+        Column<BudgetElement, Number> amountColumn = new Column<BudgetElement, Number>(numberCell) {
             @Override
-            public Number getValue(BudgetElementProxy object) {
+            public Number getValue(BudgetElement object) {
                 return object.getAmount();
             }
         };
@@ -257,9 +256,9 @@ public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements 
     }
 
     private void setupBudgetLeftColumn() {
-        Column<BudgetElementProxy, Double> resultColumn = new Column<BudgetElementProxy, Double>(amountCell) {
+        Column<BudgetElement, Double> resultColumn = new Column<BudgetElement, Double>(amountCell) {
             @Override
-            public Double getValue(BudgetElementProxy object) {
+            public Double getValue(BudgetElement object) {
                 return object.getLeftAmount();
             }
         };

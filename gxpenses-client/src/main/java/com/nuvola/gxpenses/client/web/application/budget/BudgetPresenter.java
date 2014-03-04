@@ -3,6 +3,7 @@ package com.nuvola.gxpenses.client.web.application.budget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -10,24 +11,24 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
-import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
-import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
+import com.nuvola.gxpenses.client.rest.BudgetService;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.util.DateUtils;
-import com.nuvola.gxpenses.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetElementPresenter;
 import com.nuvola.gxpenses.client.web.application.budget.widget.BudgetSiderPresenter;
-import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
+import com.nuvola.gxpenses.common.client.util.EmptyDisplay;
+import com.nuvola.gxpenses.common.shared.business.Budget;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
+import com.nuvola.gxpenses.common.shared.dto.BudgetProgressTotal;
 
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,7 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
         BudgetChangedEvent.BudgetChangedHandler, PopupClosedEvent.PopupClosedHandler,
         BudgetElementsChangedEvent.BudgetElementsChangedHandler {
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<BudgetUiHandlers> {
-        void setData(List<BudgetElementProxy> data, BudgetProgressTotal total);
+        void setData(List<BudgetElement> data, BudgetProgressTotal total);
 
         void setPeriod(String periodName);
 
@@ -60,22 +61,28 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
     public interface MyProxy extends ProxyPlace<BudgetPresenter> {
     }
 
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final BudgetService budgetService;
     private final MessageBundle messageBundle;
     private final BudgetSiderPresenter budgetSiderPresenter;
     private final AddBudgetElementPresenter addBudgetElementPresenter;
 
-    private BudgetProxy currentBudget;
+    private Budget currentBudget;
     private Date currentDate;
 
     @Inject
-    public BudgetPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                           final GxpensesRequestFactory requestFactory, final MessageBundle messageBundle,
-                           final BudgetSiderPresenter budgetSiderPresenter,
-                           final AddBudgetElementPresenter addBudgetElementPresenter) {
-        super(eventBus, view, proxy);
+    BudgetPresenter(EventBus eventBus,
+                    MyView view,
+                    MyProxy proxy,
+                    RestDispatchAsync dispatcher,
+                    BudgetService budgetService,
+                    MessageBundle messageBundle,
+                    BudgetSiderPresenter budgetSiderPresenter,
+                    AddBudgetElementPresenter addBudgetElementPresenter) {
+        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
 
-        this.requestFactory = requestFactory;
+        this.dispatcher = dispatcher;
+        this.budgetService = budgetService;
         this.messageBundle = messageBundle;
         this.budgetSiderPresenter = budgetSiderPresenter;
         this.addBudgetElementPresenter = addBudgetElementPresenter;
@@ -153,11 +160,6 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
     }
 
     @Override
-    protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
-    }
-
-    @Override
     protected void onBind() {
         addRegisteredHandler(NoElementFoundEvent.getType(), this);
         addRegisteredHandler(BudgetChangedEvent.getType(), this);
@@ -171,14 +173,14 @@ public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPre
     }
 
     private void fireLoadBudgetElementByIdAndPeriod() {
-        requestFactory.budgetService().findAllBudgetElementsByBudget(currentBudget.getId(), currentDate)
-                .fire(new ReceiverImpl<List<BudgetElementProxy>>() {
+        dispatcher.execute(budgetService.budgetElement(currentBudget.getId()).findAllBudgetElements(currentDate),
+                new AsyncCallbackImpl<List<BudgetElement>>() {
             @Override
-            public void onSuccess(List<BudgetElementProxy> budgetElements) {
-                getView().setData(budgetElements, new BudgetProgressTotal(currentBudget.getTotalAllowed(),
+            public void onReceive(List<BudgetElement> response) {
+                getView().setData(response, new BudgetProgressTotal(currentBudget.getTotalAllowed(),
                         currentBudget.getTotalConsumed()));
 
-                if (budgetElements.size() > 0) {
+                if (response.size() > 0) {
                     getView().hideNoBudgetsPanel();
                 } else {
                     getView().showNoBudgetsPanel();

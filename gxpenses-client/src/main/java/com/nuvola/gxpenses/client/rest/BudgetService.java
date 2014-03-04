@@ -3,6 +3,7 @@ package com.nuvola.gxpenses.client.rest;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestService;
 import com.nuvola.gxpenses.common.shared.business.Budget;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 import com.nuvola.gxpenses.common.shared.rest.PathParameter;
 import com.nuvola.gxpenses.common.shared.rest.ResourcesPath;
 import com.nuvola.gxpenses.common.shared.rest.RestParameter;
@@ -25,5 +26,5 @@ public interface BudgetService extends RestService {
     RestAction<List<Budget>> findAllBudgets(@QueryParam(UrlParameter.PERIOD) Date period);
 
     @Path(PathParameter.ID)
-    BudgetService budgetElement(@PathParam(RestParameter.ID) Long budgetId);
+    BudgetElementService budgetElement(@PathParam(RestParameter.ID) Long budgetId);
 }

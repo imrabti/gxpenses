@@ -20,15 +20,14 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.table.SmallTableStyle;
 import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetElementEditor;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.RemoveBudgetElementCellFactory;
 import com.nuvola.gxpenses.client.web.application.renderer.ClickableIconCell;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 
 import java.util.List;
 
@@ -40,24 +39,26 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
     @UiField
     PopupPanel popup;
     @UiField(provided = true)
-    CellTable<BudgetElementProxy> elementsTable;
+    CellTable<BudgetElement> elementsTable;
     @UiField(provided = true)
     BudgetElementEditor budgetElementEditor;
 
-    private final ProvidesKey<BudgetElementProxy> keyProvider;
-    private final ListDataProvider<BudgetElementProxy> dataProvider;
+    private final ProvidesKey<BudgetElement> keyProvider;
+    private final ListDataProvider<BudgetElement> dataProvider;
     private final RemoveBudgetElementCellFactory removeBudgetElementCellFactory;
     private final Resources resources;
-    private final ActionCell.Delegate<BudgetElementProxy> removeDelegate;
+    private final ActionCell.Delegate<BudgetElement> removeDelegate;
     private final String currency;
 
     @Inject
-    public AddBudgetElementView(final EventBus eventBus, final Binder uiBinder,
-                                final UiHandlersStrategy<AddBudgetElementUiHandlers> uiHandlersStrategy,
-                                final SmallTableStyle smallTableStyle, final BudgetElementEditor budgetElementEditor,
-                                final RemoveBudgetElementCellFactory removeBudgetElementCellFactory,
-                                final Resources resources, @Currency String currency) {
-        super(eventBus, uiHandlersStrategy);
+    AddBudgetElementView(EventBus eventBus,
+                         Binder uiBinder,
+                         SmallTableStyle smallTableStyle,
+                         BudgetElementEditor budgetElementEditor,
+                         RemoveBudgetElementCellFactory removeBudgetElementCellFactory,
+                         Resources resources,
+                         @Currency String currency) {
+        super(eventBus);
 
         this.currency = currency;
         this.resources = resources;
@@ -65,9 +66,9 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
         this.keyProvider = setupKeyProvider();
         this.removeDelegate = setupRemoveAction();
         this.removeBudgetElementCellFactory = removeBudgetElementCellFactory;
-        this.dataProvider = new ListDataProvider<BudgetElementProxy>(keyProvider);
+        this.dataProvider = new ListDataProvider<BudgetElement>(keyProvider);
 
-        elementsTable = new CellTable<BudgetElementProxy>(20, smallTableStyle);
+        elementsTable = new CellTable<BudgetElement>(20, smallTableStyle);
         elementsTable.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.DISABLED);
         dataProvider.addDataDisplay(elementsTable);
 
@@ -84,19 +85,19 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
     }
 
     @Override
-    public void edit(BudgetElementProxy budgetElement) {
+    public void edit(BudgetElement budgetElement) {
         budgetElementEditor.edit(budgetElement);
     }
 
     @Override
-    public void setData(List<BudgetElementProxy> budgetElements) {
+    public void setData(List<BudgetElement> budgetElements) {
         dataProvider.getList().clear();
         dataProvider.getList().addAll(budgetElements);
         dataProvider.refresh();
     }
 
     @Override
-    public void onBudgetElementAdded(BudgetElementProxy budgetElement) {
+    public void onBudgetElementAdded(BudgetElement budgetElement) {
         getUiHandlers().addNewBudgetElement(budgetElement);
     }
 
@@ -111,19 +112,19 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
         hide();
     }
 
-    private ProvidesKey<BudgetElementProxy> setupKeyProvider() {
-        return new ProvidesKey<BudgetElementProxy>() {
+    private ProvidesKey<BudgetElement> setupKeyProvider() {
+        return new ProvidesKey<BudgetElement>() {
             @Override
-            public Object getKey(BudgetElementProxy budgetElement) {
+            public Object getKey(BudgetElement budgetElement) {
                 return budgetElement == null ? null : budgetElement.getId();
             }
         };
     }
 
-    private ActionCell.Delegate<BudgetElementProxy> setupRemoveAction() {
-        return new ActionCell.Delegate<BudgetElementProxy>() {
+    private ActionCell.Delegate<BudgetElement> setupRemoveAction() {
+        return new ActionCell.Delegate<BudgetElement>() {
             @Override
-            public void execute(BudgetElementProxy budgetElement) {
+            public void execute(BudgetElement budgetElement) {
                 getUiHandlers().removeBudgetElement(budgetElement);
             }
         };
@@ -136,9 +137,9 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
     }
 
     private void setupTagColumn() {
-        TextColumn<BudgetElementProxy> tagColumn = new TextColumn<BudgetElementProxy>() {
+        TextColumn<BudgetElement> tagColumn = new TextColumn<BudgetElement>() {
             @Override
-            public String getValue(BudgetElementProxy object) {
+            public String getValue(BudgetElement object) {
                 return object.getTag();
             }
         };
@@ -148,9 +149,9 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
 
     private void setupBudgetAmountColumn() {
         NumberCell numberCell = new NumberCell(NumberFormat.getFormat("###,##0.00"));
-        Column<BudgetElementProxy, Number> amountColumn = new Column<BudgetElementProxy, Number>(numberCell) {
+        Column<BudgetElement, Number> amountColumn = new Column<BudgetElement, Number>(numberCell) {
             @Override
-            public Number getValue(BudgetElementProxy object) {
+            public Number getValue(BudgetElement object) {
                 return object.getAmount();
             }
         };
@@ -160,12 +161,12 @@ public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetEleme
     }
 
     private void setupRemoveActionColumn() {
-        ClickableIconCell<BudgetElementProxy> removeCell = removeBudgetElementCellFactory.create(resources.removeIcon(),
+        ClickableIconCell<BudgetElement> removeCell = removeBudgetElementCellFactory.create(resources.removeIcon(),
                 removeDelegate);
-        Column<BudgetElementProxy, BudgetElementProxy> removeColumn =
-                new Column<BudgetElementProxy, BudgetElementProxy>(removeCell) {
+        Column<BudgetElement, BudgetElement> removeColumn =
+                new Column<BudgetElement, BudgetElement>(removeCell) {
             @Override
-            public BudgetElementProxy getValue(BudgetElementProxy object) {
+            public BudgetElement getValue(BudgetElement object) {
                 return object;
             }
         };

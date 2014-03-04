@@ -14,20 +14,20 @@ import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
-import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
+import com.nuvola.gxpenses.common.client.util.EditorView;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 
-public class BudgetElementEditor extends Composite implements EditorView<BudgetElementProxy> {
+public class BudgetElementEditor extends Composite implements EditorView<BudgetElement> {
     public interface Binder extends UiBinder<HTMLPanel, BudgetElementEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<BudgetElementProxy, BudgetElementEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<BudgetElement, BudgetElementEditor> {
     }
 
     public interface Handler {
-        void onBudgetElementAdded(BudgetElementProxy budgetElement);
+        void onBudgetElementAdded(BudgetElement budgetElement);
     }
 
     @UiField(provided=true)
@@ -55,15 +55,15 @@ public class BudgetElementEditor extends Composite implements EditorView<BudgetE
     }
 
     @Override
-    public void edit(BudgetElementProxy budgetElement) {
+    public void edit(BudgetElement budgetElement) {
         initSuggestionList();
         tag.setFocus(true);
         driver.edit(budgetElement);
     }
 
     @Override
-    public BudgetElementProxy get() {
-        BudgetElementProxy budgetElement = driver.flush();
+    public BudgetElement get() {
+        BudgetElement budgetElement = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
@@ -77,7 +77,7 @@ public class BudgetElementEditor extends Composite implements EditorView<BudgetE
 
     @UiHandler("addElement")
     void onAddElementClicked(ClickEvent event) {
-        BudgetElementProxy budgetElement = get();
+        BudgetElement budgetElement = get();
         if (budgetElement != null) {
             handler.onBudgetElementAdded(budgetElement);
         }
@@ -86,7 +86,7 @@ public class BudgetElementEditor extends Composite implements EditorView<BudgetE
     @UiHandler("amount")
     void onAmountKeyUp(KeyUpEvent event) {
         if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-            BudgetElementProxy budgetElement = get();
+            BudgetElement budgetElement = get();
             if (budgetElement != null) {
                 handler.onBudgetElementAdded(budgetElement);
             }
