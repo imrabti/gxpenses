@@ -14,7 +14,8 @@ public class ReportSiderPresenter extends PresenterWidget<ReportSiderPresenter.M
     }
 
     @Inject
-    public ReportSiderPresenter(EventBus eventBus, MyView view) {
+    ReportSiderPresenter(EventBus eventBus,
+                         MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

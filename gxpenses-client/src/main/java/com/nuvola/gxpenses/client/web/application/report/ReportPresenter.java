@@ -8,7 +8,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
@@ -36,11 +35,13 @@ public class ReportPresenter extends Presenter<ReportPresenter.MyView, ReportPre
     private final SpendingOverTimePresenter spendingOverTimePresenter;
 
     @Inject
-    public ReportPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                           final ReportSiderPresenter reportSiderPresenter,
-                           final SpendingByTagPresenter spendingByTagPresenter,
-                           final SpendingOverTimePresenter spendingOverTimePresenter) {
-        super(eventBus, view, proxy);
+    ReportPresenter(EventBus eventBus,
+                    MyView view,
+                    MyProxy proxy,
+                    ReportSiderPresenter reportSiderPresenter,
+                    SpendingByTagPresenter spendingByTagPresenter,
+                    SpendingOverTimePresenter spendingOverTimePresenter) {
+        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
 
         this.reportSiderPresenter = reportSiderPresenter;
         this.spendingByTagPresenter = spendingByTagPresenter;
@@ -60,11 +61,6 @@ public class ReportPresenter extends Presenter<ReportPresenter.MyView, ReportPre
                 setInSlot(TYPE_SetMainContent, spendingByTagPresenter);
                 break;
         }
-    }
-
-    @Override
-    protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
 
     @Override
