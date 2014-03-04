@@ -8,12 +8,10 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 
 public class EntryPointPresenter extends Presenter<EntryPointPresenter.MyView, EntryPointPresenter.MyProxy> {
-
     public interface MyView extends View {
     }
 
@@ -25,14 +23,9 @@ public class EntryPointPresenter extends Presenter<EntryPointPresenter.MyView, E
     public static final GwtEvent.Type<RevealContentHandler<?>> TYPE_SetMainContent = new GwtEvent.Type<RevealContentHandler<?>>();
 
     @Inject
-    public EntryPointPresenter(final EventBus eventBus, final MyView view,
-                             final MyProxy proxy) {
-        super(eventBus, view, proxy);
+    EntryPointPresenter(EventBus eventBus,
+                        MyView view,
+                        MyProxy proxy) {
+        super(eventBus, view, proxy, GxpensesPresenter.TYPE_SetMainContent);
     }
-
-    @Override
-    protected void revealInParent() {
-        RevealContentEvent.fire(this, GxpensesPresenter.TYPE_SetMainContent, this);
-    }
-
 }

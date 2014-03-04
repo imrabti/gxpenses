@@ -13,16 +13,15 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.UserProxy;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
+import com.nuvola.gxpenses.common.shared.business.User;
 
 public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> implements RegisterPresenter.MyView {
     public interface Binder extends UiBinder<Widget, RegisterView> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<UserProxy, RegisterView> {
+    public interface Driver extends SimpleBeanEditorDriver<User, RegisterView> {
     }
 
     @UiField
@@ -39,11 +38,9 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     private final Driver driver;
 
     @Inject
-    public RegisterView(final Binder uiBinder, final MessageBundle messageBundle,
-                        final UiHandlersStrategy<RegisterUiHandlers> uiHandlers,
-                        final Driver driver) {
-        super(uiHandlers);
-
+    RegisterView(Binder uiBinder,
+                 MessageBundle messageBundle,
+                 Driver driver) {
         this.messageBundle = messageBundle;
         this.driver = driver;
 
@@ -52,15 +49,15 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     }
 
     @Override
-    public void edit(UserProxy user) {
+    public void edit(User user) {
         email.setFocus(true);
         driver.edit(user);
         registrationError.setVisible(false);
     }
 
     @Override
-    public UserProxy get() {
-        UserProxy user = driver.flush();
+    public User get() {
+        User user = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {
@@ -81,7 +78,7 @@ public class RegisterView extends ViewWithUiHandlers<RegisterUiHandlers> impleme
     }
 
     private void processRegisterAction() {
-        UserProxy user = get();
+        User user = get();
 
         if (!Strings.isNullOrEmpty(user.getEmail()) && !Strings.isNullOrEmpty(user.getUserName()) &&
                 !Strings.isNullOrEmpty(user.getPassword())) {
