@@ -5,7 +5,6 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class NoElementFoundEvent extends GwtEvent<NoElementFoundEvent.NoElementFoundHandler> {
-
     public static Type<NoElementFoundHandler> TYPE = new Type<NoElementFoundHandler>();
 
     public interface NoElementFoundHandler extends EventHandler {

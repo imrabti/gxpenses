@@ -2,29 +2,34 @@ package com.nuvola.gxpenses.client.util;
 
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
+import com.nuvola.gxpenses.client.rest.UserService;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SuggestionListFactory {
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final UserService userService;
 
     private List<String> listTags;
     private List<String> listPayee;
 
     @Inject
-    public SuggestionListFactory(final GxpensesRequestFactory requestFactory) {
-        this.requestFactory = requestFactory;
+    SuggestionListFactory(RestDispatchAsync dispatcher,
+                          UserService userService) {
+        this.dispatcher = dispatcher;
+        this.userService = userService;
     }
 
     public List<String> getListTags() {
         if (listTags == null) {
-            requestFactory.userService().findAllTagsForUser().fire(new ReceiverImpl<List<String>>() {
+            dispatcher.execute(userService.tag().findAllTags(), new AsyncCallbackImpl<List<String>>() {
                 @Override
-                public void onSuccess(List<String> tags) {
-                    listTags = tags;
+                public void onReceive(List<String> response) {
+                    listTags = response;
                 }
             });
         }
@@ -34,10 +39,10 @@ public class SuggestionListFactory {
 
     public List<String> getListPayee() {
         if (listPayee == null) {
-            requestFactory.userService().findAllPayeeForUser().fire(new ReceiverImpl<List<String>>() {
+            dispatcher.execute(userService.payee().findAllPayee(), new AsyncCallbackImpl<List<String>>() {
                 @Override
-                public void onSuccess(List<String> payees) {
-                    listPayee = payees;
+                public void onReceive(List<String> response) {
+                    listPayee = response;
                 }
             });
         }
@@ -63,9 +68,9 @@ public class SuggestionListFactory {
                 }
             }
 
-            requestFactory.userService().createTags(toAdd).fire(new ReceiverImpl<Void>() {
+            dispatcher.execute(userService.tag().createTags(toAdd), new AsyncCallbackImpl<Void>() {
                 @Override
-                public void onSuccess(Void aVoid) {
+                public void onReceive(Void response) {
                 }
             });
         }

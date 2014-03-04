@@ -5,7 +5,6 @@ import com.nuvola.gxpenses.client.web.application.ApplicationModule;
 import com.nuvola.gxpenses.client.web.welcome.WelcomeModule;
 
 public class GxpensesModule extends AbstractPresenterModule {
-
     @Override
     protected void configure() {
         install(new WelcomeModule());
@@ -14,5 +13,4 @@ public class GxpensesModule extends AbstractPresenterModule {
         bindPresenter(GxpensesPresenter.class, GxpensesPresenter.MyView.class, GxpensesView.class,
                 GxpensesPresenter.MyProxy.class);
     }
-
 }

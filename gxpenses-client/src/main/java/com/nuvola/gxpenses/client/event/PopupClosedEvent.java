@@ -5,7 +5,6 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class PopupClosedEvent extends GwtEvent<PopupClosedEvent.PopupClosedHandler> {
-
     public static Type<PopupClosedHandler> TYPE = new Type<PopupClosedHandler>();
 
     public interface PopupClosedHandler extends EventHandler {

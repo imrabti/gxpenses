@@ -9,10 +9,8 @@ import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
-import com.gwtplatform.mvp.client.proxy.RevealRootLayoutContentEvent;
 
 public class GxpensesPresenter extends Presenter<GxpensesPresenter.MyView, GxpensesPresenter.MyProxy> {
-
     public interface MyView extends View {
         public void hideLoading();
     }
@@ -25,19 +23,14 @@ public class GxpensesPresenter extends Presenter<GxpensesPresenter.MyView, Gxpen
     public static final Type<RevealContentHandler<?>> TYPE_SetMainContent = new Type<RevealContentHandler<?>>();
 
     @Inject
-    public GxpensesPresenter(final EventBus eventBus, final MyView view,
-                             final MyProxy proxy) {
-        super(eventBus, view, proxy);
-    }
-
-    @Override
-    protected void revealInParent() {
-        RevealRootLayoutContentEvent.fire(this, this);
+    GxpensesPresenter(EventBus eventBus,
+                      MyView view,
+                      MyProxy proxy) {
+        super(eventBus, view, proxy, RevealType.RootLayout);
     }
 
     @Override
     protected void onReveal() {
         getView().hideLoading();
     }
-
 }

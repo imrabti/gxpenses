@@ -1,30 +1,28 @@
 package com.nuvola.gxpenses.client.gin;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
-import com.gwtplatform.dispatch.rest.shared.RestCallback;
 import com.gwtplatform.mvp.client.Bootstrapper;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.rest.SessionService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
 import com.nuvola.gxpenses.common.shared.business.User;
 
-import java.util.logging.Logger;
-
 public class BootstrapperImpl implements Bootstrapper {
-    private final static Logger logger = Logger.getLogger(BootstrapperImpl.class.getName());
-
     private final PlaceManager placeManager;
     private final RestDispatchAsync dispatcher;
     private final SessionService sessionService;
     private final ValueListFactory valueListFactory;
     private final SuggestionListFactory suggestionListFactory;
     private final SecurityUtils securityUtils;
-    private final Receiver<User> getCurrentUserCallback;
+    private final AsyncCallback<User> getCurrentUserCallback;
+    private final CurrentUser currentUser;
 
     @Inject
     BootstrapperImpl(RestDispatchAsync dispatcher,
@@ -32,17 +30,20 @@ public class BootstrapperImpl implements Bootstrapper {
                      SecurityUtils securityUtils,
                      PlaceManager placeManager,
                      ValueListFactory valueListFactory,
-                     SuggestionListFactory suggestionListFactory) {
+                     SuggestionListFactory suggestionListFactory,
+                     CurrentUser currentUserProvider) {
         this.dispatcher = dispatcher;
         this.sessionService = sessionService;
         this.securityUtils = securityUtils;
         this.placeManager = placeManager;
         this.valueListFactory = valueListFactory;
         this.suggestionListFactory = suggestionListFactory;
+        this.currentUser = currentUserProvider;
 
-        getCurrentUserCallback = new Receiver<User>() {
+        getCurrentUserCallback = new AsyncCallbackImpl<User>() {
             @Override
-            public void onSuccess(User user) {
+            public void onReceive(User response) {
+                currentUser.init(response);
                 onGetCurrentUser();
             }
         };
@@ -51,23 +52,14 @@ public class BootstrapperImpl implements Bootstrapper {
     @Override
     public void onBootstrap() {
         if (securityUtils.isLoggedIn()) {
-            dispatcher.execute(sessionService.getSession(), RestCallback)
-
-            requestFactory.authenticationService().currentUser().fire(getCurrentUserCallback);
+            dispatcher.execute(sessionService.getSession(), getCurrentUserCallback);
         } else {
             bounceToLogin();
         }
     }
 
-    @Override
-    public void logout() {
-        securityUtils.clearCredentials();
-        bounceToLogin();
-    }
-
     private void onGetCurrentUser() {
         if (currentUser == null) {
-            logger.info("User is not authentified -- access denied...");
             bounceToLogin();
         } else {
             suggestionListFactory.getListPayee();
@@ -83,12 +75,12 @@ public class BootstrapperImpl implements Bootstrapper {
     }
 
     private void bounceToTransactions() {
-        PlaceRequest place = new PlaceRequest(NameTokens.getTransaction());
+        PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getTransaction()).build();
         placeManager.revealPlace(place);
     }
 
     private void bounceToLogin() {
-        PlaceRequest place = new PlaceRequest(NameTokens.getLogin());
+        PlaceRequest place = new PlaceRequest.Builder().nameToken(NameTokens.getLogin()).build();
         placeManager.revealPlace(place);
     }
 }

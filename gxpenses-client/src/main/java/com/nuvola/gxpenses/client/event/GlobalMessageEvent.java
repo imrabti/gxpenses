@@ -5,7 +5,6 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
 
 public class GlobalMessageEvent extends GwtEvent<GlobalMessageEvent.GlobalMessageHandler> {
-
     public static Type<GlobalMessageHandler> TYPE = new Type<GlobalMessageHandler>();
 
     public interface GlobalMessageHandler extends EventHandler {
@@ -40,5 +39,4 @@ public class GlobalMessageEvent extends GwtEvent<GlobalMessageEvent.GlobalMessag
     protected void dispatch(GlobalMessageHandler handler) {
         handler.onMessageRecieved(this);
     }
-
 }

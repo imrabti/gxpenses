@@ -1,22 +1,27 @@
 package com.nuvola.gxpenses.client.util;
 
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
-import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
+import com.nuvola.gxpenses.client.rest.AccountService;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
+import com.nuvola.gxpenses.common.shared.business.Account;
 
 import java.util.List;
 
 public class ValueListFactory {
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final AccountService accountService;
 
-    private List<AccountProxy> listAccounts;
+    private List<Account> listAccounts;
 
     @Inject
-    public ValueListFactory(final GxpensesRequestFactory requestFactory) {
-        this.requestFactory = requestFactory;
+    public ValueListFactory(RestDispatchAsync dispatcher,
+                            AccountService accountService) {
+        this.dispatcher = dispatcher;
+        this.accountService = accountService;
     }
 
-    public List<AccountProxy> getListAccounts() {
+    public List<Account> getListAccounts() {
         if (listAccounts == null) {
             updateListAccount();
         }
@@ -25,10 +30,10 @@ public class ValueListFactory {
     }
 
     public void updateListAccount() {
-        requestFactory.accountService().findAllAccountsByUserId().fire(new ReceiverImpl<List<AccountProxy>>() {
+        dispatcher.execute(accountService.findAllAccounts(), new AsyncCallbackImpl<List<Account>>() {
             @Override
-            public void onSuccess(List<AccountProxy> accounts) {
-                listAccounts = accounts;
+            public void onReceive(List<Account> response) {
+                listAccounts = response;
             }
         });
     }

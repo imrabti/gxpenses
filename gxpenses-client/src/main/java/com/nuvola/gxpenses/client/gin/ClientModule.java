@@ -9,7 +9,6 @@ import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
@@ -27,7 +26,7 @@ public class ClientModule extends AbstractPresenterModule {
         install(new DefaultModule());
         install(new CommonModule());
         install(new GxpensesModule());
-        install(new RestDispatchAsyncModule.Builder().build());
+        install(new RestDispatchAsyncModule());
 
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.login);
         bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.login);
@@ -36,7 +35,6 @@ public class ClientModule extends AbstractPresenterModule {
 
         bind(Resources.class).in(Singleton.class);
         bind(MessageBundle.class).in(Singleton.class);
-        requestStaticInjection(ReceiverImpl.class);
 
         bind(SuggestionListFactory.class).in(Singleton.class);
         bind(ValueListFactory.class).in(Singleton.class);
@@ -48,5 +46,6 @@ public class ClientModule extends AbstractPresenterModule {
         bind(List.class).annotatedWith(ChartColor.class).toProvider(ChartColorProvider.class);
 
         bind(ResourceLoader.class).asEagerSingleton();
+        bind(CurrentUser.class).asEagerSingleton();
     }
 }

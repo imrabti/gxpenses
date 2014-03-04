@@ -6,7 +6,6 @@ import com.google.gwt.event.shared.HasHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 
 public class SetVisibleSiderEvent extends GwtEvent<SetVisibleSiderEvent.SetVisibleSiderHandler> {
-
     public interface SetVisibleSiderHandler extends EventHandler {
         void onVisibleSider(SetVisibleSiderEvent event);
     }
@@ -44,5 +43,4 @@ public class SetVisibleSiderEvent extends GwtEvent<SetVisibleSiderEvent.SetVisib
     protected void dispatch(SetVisibleSiderHandler handler) {
         handler.onVisibleSider(this);
     }
-
 }

@@ -4,13 +4,13 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewImpl;
+import com.gwtplatform.mvp.client.ViewImpl;
 
 public class GxpensesView extends ViewImpl implements GxpensesPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, GxpensesView> {
     }
 
@@ -18,12 +18,12 @@ public class GxpensesView extends ViewImpl implements GxpensesPresenter.MyView {
     SimpleLayoutPanel main;
 
     @Inject
-    public GxpensesView(final Binder uiBinder) {
+    GxpensesView(Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
 
     @Override
-    public void setInSlot(Object slot, Widget content) {
+    public void setInSlot(Object slot, IsWidget content) {
         if (content != null) {
             if (slot == GxpensesPresenter.TYPE_SetMainContent) {
                 main.setWidget(content);
@@ -36,5 +36,4 @@ public class GxpensesView extends ViewImpl implements GxpensesPresenter.MyView {
         Element loading = Document.get().getElementById("loading");
         loading.getParentElement().removeChild(loading);
     }
-
 }

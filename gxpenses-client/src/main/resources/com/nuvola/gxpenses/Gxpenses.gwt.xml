@@ -3,6 +3,7 @@
     <inherits name='com.google.gwt.user.theme.standard.Standard'/>
     <inherits name='com.google.gwt.query.Query'/>
     <inherits name='com.google.gwt.visualization.Visualization'/>
+    <inherits name='com.nuvola.gxpenses.common.Common'/>
     <inherits name="com.gwtplatform.dispatch.rest.DispatchRest"/>
     <inherits name="com.gwtplatform.mvp.MvpWithEntryPoint"/>
 

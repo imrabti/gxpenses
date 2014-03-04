@@ -48,6 +48,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Hibernate dependencies -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
         <!-- Other dependencies -->
         <dependency>
             <groupId>com.google.guava</groupId>
