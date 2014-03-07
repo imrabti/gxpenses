@@ -25,7 +25,7 @@
         <!-- client -->
         <gwt.version>2.6.0</gwt.version>
         <gwt-maven-plugin.version>2.6.0</gwt-maven-plugin.version>
-        <gwtp.version>1.2-SNAPSHOT</gwtp.version>
+        <gwtp.version>1.2</gwtp.version>
         <guice.version>3.0</guice.version>
         <gin.version>2.1.2</gin.version>
         <gwt-visualization.version>1.0.2</gwt-visualization.version>
