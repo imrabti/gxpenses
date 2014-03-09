@@ -1,6 +1,5 @@
 package com.nuvola.gxpenses.client.rest;
 
-import com.google.web.bindery.requestfactory.shared.Request;
 import com.gwtplatform.dispatch.rest.shared.RestAction;
 import com.gwtplatform.dispatch.rest.shared.RestService;
 import com.nuvola.gxpenses.common.shared.business.Transaction;

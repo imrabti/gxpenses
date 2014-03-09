@@ -4,6 +4,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -18,24 +19,21 @@ import com.nuvola.gxpenses.client.event.PopupClosedEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.gin.PageSize;
 import com.nuvola.gxpenses.client.place.NameTokens;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
-import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
-import com.nuvola.gxpenses.client.request.proxy.DataPageProxy;
-import com.nuvola.gxpenses.client.request.proxy.PagedTransactionsProxy;
-import com.nuvola.gxpenses.client.request.proxy.TransactionFilterProxy;
-import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
+import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
 import com.nuvola.gxpenses.client.util.DateUtils;
-import com.nuvola.gxpenses.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.client.web.application.ApplicationPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddTransactionPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.widget.AccountSiderPresenter;
-import com.nuvola.gxpenses.shared.type.PeriodType;
-import com.nuvola.gxpenses.shared.type.TransactionType;
+import com.nuvola.gxpenses.common.client.util.EmptyDisplay;
+import com.nuvola.gxpenses.common.shared.business.Account;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
+import com.nuvola.gxpenses.common.shared.type.PeriodType;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 import java.util.List;
 
@@ -45,7 +43,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
         AccountBalanceChangedEvent.AccountBalanceChangedHandler,
         NoElementFoundEvent.NoElementFoundHandler, PopupClosedEvent.PopupClosedHandler {
     public interface MyView extends View, EmptyDisplay, HasUiHandlers<TransactionUiHandlers> {
-        void setData(List<TransactionProxy> data, Integer start, Integer totalCount);
+        void setData(List<Transaction> data, Integer start, Integer totalCount);
 
         void clearSelection();
 
@@ -74,28 +72,33 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     public interface MyProxy extends ProxyPlace<TransactionPresenter> {
     }
 
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final TransactionService transactionService;
     private final MessageBundle messageBundle;
     private final Integer defaultPageSize;
 
     private final AccountSiderPresenter accountSiderPresenter;
     private final AddTransactionPresenter addTransactionPresenter;
 
-    private AccountProxy selectedAccount;
+    private Account selectedAccount;
     private PeriodType selectedPeriodeFilter;
     private TransactionType selectedTypeFilter;
     private Integer paginationStart;
 
     @Inject
-    public TransactionPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                                final GxpensesRequestFactory requestFactory,
-                                final MessageBundle messageBundle,
-                                final AccountSiderPresenter accountSiderPresenter,
-                                final AddTransactionPresenter addTransactionPresenter,
-                                @PageSize Integer defaultPageSize) {
+    TransactionPresenter(EventBus eventBus,
+                         MyView view,
+                         MyProxy proxy,
+                         RestDispatchAsync dispatcher,
+                         TransactionService transactionService,
+                         MessageBundle messageBundle,
+                         AccountSiderPresenter accountSiderPresenter,
+                         AddTransactionPresenter addTransactionPresenter,
+                         @PageSize Integer defaultPageSize) {
         super(eventBus, view, proxy);
 
-        this.requestFactory = requestFactory;
+        this.dispatcher = dispatcher;
+        this.transactionService = transactionService;
         this.messageBundle = messageBundle;
         this.defaultPageSize = defaultPageSize;
         this.accountSiderPresenter = accountSiderPresenter;
@@ -195,7 +198,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     @Override
-    public void removeTransaction(TransactionProxy transaction) {
+    public void removeTransaction(Transaction transaction) {
         Boolean decision = Window.confirm(messageBundle.transactionConf());
         if (decision) {
             requestFactory.transactionService().removeTransaction(transaction.getId()).fire(new ReceiverImpl<Void>() {

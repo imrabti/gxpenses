@@ -3,8 +3,8 @@ package com.nuvola.gxpenses.client.web.application.transaction.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.nuvola.gxpenses.shared.type.PeriodType;
-import com.nuvola.gxpenses.shared.type.TransactionType;
+import com.nuvola.gxpenses.common.shared.type.PeriodType;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 public class TransactionFiltreChangedEvent extends GwtEvent<TransactionFiltreChangedEvent.TransactionFilterChangedHandler> {
     public static Type<TransactionFilterChangedHandler> TYPE = new Type<TransactionFilterChangedHandler>();
@@ -16,7 +16,8 @@ public class TransactionFiltreChangedEvent extends GwtEvent<TransactionFiltreCha
     private PeriodType periodeFilter;
     private TransactionType typeFilter;
 
-    public TransactionFiltreChangedEvent(PeriodType periodeFilter, TransactionType typeFilter) {
+    public TransactionFiltreChangedEvent(PeriodType periodeFilter,
+                                         TransactionType typeFilter) {
         this.periodeFilter = periodeFilter;
         this.typeFilter = typeFilter;
     }
