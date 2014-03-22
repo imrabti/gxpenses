@@ -9,10 +9,9 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.TransactionEditor;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
 
 public class AddTransactionView extends PopupViewWithUiHandlers<AddTransactionUiHandler>
         implements AddTransactionPresenter.MyView {
@@ -25,10 +24,10 @@ public class AddTransactionView extends PopupViewWithUiHandlers<AddTransactionUi
     TransactionEditor transactionEditor;
 
     @Inject
-    public AddTransactionView(final EventBus eventBus, final Binder uiBinder,
-                              final UiHandlersStrategy<AddTransactionUiHandler> uiHandlersStrategy,
-                              final TransactionEditor transactionEditor) {
-        super(eventBus, uiHandlersStrategy);
+    AddTransactionView(EventBus eventBus,
+                       Binder uiBinder,
+                       TransactionEditor transactionEditor) {
+        super(eventBus);
         this.transactionEditor = transactionEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -41,7 +40,7 @@ public class AddTransactionView extends PopupViewWithUiHandlers<AddTransactionUi
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        TransactionProxy transaction = transactionEditor.get();
+        Transaction transaction = transactionEditor.get();
         if (transaction != null) {
             getUiHandlers().saveTransaction(transaction);
             getUiHandlers().close();
@@ -63,7 +62,7 @@ public class AddTransactionView extends PopupViewWithUiHandlers<AddTransactionUi
     }
 
     @Override
-    public void edit(TransactionProxy transaction) {
+    public void edit(Transaction transaction) {
         transactionEditor.edit(transaction);
     }
 }

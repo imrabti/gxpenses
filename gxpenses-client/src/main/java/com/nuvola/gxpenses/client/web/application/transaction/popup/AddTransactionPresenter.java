@@ -13,8 +13,10 @@ import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.TransactionService;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
 import com.nuvola.gxpenses.common.shared.business.Account;
 import com.nuvola.gxpenses.common.shared.business.Transaction;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 public class AddTransactionPresenter extends PresenterWidget<AddTransactionPresenter.MyView>
         implements AddTransactionUiHandler {
@@ -35,11 +37,13 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
     @Inject
     AddTransactionPresenter(EventBus eventBus,
                             MyView view,
-                            RestDispatchAsync dispatchAsync,
+                            RestDispatchAsync dispatcher,
+                            TransactionService transactionService,
                             SuggestionListFactory suggestionListFactory,
                             MessageBundle messageBundle) {
         super(eventBus, view);
-        this.requestFactory = requestFactory;
+        this.dispatcher = dispatcher;
+        this.transactionService = transactionService;
         this.suggestionListFactory = suggestionListFactory;
         this.messageBundle = messageBundle;
 
@@ -47,10 +51,10 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
     }
 
     @Override
-    public void saveTransaction(final TransactionProxy transaction) {
-        currentContext.createNewTransaction(transaction).fire(new ReceiverImpl<Void>() {
+    public void saveTransaction(final Transaction transaction) {
+        dispatcher.execute(transactionService.createNewTransaction(transaction), new AsyncCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onReceive(Void response) {
                 suggestionListFactory.updatePayeeList(transaction.getPayee());
                 suggestionListFactory.updateTagsList(transaction.getTags());
 
@@ -69,16 +73,16 @@ public class AddTransactionPresenter extends PresenterWidget<AddTransactionPrese
         this.relativeTo = relativeTo;
     }
 
-    public void setSelectedAccount(AccountProxy selectedAccount) {
+    public void setSelectedAccount(Account selectedAccount) {
         this.selectedAccount = selectedAccount;
     }
 
     @Override
     protected void onReveal() {
-        currentContext = requestFactory.transactionService();
-        TransactionProxy newTransaction = currentContext.create(TransactionProxy.class);
+        Transaction newTransaction = new Transaction();
         newTransaction.setType(TransactionType.EXPENSE);
-        newTransaction.setAccount(currentContext.edit(selectedAccount));
+        newTransaction.setAccount(selectedAccount);
+
         getView().edit(newTransaction);
         getView().showRelativeTo(relativeTo);
     }

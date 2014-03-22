@@ -1,7 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.transaction.renderer;
 
 import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.cell.client.ActionCell.Delegate;
+import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
@@ -15,9 +15,9 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
+import com.nuvola.gxpenses.common.shared.business.Account;
 
-public class AccountCell extends AbstractCell<AccountProxy> {
+public class AccountCell extends AbstractCell<Account> {
     public interface Template extends SafeHtmlTemplates {
         @Template("<span class=\"removeButton\"></span><div style=\"float:left; padding: 3px; margin: 4px;\">{0}</div>" +
                   "<div style=\"float:right; margin: 4px;\" class=\"elementBalance\">{1}</div>" +
@@ -26,12 +26,13 @@ public class AccountCell extends AbstractCell<AccountProxy> {
     }
 
     private final Template template;
-    private final Delegate<AccountProxy> delegate;
+    private final ActionCell.Delegate<Account> delegate;
     private final String currency;
 
     @Inject
-    public AccountCell(final Template template, @Currency String currency,
-                       @Assisted Delegate<AccountProxy> delegate) {
+    AccountCell(Template template,
+                @Currency String currency,
+                @Assisted ActionCell.Delegate<Account> delegate) {
         super(BrowserEvents.CLICK);
 
         this.template = template;
@@ -40,8 +41,8 @@ public class AccountCell extends AbstractCell<AccountProxy> {
     }
 
     @Override
-    public void onBrowserEvent(Context context, Element parent, AccountProxy value, NativeEvent event,
-                               ValueUpdater<AccountProxy> valueUpdater) {
+    public void onBrowserEvent(Context context, Element parent, Account value, NativeEvent event,
+                               ValueUpdater<Account> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
         if (BrowserEvents.CLICK.equals(event.getType())) {
             EventTarget eventTarget = event.getEventTarget();
@@ -56,7 +57,7 @@ public class AccountCell extends AbstractCell<AccountProxy> {
     }
 
     @Override
-    public void render(Context context, AccountProxy value, SafeHtmlBuilder sb) {
+    public void render(Context context, Account value, SafeHtmlBuilder sb) {
         NumberFormat format = NumberFormat.getFormat("###,##0.00");
         String balance = (null == value.getBalance()) ? format.format(0d) : format.format(value.getBalance());
 

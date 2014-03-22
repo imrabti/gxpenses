@@ -9,10 +9,9 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.TransferTransactionProxy;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.TransferTransactionEditor;
+import com.nuvola.gxpenses.common.shared.dto.TransferTransaction;
 
 public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTransactionUiHandlers>
         implements TransferTransactionPresenter.MyView {
@@ -25,10 +24,11 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
     TransferTransactionEditor transferTransactionEditor;
 
     @Inject
-    public TransferTransactionView(final EventBus eventBus, final Binder uiBinder,
-                                   final UiHandlersStrategy<TransferTransactionUiHandlers> uiHandlersStrategy,
-                                   final TransferTransactionEditor transferTransactionEditor) {
-        super(eventBus, uiHandlersStrategy);
+    TransferTransactionView(EventBus eventBus,
+                            Binder uiBinder,
+                            TransferTransactionEditor transferTransactionEditor) {
+        super(eventBus);
+
         this.transferTransactionEditor = transferTransactionEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -41,7 +41,7 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        TransferTransactionProxy transfer = transferTransactionEditor.get();
+        TransferTransaction transfer = transferTransactionEditor.get();
         if (transfer != null) {
             getUiHandlers().saveTransfer(transfer);
             getUiHandlers().close();
@@ -63,7 +63,7 @@ public class TransferTransactionView extends PopupViewWithUiHandlers<TransferTra
     }
 
     @Override
-    public void edit(TransferTransactionProxy transfer) {
+    public void edit(TransferTransaction transfer) {
         transferTransactionEditor.edit(transfer);
     }
 }

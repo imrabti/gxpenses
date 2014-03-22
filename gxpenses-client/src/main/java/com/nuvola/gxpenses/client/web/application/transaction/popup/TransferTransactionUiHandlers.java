@@ -1,10 +1,10 @@
 package com.nuvola.gxpenses.client.web.application.transaction.popup;
 
 import com.gwtplatform.mvp.client.UiHandlers;
-import com.nuvola.gxpenses.client.request.proxy.TransferTransactionProxy;
+import com.nuvola.gxpenses.common.shared.dto.TransferTransaction;
 
 public interface TransferTransactionUiHandlers extends UiHandlers {
-    void saveTransfer(TransferTransactionProxy transferTransaction);
+    void saveTransfer(TransferTransaction transferTransaction);
 
     void close();
 }
