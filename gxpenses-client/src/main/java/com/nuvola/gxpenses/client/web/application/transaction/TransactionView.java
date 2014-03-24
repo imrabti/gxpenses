@@ -20,25 +20,23 @@ import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.gin.PageSize;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.resource.style.list.TransactionListStyle;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.TransactionCellFactory;
 import com.nuvola.gxpenses.client.web.application.ui.ShowMorePagerPanel;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
 
 import java.util.List;
 
-public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
-        implements TransactionPresenter.MyView {
+public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers> implements TransactionPresenter.MyView {
     public interface Binder extends UiBinder<Widget, TransactionView> {
     }
 
-    CellList<TransactionProxy> transactionList;
+    CellList<Transaction> transactionList;
 
     @UiField
     Label message;
@@ -63,32 +61,31 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
     @UiField
     Button addTransactionButton;
 
-    private final ProvidesKey<TransactionProxy> keyProvider;
-    private final AsyncDataProvider<TransactionProxy> dataProvider;
-    private final SingleSelectionModel<TransactionProxy> selectionModel;
+    private final ProvidesKey<Transaction> keyProvider;
+    private final AsyncDataProvider<Transaction> dataProvider;
+    private final SingleSelectionModel<Transaction> selectionModel;
     private final MessageBundle messageBundle;
     private final Resources resources;
 
     private String currency;
 
     @Inject
-    public TransactionView(final Binder uiBinder,
-                           final UiHandlersStrategy<TransactionUiHandlers> uiHandlers,
-                           final TransactionCellFactory transactionCellFactory,
-                           final TransactionListStyle listResources,
-                           final Resources resources, final MessageBundle messageBundle,
-                           @Currency String currency, @PageSize Integer pageSize) {
-        super(uiHandlers);
-
+    TransactionView(Binder uiBinder,
+                    TransactionCellFactory transactionCellFactory,
+                    TransactionListStyle listResources,
+                    Resources resources,
+                    MessageBundle messageBundle,
+                    @Currency String currency,
+                    @PageSize Integer pageSize) {
         this.resources = resources;
         this.currency = currency;
         this.messageBundle = messageBundle;
 
         keyProvider = setupKeyProvider();
         dataProvider = setupDataProvider();
-        selectionModel = new SingleSelectionModel<TransactionProxy>(keyProvider);
+        selectionModel = new SingleSelectionModel<>(keyProvider);
         pagerPanel = new ShowMorePagerPanel(pageSize);
-        transactionList = new CellList<TransactionProxy>(transactionCellFactory.create(setupRemoveAction()), listResources);
+        transactionList = new CellList<>(transactionCellFactory.create(setupRemoveAction()), listResources);
 
         initWidget(uiBinder.createAndBindUi(this));
         hideTransactionsPanel();
@@ -108,7 +105,7 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
     }
 
     @Override
-    public void setData(List<TransactionProxy> data, Integer start, Integer totalCount) {
+    public void setData(List<Transaction> data, Integer start, Integer totalCount) {
         dataProvider.updateRowData(start, data);
         dataProvider.updateRowCount(totalCount, false);
     }
@@ -202,34 +199,34 @@ public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers>
         addTransactionButton.addStyleName(resources.buttonStyleCss().addButtonAltText());
     }
 
-    private ProvidesKey<TransactionProxy> setupKeyProvider() {
-        return new ProvidesKey<TransactionProxy>() {
+    private ProvidesKey<Transaction> setupKeyProvider() {
+        return new ProvidesKey<Transaction>() {
             @Override
-            public Object getKey(TransactionProxy transaction) {
+            public Object getKey(Transaction transaction) {
                 return transaction == null ? null : transaction.getId();
             }
         };
     }
 
-    private AsyncDataProvider<TransactionProxy> setupDataProvider() {
-        return new AsyncDataProvider<TransactionProxy>(keyProvider) {
+    private AsyncDataProvider<Transaction> setupDataProvider() {
+        return new AsyncDataProvider<Transaction>(keyProvider) {
             @Override
-            protected void onRangeChanged(HasData<TransactionProxy> display) {
+            protected void onRangeChanged(HasData<Transaction> display) {
                 fetchData(display);
             }
         };
     }
 
-    private ActionCell.Delegate<TransactionProxy> setupRemoveAction() {
-        return new ActionCell.Delegate<TransactionProxy>() {
+    private ActionCell.Delegate<Transaction> setupRemoveAction() {
+        return new ActionCell.Delegate<Transaction>() {
             @Override
-            public void execute(TransactionProxy transaction) {
+            public void execute(Transaction transaction) {
                 getUiHandlers().removeTransaction(transaction);
             }
         };
     }
 
-    private void fetchData(HasData<TransactionProxy> display) {
+    private void fetchData(HasData<Transaction> display) {
         Range range = display.getVisibleRange();
 
         if (getUiHandlers() != null) {

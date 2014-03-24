@@ -29,9 +29,12 @@ import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChang
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddTransactionPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.widget.AccountSiderPresenter;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
 import com.nuvola.gxpenses.common.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.common.shared.business.Account;
 import com.nuvola.gxpenses.common.shared.business.Transaction;
+import com.nuvola.gxpenses.common.shared.dto.PagedTransactions;
+import com.nuvola.gxpenses.common.shared.dto.TransactionFilter;
 import com.nuvola.gxpenses.common.shared.type.PeriodType;
 import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
@@ -201,9 +204,10 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     public void removeTransaction(Transaction transaction) {
         Boolean decision = Window.confirm(messageBundle.transactionConf());
         if (decision) {
-            requestFactory.transactionService().removeTransaction(transaction.getId()).fire(new ReceiverImpl<Void>() {
+            dispatcher.execute(transactionService.removeTransaction(transaction.getId()),
+                    new AsyncCallbackImpl<Void>() {
                 @Override
-                public void onSuccess(Void aVoid) {
+                public void onReceive(Void response) {
                     Integer pageNumber = (paginationStart / defaultPageSize) + (paginationStart % defaultPageSize);
                     fireLoadTransactionDataRequest(pageNumber, defaultPageSize);
                     fireLoadTotalAmountTransactionRequest();
@@ -235,21 +239,17 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     private void fireLoadTransactionDataRequest(Integer pageNumber, Integer length) {
-        TransactionRequest currentContext = requestFactory.transactionService();
-        TransactionFilterProxy filter = currentContext.create(TransactionFilterProxy.class);
-        DataPageProxy page = currentContext.create(DataPageProxy.class);
+        TransactionFilter filter = new TransactionFilter();
         filter.setAccountId(selectedAccount.getId());
         filter.setType(selectedTypeFilter);
         filter.setPeriod(selectedPeriodeFilter);
-        page.setPageNumber(pageNumber);
-        page.setLength(length);
 
-        currentContext.findByAccountAndDateAndType(filter, page).fire(new ReceiverImpl<PagedTransactionsProxy>() {
+        dispatcher.execute(transactionService.findAllTransactions(filter), new AsyncCallbackImpl<PagedTransactions>() {
             @Override
-            public void onSuccess(PagedTransactionsProxy result) {
-                getView().setData(result.getTransactions(), paginationStart, result.getTotalElements());
+            public void onReceive(PagedTransactions response) {
+                getView().setData(response.getTransactions(), paginationStart, response.getTotalElements());
 
-                if (result.getTransactions().size() > 0) {
+                if (response.getTransactions().size() > 0) {
                     getView().hideNoTransactionsPanel();
                 } else {
                     getView().showNoTransactionsPanel();
@@ -259,16 +259,15 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
     }
 
     private void fireLoadTotalAmountTransactionRequest() {
-        TransactionRequest currentContext = requestFactory.transactionService();
-        TransactionFilterProxy filter = currentContext.create(TransactionFilterProxy.class);
+        TransactionFilter filter = new TransactionFilter();
         filter.setAccountId(selectedAccount.getId());
         filter.setType(selectedTypeFilter);
         filter.setPeriod(selectedPeriodeFilter);
 
-        currentContext.totalAmountByAccountAndPeriodAndType(filter).fire(new ReceiverImpl<Double>() {
+        dispatcher.execute(transactionService.findAllTransactions(filter), new AsyncCallbackImpl<PagedTransactions>() {
             @Override
-            public void onSuccess(Double totalAmount) {
-                getView().setTransactionTotal(totalAmount);
+            public void onReceive(PagedTransactions response) {
+                getView().setTransactionTotal(response.getTotalAmount());
             }
         });
     }
