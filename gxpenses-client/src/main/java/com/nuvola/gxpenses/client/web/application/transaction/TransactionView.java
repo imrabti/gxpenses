@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.transaction;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.NumberFormat;
@@ -29,8 +31,6 @@ import com.nuvola.gxpenses.client.resource.style.list.TransactionListStyle;
 import com.nuvola.gxpenses.client.web.application.transaction.renderer.TransactionCellFactory;
 import com.nuvola.gxpenses.client.web.application.ui.ShowMorePagerPanel;
 import com.nuvola.gxpenses.common.shared.business.Transaction;
-
-import java.util.List;
 
 public class TransactionView extends ViewWithUiHandlers<TransactionUiHandlers> implements TransactionPresenter.MyView {
     public interface Binder extends UiBinder<Widget, TransactionView> {

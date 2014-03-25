@@ -1,10 +1,10 @@
 package com.nuvola.gxpenses.server.service;
 
-import com.nuvola.gxpenses.common.shared.business.Budget;
-import com.nuvola.gxpenses.common.shared.business.BudgetElement;
-
 import java.util.Date;
 import java.util.List;
+
+import com.nuvola.gxpenses.common.shared.business.Budget;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 
 public interface BudgetService {
     void createBudget(Budget budget);

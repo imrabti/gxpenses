@@ -1,15 +1,25 @@
+/*
+ * Copyright (c) 2014 by Nuvola Group, Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of Nuvola Group, Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.nuvola.gxpenses.common.shared.business;
 
-import com.nuvola.gxpenses.common.shared.type.CurrencyType;
-import com.nuvola.gxpenses.common.shared.type.PaginationType;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.Serializable;
-import java.util.Date;
+
+import com.nuvola.gxpenses.common.shared.type.CurrencyType;
+import com.nuvola.gxpenses.common.shared.type.PaginationType;
 
 @Entity
 public class User implements Serializable {

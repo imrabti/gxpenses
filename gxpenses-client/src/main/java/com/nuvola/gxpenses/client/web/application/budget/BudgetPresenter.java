@@ -1,5 +1,8 @@
 package com.nuvola.gxpenses.client.web.application.budget;
 
+import java.util.Date;
+import java.util.List;
+
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -29,9 +32,6 @@ import com.nuvola.gxpenses.common.client.util.EmptyDisplay;
 import com.nuvola.gxpenses.common.shared.business.Budget;
 import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 import com.nuvola.gxpenses.common.shared.dto.BudgetProgressTotal;
-
-import java.util.Date;
-import java.util.List;
 
 public class BudgetPresenter extends Presenter<BudgetPresenter.MyView, BudgetPresenter.MyProxy>
         implements BudgetUiHandlers, NoElementFoundEvent.NoElementFoundHandler,

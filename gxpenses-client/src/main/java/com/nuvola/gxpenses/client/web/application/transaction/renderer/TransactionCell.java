@@ -1,5 +1,8 @@
 package com.nuvola.gxpenses.client.web.application.transaction.renderer;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.cell.client.ValueUpdater;
@@ -17,9 +20,6 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.common.shared.business.Transaction;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class TransactionCell extends AbstractCell<Transaction> {
 

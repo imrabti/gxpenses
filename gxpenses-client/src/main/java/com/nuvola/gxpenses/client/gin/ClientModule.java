@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.gin;
 
+import java.util.List;
+
 import com.google.inject.Singleton;
 import com.gwtplatform.dispatch.rest.client.RestApplicationPath;
 import com.gwtplatform.dispatch.rest.client.gin.RestDispatchAsyncModule;
@@ -17,8 +19,6 @@ import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.GxpensesModule;
 import com.nuvola.gxpenses.common.client.CommonModule;
-
-import java.util.List;
 
 public class ClientModule extends AbstractPresenterModule {
     @Override

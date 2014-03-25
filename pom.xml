@@ -25,7 +25,7 @@
         <!-- client -->
         <gwt.version>2.6.0</gwt.version>
         <gwt-maven-plugin.version>2.6.0</gwt-maven-plugin.version>
-        <gwtp.version>1.2</gwtp.version>
+        <gwtp.version>1.2.1</gwtp.version>
         <guice.version>3.0</guice.version>
         <gin.version>2.1.2</gin.version>
         <gwt-visualization.version>1.0.2</gwt-visualization.version>
@@ -54,21 +54,43 @@
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
         <maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
         <maven-resources-plugin.version>2.5</maven-resources-plugin.version>
-        <maven-tomcat-plugin.version>2.0</maven-tomcat-plugin.version>
+        <maven-checkstyle-plugin.version>2.11</maven-checkstyle-plugin.version>
         <maven-build-helper-plugin.version>1.7</maven-build-helper-plugin.version>
         <servlet-api.version>2.5</servlet-api.version>
 
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>sonatype.snapshots</id>
-            <name>Sonatype snapshot repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <build>
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+
+                    <configuration>
+                        <configLocation>/checkstyle/checkstyle.xml</configLocation>
+                        <suppressionsLocation>/checkstyle/suppressions.xml</suppressionsLocation>
+                        <cacheFile>target/checkstyle-cachefile</cacheFile>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <linkXRef>false</linkXRef>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>checkstyle</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

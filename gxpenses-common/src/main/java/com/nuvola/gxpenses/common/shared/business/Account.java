@@ -1,6 +1,15 @@
+/*
+ * Copyright (c) 2014 by Nuvola Group, Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of Nuvola Group, Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.nuvola.gxpenses.common.shared.business;
 
-import com.nuvola.gxpenses.common.shared.type.AccountType;
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -8,7 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.io.Serializable;
+
+import com.nuvola.gxpenses.common.shared.type.AccountType;
 
 @Entity
 public class Account implements Serializable {

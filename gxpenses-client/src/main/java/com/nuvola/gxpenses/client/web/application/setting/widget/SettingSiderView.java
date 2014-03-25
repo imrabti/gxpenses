@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.setting.widget;
 
+import java.util.Arrays;
+
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -11,8 +13,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.resource.style.list.SiderMenuStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumCell;
-
-import java.util.Arrays;
 
 public class SettingSiderView extends ViewWithUiHandlers<SettingSiderUiHandlers>
         implements SettingSiderPresenter.MyView {

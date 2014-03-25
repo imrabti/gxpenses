@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.budget.popup;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.dom.client.Style;
@@ -28,8 +30,6 @@ import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetElementE
 import com.nuvola.gxpenses.client.web.application.budget.renderer.RemoveBudgetElementCellFactory;
 import com.nuvola.gxpenses.client.web.application.renderer.ClickableIconCell;
 import com.nuvola.gxpenses.common.shared.business.BudgetElement;
-
-import java.util.List;
 
 public class AddBudgetElementView extends PopupViewWithUiHandlers<AddBudgetElementUiHandlers>
         implements AddBudgetElementPresenter.MyView, BudgetElementEditor.Handler {

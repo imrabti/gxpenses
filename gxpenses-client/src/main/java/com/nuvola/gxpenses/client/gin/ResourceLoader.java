@@ -1,8 +1,8 @@
 package com.nuvola.gxpenses.client.gin;
 
-import com.nuvola.gxpenses.client.resource.Resources;
-
 import javax.inject.Inject;
+
+import com.nuvola.gxpenses.client.resource.Resources;
 
 public class ResourceLoader {
     @Inject

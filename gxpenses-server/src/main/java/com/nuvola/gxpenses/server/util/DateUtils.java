@@ -1,11 +1,11 @@
 package com.nuvola.gxpenses.server.util;
 
-import com.nuvola.gxpenses.common.shared.type.FrequencyType;
-import com.nuvola.gxpenses.common.shared.type.PeriodType;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import com.nuvola.gxpenses.common.shared.type.FrequencyType;
+import com.nuvola.gxpenses.common.shared.type.PeriodType;
 
 public class DateUtils {
 

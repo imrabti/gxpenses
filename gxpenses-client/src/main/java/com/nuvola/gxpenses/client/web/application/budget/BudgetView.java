@@ -1,5 +1,8 @@
 package com.nuvola.gxpenses.client.web.application.budget;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.gwt.cell.client.NumberCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.Style;
@@ -33,9 +36,6 @@ import com.nuvola.gxpenses.client.web.application.renderer.AmountCell;
 import com.nuvola.gxpenses.client.web.application.renderer.TowSideTextCell;
 import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 import com.nuvola.gxpenses.common.shared.dto.BudgetProgressTotal;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class BudgetView extends ViewWithUiHandlers<BudgetUiHandlers> implements BudgetPresenter.MyView {
     public interface Binder extends UiBinder<Widget, BudgetView> {

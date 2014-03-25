@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.setting.widget;
 
+import java.util.List;
+
 import com.google.common.base.Strings;
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -17,8 +19,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.resource.style.list.TagListStyle;
 import com.nuvola.gxpenses.client.web.application.setting.renderer.TagCellFactory;
-
-import java.util.List;
 
 public class TagSettingView extends ViewWithUiHandlers<TagSettingUiHandlers> implements TagSettingPresenter.MyView {
     public interface Binder extends UiBinder<Widget, TagSettingView> {

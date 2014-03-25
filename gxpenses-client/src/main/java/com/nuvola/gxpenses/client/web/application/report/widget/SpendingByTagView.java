@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.report.widget;
 
+import java.util.List;
+
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
@@ -18,8 +20,6 @@ import com.nuvola.gxpenses.client.gin.ChartColor;
 import com.nuvola.gxpenses.client.resource.style.list.TopSpendingListStyle;
 import com.nuvola.gxpenses.client.web.application.report.renderer.TopSpendingCell;
 import com.nuvola.gxpenses.common.shared.dto.SpendingByTag;
-
-import java.util.List;
 
 public class SpendingByTagView extends ViewWithUiHandlers<SpendingByTagUiHandlers>
         implements SpendingByTagPresenter.MyView {

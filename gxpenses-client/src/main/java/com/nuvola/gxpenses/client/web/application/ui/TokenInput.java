@@ -1,5 +1,9 @@
 package com.nuvola.gxpenses.client.web.application.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.common.base.Strings;
 import com.google.gwt.cell.client.ActionCell;
 import com.google.gwt.editor.client.LeafValueEditor;
@@ -22,10 +26,6 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.list.TokenListStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.TokenCellFactory;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TokenInput extends Composite implements LeafValueEditor<String> {
     public interface Binder extends UiBinder<Widget, TokenInput> {

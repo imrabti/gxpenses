@@ -1,4 +1,22 @@
+/*
+ * Copyright (c) 2014 by Nuvola Group, Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of Nuvola Group, Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.nuvola.gxpenses.server.service;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nuvola.gxpenses.common.shared.business.Account;
 import com.nuvola.gxpenses.common.shared.business.Transaction;
@@ -6,14 +24,6 @@ import com.nuvola.gxpenses.common.shared.type.TransactionType;
 import com.nuvola.gxpenses.server.repos.AccountRepos;
 import com.nuvola.gxpenses.server.repos.TransactionRepos;
 import com.nuvola.gxpenses.server.security.SecurityContextProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 @Transactional

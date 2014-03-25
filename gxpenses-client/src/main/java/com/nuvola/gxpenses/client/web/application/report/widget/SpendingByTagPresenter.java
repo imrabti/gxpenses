@@ -1,14 +1,14 @@
 package com.nuvola.gxpenses.client.web.application.report.widget;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.common.shared.dto.SpendingByTag;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SpendingByTagPresenter extends PresenterWidget<SpendingByTagPresenter.MyView>
         implements SpendingByTagUiHandlers  {

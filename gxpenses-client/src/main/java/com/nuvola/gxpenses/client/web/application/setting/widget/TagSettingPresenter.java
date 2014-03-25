@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.setting.widget;
 
+import java.util.List;
+
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
@@ -11,8 +13,6 @@ import com.nuvola.gxpenses.client.resource.message.MessageBundle;
 import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
-
-import java.util.List;
 
 public class TagSettingPresenter extends PresenterWidget<TagSettingPresenter.MyView> implements TagSettingUiHandlers {
     public interface MyView extends View, HasUiHandlers<TagSettingUiHandlers> {

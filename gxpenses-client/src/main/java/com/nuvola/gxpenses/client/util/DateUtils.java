@@ -1,10 +1,10 @@
 package com.nuvola.gxpenses.client.util;
 
+import java.util.Date;
+
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.nuvola.gxpenses.common.shared.type.FrequencyType;
 import com.nuvola.gxpenses.common.shared.type.PeriodType;
-
-import java.util.Date;
 
 public class DateUtils {
 

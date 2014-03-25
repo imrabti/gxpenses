@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.budget.popup.ui;
 
+import java.util.Arrays;
+
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -12,8 +14,6 @@ import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.common.client.util.EditorView;
 import com.nuvola.gxpenses.common.shared.business.Budget;
 import com.nuvola.gxpenses.common.shared.type.FrequencyType;
-
-import java.util.Arrays;
 
 public class BudgetEditor extends Composite implements EditorView<Budget> {
     public interface Binder extends UiBinder<HTMLPanel, BudgetEditor> {

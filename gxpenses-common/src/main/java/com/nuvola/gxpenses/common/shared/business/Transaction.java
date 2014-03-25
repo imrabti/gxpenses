@@ -1,6 +1,7 @@
 package com.nuvola.gxpenses.common.shared.business;
 
-import com.nuvola.gxpenses.common.shared.type.TransactionType;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -8,8 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.io.Serializable;
-import java.util.Date;
+
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 @Entity
 public class Transaction implements Serializable {

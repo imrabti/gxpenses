@@ -1,5 +1,8 @@
 package com.nuvola.gxpenses.client.web.application.budget.widget;
 
+import java.util.Date;
+import java.util.List;
+
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -14,9 +17,6 @@ import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsCha
 import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetPresenter;
 import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
 import com.nuvola.gxpenses.common.shared.business.Budget;
-
-import java.util.Date;
-import java.util.List;
 
 public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.MyView>
         implements BudgetSiderUiHandlers, BudgetElementsChangedEvent.BudgetElementsChangedHandler {

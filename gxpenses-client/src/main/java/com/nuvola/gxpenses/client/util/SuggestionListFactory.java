@@ -1,14 +1,14 @@
 package com.nuvola.gxpenses.client.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
 import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SuggestionListFactory {
     private final RestDispatchAsync dispatcher;

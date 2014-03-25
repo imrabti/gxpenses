@@ -1,14 +1,15 @@
 package com.nuvola.gxpenses.server.repos;
 
-import com.nuvola.gxpenses.common.shared.business.Transaction;
-import com.nuvola.gxpenses.common.shared.type.TransactionType;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Date;
-import java.util.List;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 public interface TransactionRepos extends JpaRepository<Transaction, Long> {
     Page<Transaction> findByAccountIdAndDateBetweenAndType(Long accountId, Date from, Date to, TransactionType type,

@@ -1,3 +1,12 @@
+/*
+ * Copyright (c) 2014 by Nuvola Group, Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of Nuvola Group, Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.nuvola.gxpenses.client.web.application.transaction.widget;
 
 import java.util.Arrays;
@@ -64,16 +73,16 @@ public class AccountSiderView extends ViewWithUiHandlers<AccountSiderUiHandlers>
         accountList = new CellList<>(accountCellFactory.create(setupRemoveAction()), siderListResources);
         selectionModel = new SingleSelectionModel<>(keyProvider);
 
-        //Initialize ValueListBox elements
+        // Initialize ValueListBox elements
         periodType.setValue(PeriodType.THIS_MONTH);
         transactionType.setValue(TransactionType.ALL);
         periodType.setAcceptableValues(Arrays.asList(PeriodType.values()));
         transactionType.setAcceptableValues(Arrays.asList(TransactionType.values()));
 
-        //Init The UI Binder
+        // Init The UI Binder
         initWidget(uiBinder.createAndBindUi(this));
 
-        //Set up CSS Style Classes
+        // Set up CSS Style Classes
         addNew.setStylePrimaryName(resources.buttonStyleCss().button());
         addNew.setStyleName(resources.buttonStyleCss().medium(), true);
         addNew.setStyleName(resources.buttonStyleCss().gray(), true);

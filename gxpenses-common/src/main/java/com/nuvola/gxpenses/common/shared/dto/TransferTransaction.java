@@ -1,8 +1,8 @@
 package com.nuvola.gxpenses.common.shared.dto;
 
-import com.nuvola.gxpenses.common.shared.business.Account;
-
 import java.io.Serializable;
+
+import com.nuvola.gxpenses.common.shared.business.Account;
 
 public class TransferTransaction implements Serializable {
     private Account sourceAccount;

@@ -1,5 +1,9 @@
 package com.nuvola.gxpenses.client.web.application.setting.widget;
 
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -10,9 +14,6 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.web.application.setting.widget.ui.PasswordEditor;
 import com.nuvola.gxpenses.common.shared.dto.Password;
-
-import javax.validation.ConstraintViolation;
-import java.util.Set;
 
 public class PasswordSettingView extends ViewWithUiHandlers<PasswordSettingUiHandlers>
         implements PasswordSettingPresenter.MyView {

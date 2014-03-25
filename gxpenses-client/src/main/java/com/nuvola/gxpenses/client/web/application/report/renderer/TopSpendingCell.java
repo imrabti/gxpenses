@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.report.renderer;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -8,8 +10,6 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.ChartColor;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.common.shared.dto.SpendingByTag;
-
-import java.util.List;
 
 public class TopSpendingCell extends AbstractCell<SpendingByTag> {
     public interface Renderer extends UiRenderer {

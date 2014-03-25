@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.transaction.popup.ui;
 
+import java.util.Arrays;
+
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -20,8 +22,6 @@ import com.nuvola.gxpenses.client.web.application.ui.TokenInput;
 import com.nuvola.gxpenses.common.client.util.EditorView;
 import com.nuvola.gxpenses.common.shared.business.Transaction;
 import com.nuvola.gxpenses.common.shared.type.TransactionType;
-
-import java.util.Arrays;
 
 public class TransactionEditor extends Composite implements EditorView<Transaction> {
     public interface Binder extends UiBinder<HTMLPanel, TransactionEditor> {

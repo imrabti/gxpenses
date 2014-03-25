@@ -1,6 +1,5 @@
 package com.nuvola.gxpenses.server.security;
 
-import com.nuvola.gxpenses.common.shared.business.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
@@ -8,6 +7,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import com.nuvola.gxpenses.common.shared.business.User;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {

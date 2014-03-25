@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.transaction;
 
+import java.util.List;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -36,8 +38,6 @@ import com.nuvola.gxpenses.common.shared.dto.PagedTransactions;
 import com.nuvola.gxpenses.common.shared.dto.TransactionFilter;
 import com.nuvola.gxpenses.common.shared.type.PeriodType;
 import com.nuvola.gxpenses.common.shared.type.TransactionType;
-
-import java.util.List;
 
 public class TransactionPresenter extends Presenter<TransactionPresenter.MyView, TransactionPresenter.MyProxy>
         implements TransactionUiHandlers, AccountChangedEvent.AccountChangedHandler,

@@ -1,5 +1,9 @@
 package com.nuvola.gxpenses.client.web.application.setting.widget;
 
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
@@ -13,9 +17,6 @@ import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
 import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
 import com.nuvola.gxpenses.common.shared.business.User;
-
-import javax.validation.ConstraintViolation;
-import java.util.Set;
 
 public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPresenter.MyView>
         implements GeneralSettingUiHandlers {

@@ -1,4 +1,15 @@
+/*
+ * Copyright (c) 2014 by Nuvola Group, Inc., All rights reserved.
+ * This source code, and resulting software, is the confidential and proprietary information
+ * ("Proprietary Information") and is the intellectual property ("Intellectual Property")
+ * of Nuvola Group, Inc. ("The Company"). You shall not disclose such Proprietary Information and
+ * shall use it only in accordance with the terms and conditions of any and all license
+ * agreements you have entered into with The Company.
+ */
+
 package com.nuvola.gxpenses.client.web.application.transaction.popup.ui;
+
+import java.util.Arrays;
 
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -13,8 +24,6 @@ import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.common.client.util.EditorView;
 import com.nuvola.gxpenses.common.shared.business.Account;
 import com.nuvola.gxpenses.common.shared.type.AccountType;
-
-import java.util.Arrays;
 
 public class AccountEditor extends Composite implements EditorView<Account> {
     public interface Binder extends UiBinder<HTMLPanel, AccountEditor> {
@@ -37,7 +46,7 @@ public class AccountEditor extends Composite implements EditorView<Account> {
                   Driver driver) {
         this.driver = driver;
 
-        //Initialize ValusListBox elements
+        // Initialize ValusListBox elements
         type = new ValueListBox<>(new EnumRenderer<AccountType>());
         type.setValue(AccountType.CASH);
         type.setAcceptableValues(Arrays.asList(AccountType.values()));

@@ -1,13 +1,13 @@
 package com.nuvola.gxpenses.client.web.application.renderer;
 
+import java.util.List;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
-
-import java.util.List;
 
 public class TowSideTextCell extends AbstractCell<List<String>> {
 

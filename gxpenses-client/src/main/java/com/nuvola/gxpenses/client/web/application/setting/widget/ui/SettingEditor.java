@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.setting.widget.ui;
 
+import java.util.Arrays;
+
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -13,8 +15,6 @@ import com.nuvola.gxpenses.common.client.util.EditorView;
 import com.nuvola.gxpenses.common.shared.business.User;
 import com.nuvola.gxpenses.common.shared.type.CurrencyType;
 import com.nuvola.gxpenses.common.shared.type.PaginationType;
-
-import java.util.Arrays;
 
 public class SettingEditor extends Composite implements EditorView<User> {
     public interface Binder extends UiBinder<HTMLPanel, SettingEditor> {

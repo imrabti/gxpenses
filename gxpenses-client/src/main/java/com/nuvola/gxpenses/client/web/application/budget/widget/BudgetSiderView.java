@@ -1,5 +1,7 @@
 package com.nuvola.gxpenses.client.web.application.budget.widget;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -18,8 +20,6 @@ import com.nuvola.gxpenses.client.resource.Resources;
 import com.nuvola.gxpenses.client.resource.style.list.SiderListStyle;
 import com.nuvola.gxpenses.client.web.application.budget.renderer.BudgetCell;
 import com.nuvola.gxpenses.common.shared.business.Budget;
-
-import java.util.List;
 
 public class BudgetSiderView extends ViewWithUiHandlers<BudgetSiderUiHandlers> implements BudgetSiderPresenter.MyView {
     public interface Binder extends UiBinder<Widget, BudgetSiderView> {
