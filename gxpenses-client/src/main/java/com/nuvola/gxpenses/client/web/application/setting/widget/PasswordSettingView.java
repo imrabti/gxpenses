@@ -7,10 +7,9 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.PasswordProxy;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.web.application.setting.widget.ui.PasswordEditor;
+import com.nuvola.gxpenses.common.shared.dto.Password;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -26,11 +25,8 @@ public class PasswordSettingView extends ViewWithUiHandlers<PasswordSettingUiHan
     HTML errors;
 
     @Inject
-    public PasswordSettingView(final Binder uiBinder,
-                               final UiHandlersStrategy<PasswordSettingUiHandlers> uiHandlers,
-                               final PasswordEditor passwordEditor) {
-        super(uiHandlers);
-
+    PasswordSettingView(Binder uiBinder,
+                        PasswordEditor passwordEditor) {
         this.passwordEditor = passwordEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -39,14 +35,14 @@ public class PasswordSettingView extends ViewWithUiHandlers<PasswordSettingUiHan
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        PasswordProxy password = passwordEditor.get();
+        Password password = passwordEditor.get();
         if (password != null) {
             getUiHandlers().savePassword(password);
         }
     }
 
     @Override
-    public void edit(PasswordProxy password) {
+    public void edit(Password password) {
         passwordEditor.edit(password);
     }
 

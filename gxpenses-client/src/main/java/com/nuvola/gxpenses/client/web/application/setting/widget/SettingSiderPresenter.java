@@ -14,7 +14,8 @@ public class SettingSiderPresenter extends PresenterWidget<SettingSiderPresenter
     }
 
     @Inject
-    public SettingSiderPresenter(EventBus eventBus, MyView view) {
+    SettingSiderPresenter(EventBus eventBus,
+                          MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);
