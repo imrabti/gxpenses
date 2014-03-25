@@ -10,14 +10,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ValuePicker;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.place.PlaceType;
 import com.nuvola.gxpenses.client.resource.style.list.NavigationListStyle;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumCell;
 
 public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements HeaderPresenter.MyView {
-
     public interface Binder extends UiBinder<Widget, HeaderView> {
     }
 
@@ -27,11 +25,8 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     Label username;
 
     @Inject
-    public HeaderView(final Binder uiBinder,
-                      final UiHandlersStrategy<HeaderUiHandlers> uiHandlers,
-                      final NavigationListStyle listResources) {
-        super(uiHandlers);
-
+    HeaderView(Binder uiBinder,
+               NavigationListStyle listResources) {
         CellList<PlaceType> placeList = new CellList<PlaceType>(new EnumCell<PlaceType>(), listResources);
         placesBox = new ValuePicker<PlaceType>(placeList);
 
@@ -70,5 +65,4 @@ public class HeaderView extends ViewWithUiHandlers<HeaderUiHandlers> implements 
     void onLogoutClicked(ClickEvent event) {
         getUiHandlers().clearCredential();
     }
-
 }

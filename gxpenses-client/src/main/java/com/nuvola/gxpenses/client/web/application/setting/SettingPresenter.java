@@ -8,7 +8,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.event.SetVisibleSiderEvent;
 import com.nuvola.gxpenses.client.place.NameTokens;
 import com.nuvola.gxpenses.client.security.LoggedInGatekeeper;
@@ -38,12 +37,14 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
     private final TagSettingPresenter tagSettingPresenter;
 
     @Inject
-    public SettingPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-                            final SettingSiderPresenter settingSiderPresenter,
-                            final GeneralSettingPresenter generalSettingPresenter,
-                            final PasswordSettingPresenter passwordSettingPresenter,
-                            final TagSettingPresenter tagSettingPresenter) {
-        super(eventBus, view, proxy);
+    SettingPresenter(EventBus eventBus,
+                     MyView view,
+                     MyProxy proxy,
+                     SettingSiderPresenter settingSiderPresenter,
+                     GeneralSettingPresenter generalSettingPresenter,
+                     PasswordSettingPresenter passwordSettingPresenter,
+                     TagSettingPresenter tagSettingPresenter) {
+        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
 
         this.settingSiderPresenter = settingSiderPresenter;
         this.generalSettingPresenter = generalSettingPresenter;
@@ -67,11 +68,6 @@ public class SettingPresenter extends Presenter<SettingPresenter.MyView, Setting
                 setInSlot(TYPE_SetMainContent, generalSettingPresenter);
                 break;
         }
-    }
-
-    @Override
-    protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
 
     @Override

@@ -12,7 +12,8 @@ public class SpendingOverTimePresenter extends PresenterWidget<SpendingOverTimeP
     }
 
     @Inject
-    public SpendingOverTimePresenter(EventBus eventBus, MyView view) {
+    SpendingOverTimePresenter(EventBus eventBus,
+                              MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

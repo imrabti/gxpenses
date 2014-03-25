@@ -16,5 +16,5 @@ public interface SessionService extends RestService {
     RestAction<User> getSession();
 
     @POST
-    RestAction<Void> createNewSession(UserCredentials userCredentials);
+    RestAction<Boolean> createNewSession(UserCredentials userCredentials);
 }

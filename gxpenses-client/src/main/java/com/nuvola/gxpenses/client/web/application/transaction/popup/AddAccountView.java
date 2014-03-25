@@ -8,10 +8,9 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.ui.AccountEditor;
+import com.nuvola.gxpenses.common.shared.business.Account;
 
 public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers>
         implements AddAccountPresenter.MyView {
@@ -24,10 +23,11 @@ public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers
     AccountEditor accountEditor;
 
     @Inject
-    public AddAccountView(final EventBus eventBus, final Binder uiBinder,
-                          final UiHandlersStrategy<AddAccountUiHandlers> uiHandlersStrategy,
-                          final AccountEditor accountEditor) {
-        super(eventBus, uiHandlersStrategy);
+    AddAccountView(EventBus eventBus,
+                   Binder uiBinder,
+                   AccountEditor accountEditor) {
+        super(eventBus);
+
         this.accountEditor = accountEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -41,13 +41,13 @@ public class AddAccountView extends PopupViewWithUiHandlers<AddAccountUiHandlers
     }
 
     @Override
-    public void edit(AccountProxy account) {
+    public void edit(Account account) {
         accountEditor.edit(account);
     }
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        AccountProxy account = accountEditor.get();
+        Account account = accountEditor.get();
         if (account != null) {
             getUiHandlers().saveAccount(account);
             hide();

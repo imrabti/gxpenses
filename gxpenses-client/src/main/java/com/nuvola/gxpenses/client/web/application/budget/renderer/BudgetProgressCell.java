@@ -11,10 +11,10 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.request.proxy.BudgetElementProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
+import com.nuvola.gxpenses.common.shared.business.BudgetElement;
 
-public class BudgetProgressCell extends AbstractCell<BudgetElementProxy> {
+public class BudgetProgressCell extends AbstractCell<BudgetElement> {
     public interface Template extends SafeHtmlTemplates {
         @Template("<div class=\"{2}\"><span style=\"{1}\">" +
                   "<div style=\"margin-right: 6px;\">{0}</div></span></div>")
@@ -29,15 +29,16 @@ public class BudgetProgressCell extends AbstractCell<BudgetElementProxy> {
     private final String currency;
 
     @Inject
-    public BudgetProgressCell(final Template template, final Resources resources,
-                              @Currency String currency) {
+    BudgetProgressCell(Template template,
+                       Resources resources,
+                       @Currency String currency) {
         this.template = template;
         this.resources = resources;
         this.currency = currency;
     }
 
     @Override
-    public void render(Context context, BudgetElementProxy value, SafeHtmlBuilder sb) {
+    public void render(Context context, BudgetElement value, SafeHtmlBuilder sb) {
         NumberFormat format = NumberFormat.getFormat("###,##0.00");
         Integer percentage = (int)((Objects.firstNonNull(value.getConsumedAmount(), 0d) * 100) / value.getAmount());
 

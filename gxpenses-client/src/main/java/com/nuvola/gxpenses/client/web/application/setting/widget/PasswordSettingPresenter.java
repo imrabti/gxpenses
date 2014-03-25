@@ -2,15 +2,16 @@ package com.nuvola.gxpenses.client.web.application.setting.widget;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
-import com.nuvola.gxpenses.client.request.UserRequest;
-import com.nuvola.gxpenses.client.request.proxy.PasswordProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
+import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
+import com.nuvola.gxpenses.common.shared.dto.Password;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -18,25 +19,29 @@ import java.util.Set;
 public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPresenter.MyView>
         implements PasswordSettingUiHandlers {
     public interface MyView extends View, HasUiHandlers<PasswordSettingUiHandlers> {
-        void edit(PasswordProxy password);
+        void edit(Password password);
 
         void showErrors(Set<ConstraintViolation<?>> violations);
 
         void clearErrors();
     }
 
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final UserService userService;
     private final SecurityUtils securityUtils;
     private final MessageBundle messageBundle;
 
-    private UserRequest currentContext;
-
     @Inject
-    public PasswordSettingPresenter(EventBus eventBus, MyView view, final GxpensesRequestFactory requestFactory,
-                                    final MessageBundle messageBundle, final SecurityUtils securityUtils) {
+    PasswordSettingPresenter(EventBus eventBus,
+                             MyView view,
+                             RestDispatchAsync dispatcher,
+                             UserService userService,
+                             MessageBundle messageBundle,
+                             SecurityUtils securityUtils) {
         super(eventBus, view);
 
-        this.requestFactory = requestFactory;
+        this.dispatcher = dispatcher;
+        this.userService = userService;
         this.messageBundle = messageBundle;
         this.securityUtils = securityUtils;
 
@@ -44,20 +49,15 @@ public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPre
     }
 
     @Override
-    public void savePassword(final PasswordProxy password) {
-        currentContext.updatePassword(password).fire(new ReceiverImpl<Void>() {
+    public void savePassword(final Password password) {
+        dispatcher.execute(userService.password().updatePassword(password), new AsyncCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onReceive(Void response) {
                 securityUtils.updatePassword(password.getNewPassword());
                 GlobalMessageEvent.fire(this, messageBundle.passwordUpdated());
 
                 initAndEditPassword();
                 getView().clearErrors();
-            }
-
-            @Override
-            public void onConstraintViolation(Set<ConstraintViolation<?>> violations) {
-                getView().showErrors(violations);
             }
         });
     }
@@ -69,8 +69,7 @@ public class PasswordSettingPresenter extends PresenterWidget<PasswordSettingPre
     }
 
     private void initAndEditPassword() {
-        currentContext = requestFactory.userService();
-        PasswordProxy password = currentContext.create(PasswordProxy.class);
+        Password password = new Password();
         getView().edit(password);
     }
 }

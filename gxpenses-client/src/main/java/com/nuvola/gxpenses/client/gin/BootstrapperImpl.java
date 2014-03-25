@@ -59,7 +59,7 @@ public class BootstrapperImpl implements Bootstrapper {
     }
 
     private void onGetCurrentUser() {
-        if (currentUser == null) {
+        if (currentUser.getUser() == null) {
             bounceToLogin();
         } else {
             suggestionListFactory.getListPayee();

@@ -4,7 +4,6 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.SuggestOracle;
 
 public class MultipleSuggestBox extends SuggestBox {
-
     public MultipleSuggestBox() {
     }
 
@@ -49,5 +48,4 @@ public class MultipleSuggestBox extends SuggestBox {
             }
         }
     }
-
 }

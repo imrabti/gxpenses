@@ -1,34 +1,36 @@
 package com.nuvola.gxpenses.client.web.application.transaction.widget;
 
+import java.util.List;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
-import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
+import com.nuvola.gxpenses.client.rest.AccountService;
 import com.nuvola.gxpenses.client.util.ValueListFactory;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountBalanceChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.AccountChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.event.TransactionFiltreChangedEvent;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.AddAccountPresenter;
 import com.nuvola.gxpenses.client.web.application.transaction.popup.TransferTransactionPresenter;
-import com.nuvola.gxpenses.shared.type.PeriodType;
-import com.nuvola.gxpenses.shared.type.TransactionType;
-
-import java.util.List;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
+import com.nuvola.gxpenses.common.shared.business.Account;
+import com.nuvola.gxpenses.common.shared.type.PeriodType;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter.MyView>
         implements AccountSiderUiHandlers, AccountBalanceChangedEvent.AccountBalanceChangedHandler,
         PopupClosedEvent.PopupClosedHandler {
     public interface MyView extends View, HasUiHandlers<AccountSiderUiHandlers> {
-        void setData(List<AccountProxy> accounts);
+        void setData(List<Account> accounts);
 
         void showTransferButton(Boolean visible);
 
@@ -37,7 +39,8 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
         void clearSelection();
     }
 
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final AccountService accountService;
     private final AddAccountPresenter addAccountPresenter;
     private final TransferTransactionPresenter transferTransactionPresenter;
     private final MessageBundle messageBundle;
@@ -47,16 +50,19 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     private TransactionType currentTransactionType;
 
     @Inject
-    public AccountSiderPresenter(EventBus eventBus, MyView view,
-                                 final MessageBundle messageBundle,
-                                 final GxpensesRequestFactory requestFactory,
-                                 final AddAccountPresenter addAccountPresenter,
-                                 final TransferTransactionPresenter transferTransactionPresenter,
-                                 final ValueListFactory valueListFactory) {
+    AccountSiderPresenter(EventBus eventBus,
+                          MyView view,
+                          MessageBundle messageBundle,
+                          RestDispatchAsync dispatcher,
+                          AccountService accountService,
+                          AddAccountPresenter addAccountPresenter,
+                          TransferTransactionPresenter transferTransactionPresenter,
+                          ValueListFactory valueListFactory) {
         super(eventBus, view);
 
         this.messageBundle = messageBundle;
-        this.requestFactory = requestFactory;
+        this.dispatcher = dispatcher;
+        this.accountService = accountService;
         this.addAccountPresenter = addAccountPresenter;
         this.transferTransactionPresenter = transferTransactionPresenter;
         this.valueListFactory = valueListFactory;
@@ -90,12 +96,12 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     }
 
     @Override
-    public void removeAccount(AccountProxy account) {
+    public void removeAccount(Account account) {
         Boolean decision = Window.confirm(messageBundle.accountConf());
         if (decision) {
-            requestFactory.accountService().removeAccount(account.getId()).fire(new ReceiverImpl<Void>() {
+            dispatcher.execute(accountService.removeAccount(account.getId()), new AsyncCallbackImpl<Void>() {
                 @Override
-                public void onSuccess(Void aVoid) {
+                public void onReceive(Void response) {
                     valueListFactory.updateListAccount();
                     AccountChangedEvent.fire(this);
                     GlobalMessageEvent.fire(this, messageBundle.accountRemoved());
@@ -106,7 +112,7 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     }
 
     @Override
-    public void accountSelected(AccountProxy account) {
+    public void accountSelected(Account account) {
         AccountChangedEvent.fire(this, account, currentPeriodType, currentTransactionType);
     }
 
@@ -134,13 +140,13 @@ public class AccountSiderPresenter extends PresenterWidget<AccountSiderPresenter
     }
 
     private void fireLoadListAccounts() {
-        requestFactory.accountService().findAllAccountsByUserId().fire(new ReceiverImpl<List<AccountProxy>>() {
+        dispatcher.execute(accountService.findAllAccounts(), new AsyncCallbackImpl<List<Account>>() {
             @Override
-            public void onSuccess(List<AccountProxy> accounts) {
-                getView().showTransferButton(accounts.size() >= 2);
-                getView().setData(accounts);
+            public void onReceive(List<Account> response) {
+                getView().showTransferButton(response.size() >= 2);
+                getView().setData(response);
 
-                NoElementFoundEvent.fire(this, accounts.size());
+                NoElementFoundEvent.fire(this, response.size());
             }
         });
     }

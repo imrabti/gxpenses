@@ -11,7 +11,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.Currency;
 import com.nuvola.gxpenses.client.resource.Resources;
-import com.nuvola.gxpenses.shared.dto.BudgetProgressTotal;
+import com.nuvola.gxpenses.common.shared.dto.BudgetProgressTotal;
 
 public class BudgetProgressFooterCell extends AbstractCell<BudgetProgressTotal> {
     public interface Template extends SafeHtmlTemplates {
@@ -28,8 +28,9 @@ public class BudgetProgressFooterCell extends AbstractCell<BudgetProgressTotal> 
     private final String currency;
 
     @Inject
-    public BudgetProgressFooterCell(final Template template, final Resources resources,
-                                    @Currency String currency) {
+    BudgetProgressFooterCell(Template template,
+                             Resources resources,
+                             @Currency String currency) {
         this.template = template;
         this.resources = resources;
         this.currency = currency;

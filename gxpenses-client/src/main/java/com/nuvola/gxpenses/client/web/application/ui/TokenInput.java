@@ -39,8 +39,10 @@ public class TokenInput extends Composite implements LeafValueEditor<String> {
     private final ListDataProvider<String> dataProvider;
 
     @Inject
-    public TokenInput(final Binder uiBinder, final TokenListStyle tokenListStyle,
-                      final TokenCellFactory tokenCellFactory, final Resources resources) {
+    TokenInput(Binder uiBinder,
+               TokenListStyle tokenListStyle,
+               TokenCellFactory tokenCellFactory,
+               Resources resources) {
 
         dataProvider = new ListDataProvider<String>();
         itemBox = new SuggestBox(new MultiWordSuggestOracle());

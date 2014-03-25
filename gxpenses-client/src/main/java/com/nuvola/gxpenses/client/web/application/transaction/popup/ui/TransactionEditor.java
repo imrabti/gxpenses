@@ -13,22 +13,21 @@ import com.google.gwt.user.client.ui.SuggestBox.DefaultSuggestionDisplay;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
 import com.nuvola.gxpenses.client.resource.Resources;
-import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.util.SuggestionListFactory;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
 import com.nuvola.gxpenses.client.web.application.ui.TokenInput;
-import com.nuvola.gxpenses.shared.type.TransactionType;
+import com.nuvola.gxpenses.common.client.util.EditorView;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 import java.util.Arrays;
 
-public class TransactionEditor extends Composite implements EditorView<TransactionProxy> {
-
+public class TransactionEditor extends Composite implements EditorView<Transaction> {
     public interface Binder extends UiBinder<HTMLPanel, TransactionEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<TransactionProxy, TransactionEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<Transaction, TransactionEditor> {
     }
 
     @UiField(provided = true)
@@ -46,9 +45,11 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
     private final SuggestionListFactory suggestionListFactory;
 
     @Inject
-    public TransactionEditor(final Binder uiBinder, final Driver driver,
-                             final TokenInput tags, final Resources resources,
-                             final SuggestionListFactory suggestionListFactory) {
+    TransactionEditor(Binder uiBinder,
+                      Driver driver,
+                      TokenInput tags,
+                      Resources resources,
+                      SuggestionListFactory suggestionListFactory) {
         this.driver = driver;
         this.tags = tags;
         this.suggestionListFactory = suggestionListFactory;
@@ -71,15 +72,15 @@ public class TransactionEditor extends Composite implements EditorView<Transacti
     }
 
     @Override
-    public void edit(TransactionProxy transaction) {
+    public void edit(Transaction transaction) {
         initSuggestionList();
         payee.setFocus(true);
         driver.edit(transaction);
     }
 
     @Override
-    public TransactionProxy get() {
-        TransactionProxy transaction = driver.flush();
+    public Transaction get() {
+        Transaction transaction = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {

@@ -3,9 +3,9 @@ package com.nuvola.gxpenses.client.web.application.transaction.event;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
-import com.nuvola.gxpenses.shared.type.PeriodType;
-import com.nuvola.gxpenses.shared.type.TransactionType;
+import com.nuvola.gxpenses.common.shared.business.Account;
+import com.nuvola.gxpenses.common.shared.type.PeriodType;
+import com.nuvola.gxpenses.common.shared.type.TransactionType;
 
 public class AccountChangedEvent extends GwtEvent<AccountChangedEvent.AccountChangedHandler> {
     public static Type<AccountChangedHandler> TYPE = new Type<AccountChangedHandler>();
@@ -14,20 +14,22 @@ public class AccountChangedEvent extends GwtEvent<AccountChangedEvent.AccountCha
         void onAccountChanged(AccountChangedEvent event);
     }
 
-    private AccountProxy account;
+    private Account account;
     private PeriodType periodeFilter;
     private TransactionType typeFilter;
 
     public AccountChangedEvent() {
     }
 
-    public AccountChangedEvent(AccountProxy account, PeriodType periodeFilter, TransactionType typeFilter) {
+    public AccountChangedEvent(Account account,
+                               PeriodType periodeFilter,
+                               TransactionType typeFilter) {
         this.account = account;
         this.periodeFilter = periodeFilter;
         this.typeFilter = typeFilter;
     }
 
-    public AccountProxy getAccount() {
+    public Account getAccount() {
         return account;
     }
 
@@ -52,8 +54,7 @@ public class AccountChangedEvent extends GwtEvent<AccountChangedEvent.AccountCha
         source.fireEvent(new AccountChangedEvent());
     }
 
-    public static void fire(HasHandlers source, AccountProxy account, PeriodType periodeFilter,
-                            TransactionType typeFilter) {
+    public static void fire(HasHandlers source, Account account, PeriodType periodeFilter, TransactionType typeFilter) {
         source.fireEvent(new AccountChangedEvent(account, periodeFilter, typeFilter));
     }
 

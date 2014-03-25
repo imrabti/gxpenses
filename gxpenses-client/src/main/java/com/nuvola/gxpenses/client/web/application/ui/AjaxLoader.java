@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.resource.Resources;
 
 public class AjaxLoader extends Widget implements HasText {
-
     private Timer delayedTimer = new Timer() {
         @Override
         public void run() {
@@ -17,7 +16,7 @@ public class AjaxLoader extends Widget implements HasText {
     };
 
     @Inject
-    public AjaxLoader(final Resources resources) {
+    AjaxLoader(Resources resources) {
         setElement(DOM.createElement("div"));
         getElement().setInnerText("Loading...");
         setStyleName(getElement(), resources.generalStyleCss().ajaxLoader());
@@ -42,5 +41,4 @@ public class AjaxLoader extends Widget implements HasText {
     public void setText(String text) {
         getElement().setInnerText(text);
     }
-
 }

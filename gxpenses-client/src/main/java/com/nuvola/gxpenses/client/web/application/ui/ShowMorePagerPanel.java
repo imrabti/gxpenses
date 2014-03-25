@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.HasRows;
 
 public class ShowMorePagerPanel extends AbstractPager {
-
     private static final int DEFAULT_INCREMENT = 20;
 
     private int incrementSize = DEFAULT_INCREMENT;
@@ -69,5 +68,4 @@ public class ShowMorePagerPanel extends AbstractPager {
     @Override
     protected void onRangeOrRowCountChanged() {
     }
-
 }

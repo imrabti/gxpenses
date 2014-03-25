@@ -15,7 +15,8 @@ public class SiderHolderPresenter extends PresenterWidget<SiderHolderPresenter.M
     public static final Object TYPE_SetSiderContent = new Object();
 
     @Inject
-    public SiderHolderPresenter(final EventBus eventBus, final MyView view) {
+    SiderHolderPresenter(EventBus eventBus,
+                         MyView view) {
         super(eventBus, view);
     }
 
@@ -29,5 +30,4 @@ public class SiderHolderPresenter extends PresenterWidget<SiderHolderPresenter.M
     protected void onBind() {
         addRegisteredHandler(SetVisibleSiderEvent.getType(), this);
     }
-
 }

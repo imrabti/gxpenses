@@ -8,13 +8,12 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
-import com.nuvola.gxpenses.client.event.RequestEvent;
 import com.nuvola.gxpenses.client.web.GxpensesPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.HeaderPresenter;
 import com.nuvola.gxpenses.client.web.application.widget.SiderHolderPresenter;
+import com.nuvola.gxpenses.common.client.event.RequestEvent;
 
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
         implements GlobalMessageEvent.GlobalMessageHandler, RequestEvent.RequestEventHandler {
@@ -41,10 +40,12 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
     private final SiderHolderPresenter siderHolderPresenter;
 
     @Inject
-    public ApplicationPresenter(final EventBus eventBus, final MyView view,
-                                final MyProxy proxy, final HeaderPresenter headerPresenter,
-                                final SiderHolderPresenter siderHolderPresenter) {
-        super(eventBus, view, proxy);
+    ApplicationPresenter(EventBus eventBus,
+                         MyView view,
+                         MyProxy proxy,
+                         HeaderPresenter headerPresenter,
+                         SiderHolderPresenter siderHolderPresenter) {
+        super(eventBus, view, proxy, GxpensesPresenter.TYPE_SetMainContent);
 
         this.headerPresenter = headerPresenter;
         this.siderHolderPresenter = siderHolderPresenter;
@@ -62,11 +63,6 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
         } else {
             getView().hideAjaxLoader();
         }
-    }
-
-    @Override
-    protected void revealInParent() {
-        RevealContentEvent.fire(this, GxpensesPresenter.TYPE_SetMainContent, this);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
-import com.nuvola.gxpenses.shared.dto.SpendingByTag;
+import com.nuvola.gxpenses.common.shared.dto.SpendingByTag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,8 @@ public class SpendingByTagPresenter extends PresenterWidget<SpendingByTagPresent
     }
 
     @Inject
-    public SpendingByTagPresenter(EventBus eventBus, MyView view) {
+    SpendingByTagPresenter(EventBus eventBus,
+                           MyView view) {
         super(eventBus, view);
 
         getView().setUiHandlers(this);

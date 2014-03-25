@@ -7,7 +7,7 @@ import com.google.gwt.uibinder.client.UiRenderer;
 import com.google.inject.Inject;
 import com.nuvola.gxpenses.client.gin.ChartColor;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.shared.dto.SpendingByTag;
+import com.nuvola.gxpenses.common.shared.dto.SpendingByTag;
 
 import java.util.List;
 

@@ -15,7 +15,6 @@ import java.util.List;
 
 @Component("userDetailsService")
 public class StatelessUserDetailService implements UserDetailsService {
-
     @Autowired
     private UserRepos userRepos;
 
@@ -30,5 +29,4 @@ public class StatelessUserDetailService implements UserDetailsService {
             return new User(user.getEmail(), user.getPassword(), authorities);
         }
     }
-
 }

@@ -3,6 +3,7 @@ package com.nuvola.gxpenses.client.web.application.transaction.renderer;
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ActionCell.Delegate;
 import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
@@ -15,12 +16,12 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.nuvola.gxpenses.client.gin.Currency;
-import com.nuvola.gxpenses.client.request.proxy.TransactionProxy;
+import com.nuvola.gxpenses.common.shared.business.Transaction;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class TransactionCell extends AbstractCell<TransactionProxy> {
+public class TransactionCell extends AbstractCell<Transaction> {
 
     public interface Template extends SafeHtmlTemplates {
         @Template("<span class=\"removeButton\"></span><div style=\"float:left;\" class=\"date\">{0}</div>" +
@@ -40,14 +41,15 @@ public class TransactionCell extends AbstractCell<TransactionProxy> {
     }
 
     private final Template template;
-    private final Delegate<TransactionProxy> delegate;
+    private final Delegate<Transaction> delegate;
     private final NumberFormat numberFormat;
     private final DateTimeFormat dateFormat;
 
     @Inject
-    public TransactionCell(final Template template, @Currency String currency,
-                           @Assisted Delegate<TransactionProxy> delegate) {
-        super("click");
+    TransactionCell(Template template,
+                    @Currency String currency,
+                    @Assisted Delegate<Transaction> delegate) {
+        super(BrowserEvents.CLICK);
 
         this.template = template;
         this.delegate = delegate;
@@ -57,8 +59,8 @@ public class TransactionCell extends AbstractCell<TransactionProxy> {
     }
 
     @Override
-    public void onBrowserEvent(Context context, Element parent, TransactionProxy value, NativeEvent event,
-                               ValueUpdater<TransactionProxy> valueUpdater) {
+    public void onBrowserEvent(Context context, Element parent, Transaction value, NativeEvent event,
+                               ValueUpdater<Transaction> valueUpdater) {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
         if ("click".equals(event.getType())) {
             EventTarget eventTarget = event.getEventTarget();
@@ -73,7 +75,7 @@ public class TransactionCell extends AbstractCell<TransactionProxy> {
     }
 
     @Override
-    public void render(Context context, TransactionProxy value, SafeHtmlBuilder sb) {
+    public void render(Context context, Transaction value, SafeHtmlBuilder sb) {
         if (value != null) {
             SafeHtml safeDate = SafeHtmlUtils.fromString(dateFormat.format(value.getDate()));
             SafeHtml safePayee = SafeHtmlUtils.fromString(value.getPayee());

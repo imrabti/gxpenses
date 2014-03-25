@@ -8,10 +8,9 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
-import com.nuvola.gxpenses.client.mvp.PopupViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
+import com.gwtplatform.mvp.client.PopupViewWithUiHandlers;
 import com.nuvola.gxpenses.client.web.application.budget.popup.ui.BudgetEditor;
+import com.nuvola.gxpenses.common.shared.business.Budget;
 
 public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> implements AddBudgetPresenter.MyView {
     public interface Binder extends UiBinder<PopupPanel, AddBudgetView> {
@@ -23,10 +22,10 @@ public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> i
     BudgetEditor budgetEditor;
 
     @Inject
-    public AddBudgetView(final EventBus eventBus, final Binder uiBinder,
-                         final UiHandlersStrategy<AddBudgetUiHandler> uiHandlersStrategy,
-                         final BudgetEditor budgetEditor) {
-        super(eventBus, uiHandlersStrategy);
+    AddBudgetView(EventBus eventBus,
+                  Binder uiBinder,
+                  BudgetEditor budgetEditor) {
+        super(eventBus);
 
         this.budgetEditor = budgetEditor;
 
@@ -41,13 +40,13 @@ public class AddBudgetView extends PopupViewWithUiHandlers<AddBudgetUiHandler> i
     }
 
     @Override
-    public void edit(BudgetProxy budget) {
+    public void edit(Budget budget) {
         budgetEditor.edit(budget);
     }
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        BudgetProxy budget = budgetEditor.get();
+        Budget budget = budgetEditor.get();
         if (budget != null) {
             getUiHandlers().saveBudget(budget);
             hide();

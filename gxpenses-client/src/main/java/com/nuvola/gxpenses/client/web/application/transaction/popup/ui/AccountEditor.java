@@ -9,18 +9,18 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.proxy.AccountProxy;
-import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
-import com.nuvola.gxpenses.shared.type.AccountType;
+import com.nuvola.gxpenses.common.client.util.EditorView;
+import com.nuvola.gxpenses.common.shared.business.Account;
+import com.nuvola.gxpenses.common.shared.type.AccountType;
 
 import java.util.Arrays;
 
-public class AccountEditor extends Composite implements EditorView<AccountProxy> {
+public class AccountEditor extends Composite implements EditorView<Account> {
     public interface Binder extends UiBinder<HTMLPanel, AccountEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<AccountProxy, AccountEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<Account, AccountEditor> {
     }
 
     @UiField
@@ -33,11 +33,12 @@ public class AccountEditor extends Composite implements EditorView<AccountProxy>
     private final Driver driver;
 
     @Inject
-    public AccountEditor(final Binder uiBinder, final Driver driver) {
+    AccountEditor(Binder uiBinder,
+                  Driver driver) {
         this.driver = driver;
 
         //Initialize ValusListBox elements
-        type = new ValueListBox<AccountType>(new EnumRenderer<AccountType>());
+        type = new ValueListBox<>(new EnumRenderer<AccountType>());
         type.setValue(AccountType.CASH);
         type.setAcceptableValues(Arrays.asList(AccountType.values()));
 
@@ -46,14 +47,14 @@ public class AccountEditor extends Composite implements EditorView<AccountProxy>
     }
 
     @Override
-    public void edit(AccountProxy account) {
+    public void edit(Account account) {
         name.setFocus(true);
         driver.edit(account);
     }
 
     @Override
-    public AccountProxy get() {
-        AccountProxy account = driver.flush();
+    public Account get() {
+        Account account = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {

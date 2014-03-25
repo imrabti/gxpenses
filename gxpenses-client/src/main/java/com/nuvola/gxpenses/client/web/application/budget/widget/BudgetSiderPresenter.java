@@ -3,15 +3,17 @@ package com.nuvola.gxpenses.client.web.application.budget.widget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
-import com.nuvola.gxpenses.client.request.proxy.BudgetProxy;
+import com.nuvola.gxpenses.client.rest.BudgetService;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.event.BudgetElementsChangedEvent;
 import com.nuvola.gxpenses.client.web.application.budget.popup.AddBudgetPresenter;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
+import com.nuvola.gxpenses.common.shared.business.Budget;
 
 import java.util.Date;
 import java.util.List;
@@ -19,21 +21,25 @@ import java.util.List;
 public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.MyView>
         implements BudgetSiderUiHandlers, BudgetElementsChangedEvent.BudgetElementsChangedHandler {
     public interface MyView extends View, HasUiHandlers<BudgetSiderUiHandlers> {
-        void setData(List<BudgetProxy> budgets);
+        void setData(List<Budget> budgets);
 
         void clearSelection();
     }
 
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final BudgetService budgetService;
     private final AddBudgetPresenter addBudgetPresenter;
 
     @Inject
-    public BudgetSiderPresenter(EventBus eventBus, MyView view,
-                                final GxpensesRequestFactory requestFactory,
-                                final AddBudgetPresenter addBudgetPresenter) {
+    BudgetSiderPresenter(EventBus eventBus,
+                         MyView view,
+                         RestDispatchAsync dispatcher,
+                         BudgetService budgetService,
+                         AddBudgetPresenter addBudgetPresenter) {
         super(eventBus, view);
 
-        this.requestFactory = requestFactory;
+        this.dispatcher = dispatcher;
+        this.budgetService = budgetService;
         this.addBudgetPresenter = addBudgetPresenter;
 
         getView().setUiHandlers(this);
@@ -46,7 +52,7 @@ public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.M
     }
 
     @Override
-    public void budgetSelected(BudgetProxy budget) {
+    public void budgetSelected(Budget budget) {
         BudgetChangedEvent.fire(this, budget);
     }
 
@@ -71,12 +77,11 @@ public class BudgetSiderPresenter extends PresenterWidget<BudgetSiderPresenter.M
     }
 
     private void fireLoadListBudgets() {
-        requestFactory.budgetService().findAllBudgetsByUserId(new Date()).fire(new ReceiverImpl<List<BudgetProxy>>() {
+        dispatcher.execute(budgetService.findAllBudgets(new Date()), new AsyncCallbackImpl<List<Budget>>() {
             @Override
-            public void onSuccess(List<BudgetProxy> budgets) {
-                getView().setData(budgets);
-
-                NoElementFoundEvent.fire(this, budgets.size());
+            public void onReceive(List<Budget> response) {
+                getView().setData(response);
+                NoElementFoundEvent.fire(this, response.size());
             }
         });
     }
