@@ -2,15 +2,17 @@ package com.nuvola.gxpenses.client.web.application.setting.widget;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.rest.client.RestDispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
-import com.nuvola.gxpenses.client.request.ReceiverImpl;
-import com.nuvola.gxpenses.client.request.UserRequest;
-import com.nuvola.gxpenses.client.request.proxy.UserProxy;
 import com.nuvola.gxpenses.client.resource.message.MessageBundle;
+import com.nuvola.gxpenses.client.rest.SessionService;
+import com.nuvola.gxpenses.client.rest.UserService;
 import com.nuvola.gxpenses.client.security.SecurityUtils;
+import com.nuvola.gxpenses.common.client.rest.AsyncCallbackImpl;
+import com.nuvola.gxpenses.common.shared.business.User;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -19,25 +21,32 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
         implements GeneralSettingUiHandlers {
 
     public interface MyView extends View, HasUiHandlers<GeneralSettingUiHandlers> {
-        void edit(UserProxy user);
+        void edit(User user);
 
         void showErrors(Set<ConstraintViolation<?>> violations);
 
         void clearErrors();
     }
 
-    private final GxpensesRequestFactory requestFactory;
+    private final RestDispatchAsync dispatcher;
+    private final UserService userService;
+    private final SessionService sessionService;
     private final SecurityUtils securityUtils;
     private final MessageBundle messageBundle;
 
-    private UserRequest currentContext;
-
     @Inject
-    public GeneralSettingPresenter(EventBus eventBus, MyView view, final GxpensesRequestFactory requestFactory,
-                                   final MessageBundle messageBundle, final SecurityUtils securityUtils) {
+    GeneralSettingPresenter(EventBus eventBus,
+                            MyView view,
+                            RestDispatchAsync dispatcher,
+                            UserService userService,
+                            SessionService sessionService,
+                            MessageBundle messageBundle,
+                            SecurityUtils securityUtils) {
         super(eventBus, view);
 
-        this.requestFactory = requestFactory;
+        this.dispatcher = dispatcher;
+        this.userService = userService;
+        this.sessionService = sessionService;
         this.messageBundle = messageBundle;
         this.securityUtils = securityUtils;
 
@@ -45,20 +54,15 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
     }
 
     @Override
-    public void saveSetting(final UserProxy editedUser) {
-        currentContext.updateUser(editedUser).fire(new ReceiverImpl<Void>() {
+    public void saveSetting(final User editedUser) {
+        dispatcher.execute(userService.updateUser(editedUser), new AsyncCallbackImpl<Void>() {
             @Override
-            public void onSuccess(Void aVoid) {
+            public void onReceive(Void response) {
                 securityUtils.updateUsername(editedUser.getEmail());
                 GlobalMessageEvent.fire(this, messageBundle.settingsUpdated());
 
                 initAndEditUser();
                 getView().clearErrors();
-            }
-
-            @Override
-            public void onConstraintViolation(Set<ConstraintViolation<?>> violations) {
-                getView().showErrors(violations);
             }
         });
     }
@@ -70,12 +74,10 @@ public class GeneralSettingPresenter extends PresenterWidget<GeneralSettingPrese
     }
 
     private void initAndEditUser() {
-        requestFactory.authenticationService().currentUser().fire(new ReceiverImpl<UserProxy>() {
+        dispatcher.execute(sessionService.getSession(), new AsyncCallbackImpl<User>() {
             @Override
-            public void onSuccess(UserProxy userProxy) {
-                currentContext = requestFactory.userService();
-                userProxy = currentContext.edit(userProxy);
-                getView().edit(userProxy);
+            public void onReceive(User response) {
+                getView().edit(response);
             }
         });
     }

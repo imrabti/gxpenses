@@ -7,10 +7,9 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.mvp.ViewWithUiHandlers;
-import com.nuvola.gxpenses.client.mvp.uihandler.UiHandlersStrategy;
-import com.nuvola.gxpenses.client.request.proxy.UserProxy;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.nuvola.gxpenses.client.web.application.setting.widget.ui.SettingEditor;
+import com.nuvola.gxpenses.common.shared.business.User;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -26,10 +25,8 @@ public class GeneralSettingView extends ViewWithUiHandlers<GeneralSettingUiHandl
     HTML errors;
 
     @Inject
-    public GeneralSettingView(final Binder uiBinder,
-                              final UiHandlersStrategy<GeneralSettingUiHandlers> uiHandlers,
-                              final SettingEditor settingEditor) {
-        super(uiHandlers);
+    GeneralSettingView(Binder uiBinder,
+                       SettingEditor settingEditor) {
         this.settingEditor = settingEditor;
 
         initWidget(uiBinder.createAndBindUi(this));
@@ -38,14 +35,14 @@ public class GeneralSettingView extends ViewWithUiHandlers<GeneralSettingUiHandl
 
     @UiHandler("save")
     void onSave(ClickEvent event) {
-        UserProxy user = settingEditor.get();
+        User user = settingEditor.get();
         if (user != null) {
             getUiHandlers().saveSetting(user);
         }
     }
 
     @Override
-    public void edit(UserProxy user) {
+    public void edit(User user) {
         settingEditor.edit(user);
     }
 

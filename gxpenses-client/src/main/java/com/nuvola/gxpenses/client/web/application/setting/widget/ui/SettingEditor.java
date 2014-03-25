@@ -8,19 +8,19 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ValueListBox;
 import com.google.inject.Inject;
-import com.nuvola.gxpenses.client.request.proxy.UserProxy;
-import com.nuvola.gxpenses.client.util.EditorView;
 import com.nuvola.gxpenses.client.web.application.renderer.EnumRenderer;
-import com.nuvola.gxpenses.shared.type.CurrencyType;
-import com.nuvola.gxpenses.shared.type.PaginationType;
+import com.nuvola.gxpenses.common.client.util.EditorView;
+import com.nuvola.gxpenses.common.shared.business.User;
+import com.nuvola.gxpenses.common.shared.type.CurrencyType;
+import com.nuvola.gxpenses.common.shared.type.PaginationType;
 
 import java.util.Arrays;
 
-public class SettingEditor extends Composite implements EditorView<UserProxy> {
+public class SettingEditor extends Composite implements EditorView<User> {
     public interface Binder extends UiBinder<HTMLPanel, SettingEditor> {
     }
 
-    public interface Driver extends SimpleBeanEditorDriver<UserProxy, SettingEditor> {
+    public interface Driver extends SimpleBeanEditorDriver<User, SettingEditor> {
     }
 
     @UiField
@@ -39,11 +39,12 @@ public class SettingEditor extends Composite implements EditorView<UserProxy> {
     private final Driver driver;
 
     @Inject
-    public SettingEditor(final Binder uiBinder, final Driver driver) {
+    SettingEditor(Binder uiBinder,
+                  Driver driver) {
         this.driver = driver;
 
-        currency = new ValueListBox<CurrencyType>(new EnumRenderer<CurrencyType>());
-        pageSize = new ValueListBox<PaginationType>(new EnumRenderer<PaginationType>());
+        currency = new ValueListBox<>(new EnumRenderer<CurrencyType>());
+        pageSize = new ValueListBox<>(new EnumRenderer<PaginationType>());
 
         currency.setValue(CurrencyType.US_DOLLAR);
         pageSize.setValue(PaginationType.PAGE_40);
@@ -55,13 +56,13 @@ public class SettingEditor extends Composite implements EditorView<UserProxy> {
     }
 
     @Override
-    public void edit(UserProxy setting) {
+    public void edit(User setting) {
         driver.edit(setting);
     }
 
     @Override
-    public UserProxy get() {
-        UserProxy user = driver.flush();
+    public User get() {
+        User user = driver.flush();
         if (driver.hasErrors()) {
             return null;
         } else {

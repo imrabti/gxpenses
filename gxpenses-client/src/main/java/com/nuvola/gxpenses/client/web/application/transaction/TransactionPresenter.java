@@ -12,7 +12,6 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
-import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.nuvola.gxpenses.client.event.GlobalMessageEvent;
 import com.nuvola.gxpenses.client.event.NoElementFoundEvent;
 import com.nuvola.gxpenses.client.event.PopupClosedEvent;
@@ -98,7 +97,7 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
                          AccountSiderPresenter accountSiderPresenter,
                          AddTransactionPresenter addTransactionPresenter,
                          @PageSize Integer defaultPageSize) {
-        super(eventBus, view, proxy);
+        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
 
         this.dispatcher = dispatcher;
         this.transactionService = transactionService;
@@ -217,11 +216,6 @@ public class TransactionPresenter extends Presenter<TransactionPresenter.MyView,
                 }
             });
         }
-    }
-
-    @Override
-    protected void revealInParent() {
-        RevealContentEvent.fire(this, ApplicationPresenter.TYPE_SetMainContent, this);
     }
 
     @Override
